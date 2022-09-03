@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from './Home'
+import Signup from "./Signup";
 function App() {
   return (
     <div className="App">
@@ -9,7 +10,7 @@ function App() {
       <Home/>
       </Route>
         <Route exact path='/login'>
-      {/* <Home/> */}
+      <Signup/>
       </Route>
       </Switch>
     </div>
