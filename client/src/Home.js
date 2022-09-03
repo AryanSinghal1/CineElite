@@ -22,6 +22,8 @@ function Home() {
         }
         console.log(data)
         await axios.post('/', data)
+        e.target.reset()
+        setCode()
     }
   return (<>
     <div>Enter email</div>
