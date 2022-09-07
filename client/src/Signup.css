@@ -1,0 +1,196 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.signupMain {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.info {
+  width: 35%;
+  height: 100%;
+  background-color: #141c31;
+  background-image: linear-gradient(135deg, rgba(20, 28, 29, 0.83), #141c31);
+  position: relative;
+}
+.signupDetailsContainer {
+  width: 65%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signupDetails {
+  width: 70%;
+  height: 90%;
+}
+.signupText{
+  width: 100%;
+  height: 10%;
+}
+.signupText p{
+    font-size: 35px;
+    font-weight: 600;
+    color: #000000;
+}
+.sign{
+    color: #681FB0;
+}
+.signupForm{
+  height: 90%;
+  width: 100%;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.signupInput{
+    width: 90%;
+    height: 20%;
+    border-radius: 10px;
+    border: 0.5px solid rgba(0, 0, 0, 0.4);
+    padding: 10px;
+  }
+  .introInput{
+    width: 100%;
+  }
+  .signupInput::placeholder{
+    color: rgba(0, 0, 0, 0.2);
+  }
+.refInput{
+    width: 60%;
+}
+.signupForm form{
+  width: 100%;
+  height: 100%;
+}
+.referral{
+  font-size: 15px;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.inputFields{
+  width: 100%;
+  height: 100%;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.inputFields p{
+  margin: 5px 0px;
+}
+.introField{
+  width: 95%;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.signupFormDetails{
+  width: 100%;
+  height: 60%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 50px;
+}
+.uploadFields{
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.document{
+  width: 50%;
+  height: 100%;
+}
+.uploadText{
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.documentUpload{
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.document{
+  border: none;
+}
+.signupSubmit{
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signupButton{
+  border: none;
+  padding: 10px 40px;
+  background-color:#FFCB00;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.company {
+    position: absolute;
+    top: 30%;
+    right: 0;
+  width: 100%;
+}
+.company p {
+  font-weight: 600;
+  font-size: 50px;
+  color: #fff;
+  padding: 30px;
+}
+.logo1{
+    width: 80%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.logo2{
+    width: 80%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.logo{
+    width: 10%;
+    position: absolute;
+    bottom: 2.5%;
+    left: 5.5%;
+}
+.uploadDocuments{
+  padding: 10px 30px;
+  min-width: 150px;
+  border: 0.5px solid rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+}
+.uploadDocuments{
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.3);
+}
+.documentUpload input[type='file']{
+  display: none;
+  position: absolute;
+}
+.uploadDocuments img{
+  width: 30px;
+  height: 20px;
+}

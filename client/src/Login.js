@@ -3,7 +3,8 @@ import axios from 'axios'
 function Login() {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
-    const handleLogin = async () =>{
+    const handleLogin = async (e) =>{
+      e.preventDefault()
         let loginData = {
             email: email,
             password: password
@@ -13,10 +14,10 @@ function Login() {
     }
   return (<>
     <div>Login</div>
-    <form method='POST' action='/'>
+    <form method='POST' action='/' onSubmit={handleLogin}>
         <input type='text' onChange={(e)=>{setEmail(e.target.value)}} placeholder='Enter Email' required></input>
         <input type='text' onChange={(e)=>{setPassword(e.target.value)}} placeholder='Enter Password' required></input>
-        <button  onClick={handleLogin}>Login</button>
+        <input type="submit" value="login"></input>
     </form>
     </>
   )
