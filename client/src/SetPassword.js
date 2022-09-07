@@ -4,7 +4,8 @@ function SetPassword() {
   const [email, setEmail] = useState()
   const [password, SetPassword] = useState()
   const [rePassword, SetRePassword] = useState()
-  const handlePassword = async() =>{
+  const handlePassword = async(e) =>{
+    e.preventDefault()
     if(password===rePassword){
         let passwordData = {
             email: email,

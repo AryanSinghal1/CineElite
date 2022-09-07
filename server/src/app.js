@@ -118,9 +118,9 @@ app.post('/userlogin', async(req, res)=>{
   if(loginUser){
     const loginDone = await bcrypt.compare(req.body.password, loginUser.password)
     if(loginDone){
-      console.log("Success")
+      res.send("Success")
     }else{
-      console.log("Invalid Credentials")
+      res.send("Invalid Credentials")
     }
   }else{
     console.log("User not found")
