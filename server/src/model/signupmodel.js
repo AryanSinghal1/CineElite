@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 const signupUserSchema = new mongoose.Schema({
-    name:{
+    fname:{
+        type: String,
+        required: true
+    },
+    lname:{
         type: String,
         required: true
     },
@@ -26,7 +30,15 @@ const signupUserSchema = new mongoose.Schema({
     },
     registered:{
         type: Boolean
-    }
+    },
+    // vatImage:{
+    //     data: Buffer,
+    //     contentType: String
+    // },
+    // profImage:{
+    //     data: Buffer,
+    //     contentType: String
+    // }
 })
 const userSignupModel = new mongoose.model("userSignup", signupUserSchema)
 module.exports = userSignupModel
