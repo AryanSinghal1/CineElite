@@ -1,13 +1,26 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const registerUserSchema = new mongoose.Schema({
-    name:{
+    fname:{
         type: String,
+        required: true
+    },
+    lname:{
+        type: String,
+        required: true
+    },
+    password:{
+        type: String,
+        required: true
+    },
+    registered:{
+        type: Boolean,
         required: true
     },
     email:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     mobile:{
         type: String,
@@ -25,10 +38,6 @@ const registerUserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    password:{
-        type: String,
-        required: true
-    },
     opAddress:{
         type: String,
         required: true
@@ -38,10 +47,12 @@ const registerUserSchema = new mongoose.Schema({
         required: true
     },
 })
+let i=0;
 registerUserSchema.pre("save", async function(){
-    if(this.isModified('password')){
+    if(this.isModified('password')&&this.registered&&i>0){
     this.password = await bcrypt.hash(this.password, 10);
-    }
+}
+i++;
 })
 
 const userRegisterModel = new mongoose.model("userRegister", registerUserSchema)

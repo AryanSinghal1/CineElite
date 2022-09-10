@@ -60,6 +60,7 @@ function Signup() {
               >
                 <div className="referral">
                   <p>Referral Code*</p>
+                  <div className="refInputDiv">
                   <input
                     className="signupInput refInput"
                     onChange={(e) => {
@@ -69,11 +70,14 @@ function Signup() {
                     placeholder="Enter Invite Code"
                     maxLength="6"
                   ></input>
-                  {!invite&&error?<span className="errorField">This is a required field</span>:''}
+                  {!invite&&error?<span className="referror errorField">This is a required field</span>:''}
+                  </div>
                 </div>
                 <div className="signupFormDetails">
                   <div className="inputFields">
+                  <div className="inputFieldNames">
                     <p>First Name*</p>
+                    </div>
                     <input
                       className="signupInput"
                       onChange={(e) => {
@@ -85,7 +89,9 @@ function Signup() {
                       {!fname&&error?<span className="errorField">This is a required field</span>:''}
                   </div>
                   <div className="inputFields">
+                    <div className="inputFieldNames">
                     <p>Last Name*</p>
+                  </div>
                     <input
                       className="signupInput"
                       onChange={(e) => {
@@ -97,7 +103,9 @@ function Signup() {
                     {!lname&&error?<span className="errorField">This is a required field</span>:''}
                   </div>
                   <div className="inputFields">
+                    <div className="inputFieldNames">
                     <p>Email*</p>
+                  </div>
                     <input
                       className="signupInput"
                       onChange={(e) => {
@@ -109,7 +117,9 @@ function Signup() {
                       {!email&&error?<span className="errorField">This is a required field</span>:''}
                   </div>
                   <div className="inputFields">
+                    <div className="inputFieldNames">
                     <p>Contact Number*</p>
+                  </div>
                     <input
                       className="signupInput"
                       onChange={(e) => {
@@ -121,7 +131,9 @@ function Signup() {
                       {!mobile&&error?<span className="errorField">This is a required field</span>:''}
                   </div>
                   <div className="inputFields">
+                    <div className="inputFieldNames">
                     <p>Billing Address*</p>
+                  </div>
                     <input
                       className="signupInput"
                       onChange={(e) => {
@@ -133,7 +145,9 @@ function Signup() {
                       {!address&&error?<span className="errorField">This is a required field</span>:''}
                   </div>
                   <div className="inputFields">
+                    <div className="inputFieldNames">
                     <p>VAT/TAX Number*</p>
+                  </div>
                     <input
                       className="signupInput"
                       onChange={(e) => {
@@ -145,7 +159,9 @@ function Signup() {
                       {!VAT&&error?<span className="errorField">This is a required field</span>:''}
                   </div>
                   <div className="inputFields introField">
+                    <div className="inputFieldNames">
                     <p>My Intro*</p>
+                  </div>
                     <input
                       className="signupInput introInput"
                       onChange={(e) => {
@@ -154,7 +170,7 @@ function Signup() {
                       type="text"
                       placeholder="Introduction"
                       ></input>
-                      {!intro&&error?<span className="errorField">This is a required field</span>:''}
+                      {!intro&&error?<span className="introError errorField">This is a required field</span>:''}
                   </div>
                 </div>
                 <div className="uploadFields">
