@@ -8,9 +8,9 @@ function Verify() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const verifyit = async(e)=>{
-        const verifyData = await axios.get("http://localhost:8000/verify");
+        const verifyData = await axios.get("http://localhost:8000/admlogin");
         const getVerifyData = verifyData.data;
-        const data = getVerifyData.filter((e)=>{return e.name==email&&e.registered})
+        const data = getVerifyData.filter((e)=>{return e.email==email&&e.registered})
         if(data[0].password==password){
             setVerified(true)
         }
