@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.temppassmain{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.info {
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(353.79deg, #141C31 50.69%, rgba(20, 28, 49, 0.83) 102.13%);
+    position: relative;
+    left: 601px;
+    top: 0px;
+  }
