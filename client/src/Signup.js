@@ -15,6 +15,25 @@ function Signup() {
   const [intro, setIntro] = useState();
   const [invite, setInvite] = useState();
   const [error, setError] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState(false);
+  const [image, setImage] = useState(false);
+  const [vatDoc, setVatDoc] = useState(false);
+  
+  const getBase64 = file => {
+    return new Promise(resolve => {
+      let fileInfo;
+      let baseURL = "";
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+      console.log("Called", reader);
+      baseURL = reader.result;
+      console.log(baseURL);
+      resolve(baseURL);
+      };
+      console.log(fileInfo);
+    });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!invite||!!fname||!lname||!email||!mobile||!address||!VAT||!intro){
@@ -29,10 +48,29 @@ function Signup() {
         VAT: VAT,
         intro: intro,
         invite: invite,
+        profile: profilePhoto,
+        vatDoc: vatDoc
       };
       console.log(data)
     await axios.post("http://127.0.0.1:8000/register", data)
   };
+  const handleUploadImages = (e) =>{
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (re) => {
+      setProfilePhoto(re.target.result)
+    };
+  }
+  const handleuploadDoc = (e) =>{
+    let file = e.target.files[0];
+    console.log("This is file", file)
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (re) => {
+      setVatDoc(re.target.result)
+    };
+  }
   return (
     <>
       <div className="signupMain">
@@ -57,6 +95,7 @@ function Signup() {
                 method="POST"
                 onSubmit={handleSubmit}
                 className="signupForm"
+                encType="multipart/form-data"
               >
                 <div className="referral">
                   <p>Referral Code*</p>
@@ -182,8 +221,8 @@ function Signup() {
                       <input
                         id="vat"
                         className="document"
-                        onChange={(e) => {}}
-                        accept="image/*"
+                        onChange={handleuploadDoc}
+                        accept="application/pdf"
                         type="file"
                         name="vatPhoto"
                         ></input>
@@ -197,7 +236,7 @@ function Signup() {
                       <input
                         id="photo"
                         className="document"
-                        onChange={(e) => {}}
+                        onChange={handleUploadImages}
                         accept="image/*"
                         type="file"
                         name="proPhoto"
