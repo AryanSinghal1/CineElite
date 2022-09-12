@@ -16,24 +16,8 @@ function Signup() {
   const [invite, setInvite] = useState();
   const [error, setError] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState(false);
-  const [image, setImage] = useState(false);
+  const [signUp, setSignUp] = useState(false);
   const [vatDoc, setVatDoc] = useState(false);
-  
-  const getBase64 = file => {
-    return new Promise(resolve => {
-      let fileInfo;
-      let baseURL = "";
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-      console.log("Called", reader);
-      baseURL = reader.result;
-      console.log(baseURL);
-      resolve(baseURL);
-      };
-      console.log(fileInfo);
-    });
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!invite||!!fname||!lname||!email||!mobile||!address||!VAT||!intro){
@@ -52,7 +36,7 @@ function Signup() {
         vatDoc: vatDoc
       };
       console.log(data)
-    await axios.post("http://127.0.0.1:8000/register", data)
+    await axios.post("http://127.0.0.1:8000/register", data).then(()=>{setSignUp(true)}).catch((e)=>console.log(e))
   };
   const handleUploadImages = (e) =>{
     let file = e.target.files[0];
@@ -64,7 +48,6 @@ function Signup() {
   }
   const handleuploadDoc = (e) =>{
     let file = e.target.files[0];
-    console.log("This is file", file)
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (re) => {
@@ -72,7 +55,7 @@ function Signup() {
     };
   }
   return (
-    <>
+    <>{!signUp?<div className="signupMain"><div className="confirmation"><div className="confirmationTextContainer"><p className="registerDone">Thank You For <span className="reg">Registering.</span></p><p>Within <span className="reg">X</span> hours,</p><p>You'll get a confirmation email.</p></div></div><div className="confirmationBackground"></div></div>:(
       <div className="signupMain">
         <div className="info">
           <img src={logo1} className="logo1" alt="logo1"></img>
@@ -245,7 +228,6 @@ function Signup() {
                         Upload Photo
                         <img src={uploadLogo} alt="upload"></img>
                       </label>
-                        {/* {!intro&&error?'Error':''} */}
                     </div>
                   </div>
                 </div>
@@ -260,7 +242,7 @@ function Signup() {
             </div>
           </div>
         </div>
-      </div>
+      </div>)}
     </>
   );
 }
