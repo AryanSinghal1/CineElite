@@ -1,0 +1,66 @@
+.mainVerify{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.verifyForm{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.verifyFormContainer{
+    width: 90%;
+    height: 80%;
+}
+.background{
+    width: 50%;
+    height: 100%;
+    background-image: linear-gradient(135deg, rgba(20, 28, 29, 0.83), #141c31);
+}
+.verifyFormText{
+    margin: 0 0 40px 0;
+}
+.verifyFormText p{
+    font-size: 25px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.temporary{
+    color: #681FB0;
+}
+.verifyDetails{
+    width: 50%;
+    height: 45%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+.inputVerifyFields{
+    width: 100%;
+    height: 30%;
+}
+.verifyInput{
+    width: 100%;
+    height: 45%;
+    border-radius: 5px;
+    border: 0.5px solid rgba(0, 0, 0, 0.4);
+    padding: 10px;
+}
+.inputVerifyFields p{
+    margin: 5px 0;
+    font-size: 15px;
+}
+.verifyButton{
+    /* margin: 20px 0; */
+    border: none;
+    padding: 8px 30px;
+    background-color:#FFCB00;
+    border-radius: 5px;
+    font-weight: 600;  
+}

@@ -220,3 +220,32 @@
   width: 30px;
   height: 20px;
 }
+.confirmation{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.confirmationTextContainer{
+  width: 90%;
+  height: 50%;
+}
+.registerDone{
+  font-size: 30px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0 0 40px 0;
+}
+.confirmationTextContainer{
+  font-size: 20px;
+  font-weight: 500;
+}
+.reg{
+  color: #681FB0;
+}
+.confirmationBackground{
+  width: 50%;
+  height: 100%;
+  background-image: linear-gradient(135deg, rgba(20, 28, 29, 0.83), #141c31);
+}

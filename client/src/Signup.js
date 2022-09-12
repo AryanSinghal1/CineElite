@@ -15,6 +15,9 @@ function Signup() {
   const [intro, setIntro] = useState();
   const [invite, setInvite] = useState();
   const [error, setError] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState(false);
+  const [signUp, setSignUp] = useState(false);
+  const [vatDoc, setVatDoc] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!invite||!!fname||!lname||!email||!mobile||!address||!VAT||!intro){
@@ -29,12 +32,30 @@ function Signup() {
         VAT: VAT,
         intro: intro,
         invite: invite,
+        profile: profilePhoto,
+        vatDoc: vatDoc
       };
       console.log(data)
-    await axios.post("http://127.0.0.1:8000/register", data)
+    await axios.post("http://127.0.0.1:8000/register", data).then(()=>{setSignUp(true)}).catch((e)=>console.log(e))
   };
+  const handleUploadImages = (e) =>{
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (re) => {
+      setProfilePhoto(re.target.result)
+    };
+  }
+  const handleuploadDoc = (e) =>{
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (re) => {
+      setVatDoc(re.target.result)
+    };
+  }
   return (
-    <>
+    <>{!signUp?<div className="signupMain"><div className="confirmation"><div className="confirmationTextContainer"><p className="registerDone">Thank You For <span className="reg">Registering.</span></p><p>Within <span className="reg">X</span> hours,</p><p>You'll get a confirmation email.</p></div></div><div className="confirmationBackground"></div></div>:(
       <div className="signupMain">
         <div className="info">
           <img src={logo1} className="logo1" alt="logo1"></img>
@@ -57,6 +78,7 @@ function Signup() {
                 method="POST"
                 onSubmit={handleSubmit}
                 className="signupForm"
+                encType="multipart/form-data"
               >
                 <div className="referral">
                   <p>Referral Code*</p>
@@ -182,8 +204,8 @@ function Signup() {
                       <input
                         id="vat"
                         className="document"
-                        onChange={(e) => {}}
-                        accept="image/*"
+                        onChange={handleuploadDoc}
+                        accept="application/pdf"
                         type="file"
                         name="vatPhoto"
                         ></input>
@@ -197,7 +219,7 @@ function Signup() {
                       <input
                         id="photo"
                         className="document"
-                        onChange={(e) => {}}
+                        onChange={handleUploadImages}
                         accept="image/*"
                         type="file"
                         name="proPhoto"
@@ -206,7 +228,6 @@ function Signup() {
                         Upload Photo
                         <img src={uploadLogo} alt="upload"></img>
                       </label>
-                        {/* {!intro&&error?'Error':''} */}
                     </div>
                   </div>
                 </div>
@@ -221,7 +242,7 @@ function Signup() {
             </div>
           </div>
         </div>
-      </div>
+      </div>)}
     </>
   );
 }

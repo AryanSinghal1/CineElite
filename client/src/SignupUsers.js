@@ -21,11 +21,13 @@ const SignupUsers = () => {
             <SignupUserCard
               fname={e.fname}
               lname={e.lname}
+              photo={e.profImage}
               email={e.email}
               mobile={e.mobile}
               address={e.address}
               VAT={e.vatTaxNumber}
               intro={e.introduction}
+              vatDoc = {e.vatDocument}
             />
           ))
         : ""}

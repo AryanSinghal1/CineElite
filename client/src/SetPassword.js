@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import './SetPassword.css'
 function SetPassword(props) {
   const [password, SetPassword] = useState();
   const [rePassword, SetRePassword] = useState();
@@ -18,7 +19,19 @@ function SetPassword(props) {
   };
   return (
     <>
-      <form method="POST" action="/pass" onSubmit={handlePassword}>
+    <div className="passwordContainer">
+      <div className="passForm">
+      <div className="passFormContainer">
+      <div className="passText">
+      <p>Reset your</p>
+                <p>
+                  <span className="temp">Temporary</span> password
+                </p>
+        </div>
+      <div className="passDetails">
+      <form className="setPassForm" method="POST" action="/pass" onSubmit={handlePassword}>
+        <div className="setPasswordFields">
+          <p>New Password</p>
         <input
           type="text"
           onChange={(e) => {
@@ -26,7 +39,11 @@ function SetPassword(props) {
           }}
           placeholder="Enter password"
           required
-        ></input>
+          className="passInput"
+          ></input>
+        </div>
+            <div className="setPasswordFields">
+          <p>Re-enter your New Password</p>
         <input
           type="text"
           onChange={(e) => {
@@ -34,9 +51,16 @@ function SetPassword(props) {
           }}
           placeholder="Re-Enter password"
           required
-        ></input>
-        <input type="submit" value="Set Password"></input>
+          className="passInput"
+          ></input>
+          </div>
+        <input className="setPasswordSubmit" type="submit" value="Sign In"></input>
       </form>
+      </div>
+      </div>
+      </div>
+      <div className="formBackground"></div>
+      </div>
     </>
   );
 }

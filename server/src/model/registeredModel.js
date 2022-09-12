@@ -46,6 +46,12 @@ const registerUserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    vatDocument:{
+        type: String
+    },
+    profImage:{
+        type: String
+    }
 })
 let i=0;
 registerUserSchema.pre("save", async function(){
