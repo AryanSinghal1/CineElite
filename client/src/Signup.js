@@ -36,7 +36,18 @@ function Signup() {
         vatDoc: vatDoc
       };
       console.log(data)
-    await axios.post("http://127.0.0.1:8000/register", data).then(()=>{setSignUp(true)}).catch((e)=>console.log(e))
+    await axios.post("http://127.0.0.1:8000/register", data).then(e=>{switch (e.data) {
+      case 0:
+        setSignUp(true)
+        break;
+      case 1:
+        window.alert("Invalid Invite Code")
+        console.log("invalid code")
+        break;
+        case 2:
+          window.alert("User Not Referred")
+          break;
+    };console.log(e.data)}).catch(e=>console.log(e));
   };
   const handleUploadImages = (e) =>{
     let file = e.target.files[0];
@@ -55,7 +66,7 @@ function Signup() {
     };
   }
   return (
-    <>{!signUp?<div className="signupMain"><div className="confirmation"><div className="confirmationTextContainer"><p className="registerDone">Thank You For <span className="reg">Registering.</span></p><p>Within <span className="reg">X</span> hours,</p><p>You'll get a confirmation email.</p></div></div><div className="confirmationBackground"></div></div>:(
+    <>{!signUp?(
       <div className="signupMain">
         <div className="info">
           <img src={logo1} className="logo1" alt="logo1"></img>
@@ -242,7 +253,7 @@ function Signup() {
             </div>
           </div>
         </div>
-      </div>)}
+      </div>):<div className="signupMain"><div className="confirmation"><div className="confirmationTextContainer"><p className="registerDone">Thank You For <span className="reg">Registering.</span></p><p>Within <span className="reg">X</span> hours,</p><p>You'll get a confirmation email.</p></div></div><div className="confirmationBackground"></div></div>}
     </>
   );
 }

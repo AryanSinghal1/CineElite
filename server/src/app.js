@@ -5,25 +5,11 @@ const cors = require("cors");
 const path = require("path");
 const bcrypt = require("bcryptjs");
 require("./connection/connection");
-const multer = require("multer");
-const fs = require("fs")
 const nodemailer = require("nodemailer");
 const registerSchema = require("./model/registeredModel");
 app.use(express.json({limit: "50mb"}));
 app.use(express.urlencoded({ extended: true , limit:"500mb"}));
 app.use(cors());
-var Storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "images");
-  },
-  filename: function (req, file, cb) {
-    cb(
-      null,file.fieldname + "-" + Date.now() + path.extname(file.originalname));
-  },
-});
-var upload = multer({
-  storage: Storage,
-});
 app.get("/", (req, res) => {
   res.send("Hello");
 });
@@ -65,7 +51,7 @@ app.post("/admInvite", async (req, res) => {
   });
   await newUser.save();
 });
-
+let variable = 0
 app.post("/register", async (req, res) => {
   const userFound = await registerSchema.findOne({ email: req.body.email });
   console.log(req.body)
@@ -80,14 +66,28 @@ app.post("/register", async (req, res) => {
       userFound.introduction = req.body.intro;
       userFound.profImage = req.body.profile;
       userFound.vatDocument = req.body.vatDoc;
-      await userFound.save().then((e)=>{console.log("User registered successfully")}).catch((e)=>console.log(e));
+      await userFound.save().then((e)=>{res.send("0");variable=1;}).catch((e)=>console.log(e));
     } else {
+      res.send("1");
       console.log("Invalid Invite Code.");
+      variable = 2;
     }
   } else {
+    res.send("2");
     console.log("User not Referred.");
+    variable = 3;
   }
 });
+app.get('/register', (req, res)=>{
+  switch(variable){
+    case 1:
+      return res.status(201).send("Success");
+      case 2:
+        return res.status(201).send("Invalid");
+        case 3:
+          return res.status(201).send("NoUser");
+  }
+})
 app.get("/admlogin", async (req, res) => {
   const getData = await registerSchema.find();
   res.send(getData);
