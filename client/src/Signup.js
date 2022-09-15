@@ -18,6 +18,8 @@ function Signup() {
   const [profilePhoto, setProfilePhoto] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [vatDoc, setVatDoc] = useState(false);
+  const [invalid, setInvalid] = useState(false);
+  const [user, setUser] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!invite||!!fname||!lname||!email||!mobile||!address||!VAT||!intro){
@@ -41,11 +43,11 @@ function Signup() {
         setSignUp(true)
         break;
       case 1:
-        window.alert("Invalid Invite Code")
+        setInvalid(true)
         console.log("invalid code")
         break;
         case 2:
-          window.alert("User Not Referred")
+          setUser(true)
           break;
     };console.log(e.data)}).catch(e=>console.log(e));
   };
@@ -103,6 +105,7 @@ function Signup() {
                     placeholder="Enter Invite Code"
                     maxLength="6"
                   ></input>
+{invalid?<span className="referror errorField">Invalid Code</span>:''}
                   {!invite&&error?<span className="referror errorField">This is a required field</span>:''}
                   </div>
                 </div>
@@ -248,6 +251,7 @@ function Signup() {
                     type="submit"
                     value="Sign up"
                   ></input>
+                  {user?<p className="errorUser">User not referred</p>:''}
                 </div>
               </form>
             </div>

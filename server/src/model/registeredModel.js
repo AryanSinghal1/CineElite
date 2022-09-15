@@ -55,7 +55,7 @@ const registerUserSchema = new mongoose.Schema({
 })
 let i=0;
 registerUserSchema.pre("save", async function(){
-    if(this.isModified('password')&&this.registered&&i>0){
+    if(this.isModified('password')&&this.registered&&i>1){
     this.password = await bcrypt.hash(this.password, 10);
 }
 i++;

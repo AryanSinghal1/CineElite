@@ -9,7 +9,18 @@ function Login() {
       email: email,
       password: password,
     };
-  await axios.post("http://127.0.0.1:8000/userlogin", loginData)
+  await axios.post("http://127.0.0.1:8000/userlogin", loginData).then(e=>
+  {switch(e.data){
+    case 0:
+      window.alert("Success");
+      break;
+    case 1:
+      window.alert("Wrong Password");
+      break;
+    case 2:
+      window.alert("User not found");
+      break;
+  }})
   };
   return (
     <>

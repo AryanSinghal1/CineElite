@@ -31,7 +31,7 @@ app.post("/admInvite", async (req, res) => {
   let info = await transporter.sendMail({
     from: "aryann11223@gmail.com",
     to: req.body.username,
-    subject: "Welcome to Stabnil6",
+    subject: "Welcome to CineElite",
     text: `Hello ${req.body.username}, your invite code is ${req.body.invitecode}`,
     html: `<p>Hello User, Your username is ${req.body.username} and your invite code is ${req.body.invitecode}</p>`,
   });
@@ -49,7 +49,7 @@ app.post("/admInvite", async (req, res) => {
     YearsExp: "To be entered by the user",
     registered: false,
   });
-  await newUser.save();
+  await newUser.save().then(()=>{res.send("0")}).catch(e=>res.send("1"));
 });
 let variable = 0
 app.post("/register", async (req, res) => {
@@ -78,16 +78,6 @@ app.post("/register", async (req, res) => {
     variable = 3;
   }
 });
-app.get('/register', (req, res)=>{
-  switch(variable){
-    case 1:
-      return res.status(201).send("Success");
-      case 2:
-        return res.status(201).send("Invalid");
-        case 3:
-          return res.status(201).send("NoUser");
-  }
-})
 app.get("/admlogin", async (req, res) => {
   const getData = await registerSchema.find();
   res.send(getData);
@@ -146,13 +136,13 @@ app.post("/userlogin", async (req, res) => {
       loginUser.password
     );
     if (loginDone) {
-      res.send("Success");
+      res.send("0");
       console.log("Sivvess");
     } else {
-      res.send("Invalid Credentials");
+      res.send("1");
     }
   } else {
-    console.log("User not found");
+    res.send("2")
   }
 });
 app.listen(port, () => {

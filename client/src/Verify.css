@@ -29,7 +29,10 @@
     font-weight: 600;
     color: #000000;
 }
-
+.error{
+    font-size: 15px;
+    color: red;
+}
 .temporary{
     color: #681FB0;
 }
