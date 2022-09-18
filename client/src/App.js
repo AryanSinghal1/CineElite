@@ -3,9 +3,10 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./Home";
 import Signup from "./Signup";
 import SignupUsers from "./SignupUsers";
-import SetPassword from "./SetPassword";
+import Dashboard from "./Dashboard";
 import Login from "./Login";
 import Verify from "./Verify";
+import Overview from "./Overview";
 function App() {
   return (
     <div className="App">
@@ -19,8 +20,11 @@ function App() {
         <Route exact path="/admverify">
           <SignupUsers />
         </Route>
-        <Route exact path="/pass">
-          <SetPassword />
+        <Route exact path="/overview">
+          <Overview/>
+        </Route>
+        <Route exact path="/dashboard">
+          <Dashboard/>
         </Route>
         <Route exact path="/verify">
           <Verify />

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 const registerUserSchema = new mongoose.Schema({
     fname:{
         type: String,
@@ -46,12 +47,54 @@ const registerUserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    work:{
+        type: String,
+        required: true
+    },
     vatDocument:{
         type: String
     },
     profImage:{
         type: String
-    }
+    },
+    bankDetails:[{
+        AccNo:{
+            type: String,
+            required: true
+        },
+        Swift:{
+            type: String,
+            required: true
+        },
+        Bank:{
+            type: String,
+            required: true
+        },
+        Branch:{
+            type: String,
+            required: true
+        },
+        BranchAddress:{
+            type: String,
+            required: true
+        }
+    }],
+    links:[{
+        insta:{
+            type: String,
+            required: true
+        },
+        media2:{
+            type: String,
+            required: true
+        }
+    }],
+    tokens:[{
+        token:{
+            type:String,
+            required: true
+        }
+    }]
 })
 let i=0;
 registerUserSchema.pre("save", async function(){
@@ -60,6 +103,15 @@ registerUserSchema.pre("save", async function(){
 }
 i++;
 })
-
+registerUserSchema.methods.createJsonToken=async()=>{
+    try{
+        const token = jwt.sign({_id: this._id}, "Helloeveryonewelcometothecinelite")
+        // this.tokens.concat({token:token})
+        // await this.save();
+        return token;
+    }catch(err){
+        console.log(err);
+    }
+}
 const userRegisterModel = new mongoose.model("userRegister", registerUserSchema)
 module.exports = userRegisterModel

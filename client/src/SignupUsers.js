@@ -5,7 +5,7 @@ import SignupUserCard from "./SignupUserCard";
 const SignupUsers = () => {
   const [data, setData] = useState();
   const getData = async () => {
-    let data = await axios.get("/admlogin");
+    let data = await axios.get("/api/admlogin");
     const unregisteredData = data.data.filter((e) => {
       return e.registered == false;
     });

@@ -9,7 +9,7 @@ function Login() {
       email: email,
       password: password,
     };
-  await axios.post("http://127.0.0.1:8000/userlogin", loginData).then(e=>
+  await axios.post("http://127.0.0.1:8000/api/userlogin", loginData).then(e=>
   {switch(e.data){
     case 0:
       window.alert("Success");

@@ -9,7 +9,7 @@ function SignupUserCard(props) {
     let userData = {
       email: props.email,
     };
-    await axios.post("/admverify", userData);
+    await axios.post("/api/admverify", userData);
   };
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
   return (

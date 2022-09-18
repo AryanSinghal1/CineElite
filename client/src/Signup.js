@@ -38,7 +38,7 @@ function Signup() {
         vatDoc: vatDoc
       };
       console.log(data)
-    await axios.post("http://127.0.0.1:8000/register", data).then(e=>{switch (e.data) {
+    await axios.post("http://127.0.0.1:8000/api/register", data).then(e=>{switch (e.data) {
       case 0:
         setSignUp(true)
         break;

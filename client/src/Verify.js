@@ -10,7 +10,7 @@ function Verify() {
   const [err, setErr] = useState(false);
   const [coderr, setCodErr] = useState(false);
   const verifyit = async (e) => {
-    const verifyData = await axios.get("http://localhost:8000/admlogin");
+    const verifyData = await axios.get("http://localhost:8000/api/admlogin");
     const getVerifyData = verifyData.data;
     const data = getVerifyData.filter((e) => {
       return e.email == email && e.registered;
@@ -28,7 +28,7 @@ function Verify() {
   console.log(verified);
   return (
     <>
-      {verified ? 
+      {!verified ? 
       (
         <SetPassword email={email} />
       ) : 

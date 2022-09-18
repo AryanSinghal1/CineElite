@@ -6,7 +6,7 @@
     align-items: center;
 }
 .verifyForm{
-    width: 50%;
+    width: 30%;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -17,7 +17,7 @@
     height: 80%;
 }
 .background{
-    width: 50%;
+    width: 70%;
     height: 100%;
     background-image: linear-gradient(135deg, rgba(20, 28, 29, 0.83), #141c31);
 }
@@ -37,7 +37,7 @@
     color: #681FB0;
 }
 .verifyDetails{
-    width: 50%;
+    width: 80%;
     height: 45%;
     display: flex;
     justify-content: space-around;
@@ -62,7 +62,7 @@
 .verifyButton{
     /* margin: 20px 0; */
     border: none;
-    padding: 8px 30px;
+    padding: 5px 30px;
     background-color:#FFCB00;
     border-radius: 5px;
     font-weight: 600;  
