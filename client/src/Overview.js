@@ -1,7 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Overview.css'
 import logo from "./Logo/logo.png";
-function Overview() {
+import axios from 'axios';
+function Overview(props) {
+    const [user, setUser] = useState({});
+    const getUser = async()=>{
+        await axios.get("http://localhost:8000/api/getUser").then(e=>{
+            console.log(e.data);
+            setUser(e.data);
+        }).catch(e=>console.log(e))
+    }
+    useEffect(()=>{
+         getUser();
+    },[])
+    console.log(user.fname);
   return (
     <div className='mainDashboard'>
     <div className='dashboardInfo'>
@@ -11,7 +23,7 @@ function Overview() {
     <div className='dashboardContent'>
         <div className='businessOverview'>
             <img className='businessLogo' src={logo} alt='CineElite'></img>
-            <p className='overViewHeading'>Fname's Business Overview</p>
+            <p className='overViewHeading'>{user.fname}'s Business Overview</p>
             <p className='overViewPara'>Saturday, 3 September 2022</p>
         </div>
         <div className='businessActions'>

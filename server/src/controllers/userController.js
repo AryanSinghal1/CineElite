@@ -2,10 +2,16 @@ const registerSchema = require('../model/registeredModel');
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 const auth = require('../middleware/auth');
-exports.setHeaders = function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    next();
-  }
+const getToken = require('../token');
+var LocalStorage = require('node-localstorage').LocalStorage,
+localStorage = new LocalStorage('./scratch');
+// exports.setHeaders = function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header('Access-Control-Allow-Credentials', true);
+//     res.header('Access-Control-Allow-Headers', 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
+//     next();
+//   }
 exports.getInvite = async (req, res) => {
         let transporter = nodemailer.createTransport({
           service: "gmail",
@@ -28,10 +34,10 @@ exports.getInvite = async (req, res) => {
         }
         let paymentDetails = {
           AccNo:"Account Number",
-        Swift:"Swift",
-        Bank:"Bank",
-        Branch:"Branch",
-        BranchAddress:"Branch Address"
+          Swift:"Swift",
+          Bank:"Bank",
+          Branch:"Branch",
+          BranchAddress:"Branch Address"
         }
         const newUser = new registerSchema({
           fname: "To be entered by the user",
@@ -95,28 +101,36 @@ exports.verifyUser = async (req, res) => {
       console.log("No user found");
     }
   }
-exports.loginUser = async (req, res) => {
+  exports.loginUser = async (req, res) => {
     const loginUser = await registerSchema.findOne({ email: req.body.email });
-    const token = await loginUser.createJsonToken();
-    console.log(token);
-    res.cookie("user", token, {expire: new Date(Date.now()+60000), httpOnly: true});
     if (loginUser) {
       const loginDone = await bcrypt.compare(
         req.body.password,
         loginUser.password
-      );
-      if (loginDone) {
-        res.send("0");
-        console.log("Sivvess");
-      } else {
+        );
+        const token = await loginUser.generateAuthToken();
+        if (loginDone) {
+          localStorage.setItem("token", token);
+          res.send("0");
+          console.log("Sivvess");
+        } else {
         res.send("1");
       }
     } else {
-      res.send("2")
+      res.send("2");
     }
   }
-exports.updateUser = async(req, res)=>{
-    const upUser = await registerSchema.findOne({ email: "Aryans8791@gmail.com" });
+        exports.getUser = async (req, res) => {
+          const usertoken = localStorage.getItem("token");
+          const loggedIn = await registerSchema.findOne({token:usertoken});
+          console.log(loggedIn);
+          res.send(loggedIn);
+        }
+        exports.updateUser = async(req, res)=>{
+  const gettoken = localStorage.getItem("token");
+  const upUser = await registerSchema.findOne({token:gettoken});
+    console.log(upUser.bankDetails[0]);
+    console.log(upUser.bankDetails[0].AccNo);
     if (upUser) {
       upUser.links[0].insta = req.body.insta;
       upUser.links[0].media2 = req.body.media2;
@@ -126,9 +140,12 @@ exports.updateUser = async(req, res)=>{
       upUser.bankDetails[0].Branch=req.body.Branch;
       upUser.bankDetails[0].BranchAddress=req.body.BranchAddress;
       upUser.work = req.body.work;
-      await upUser.save();
+      upUser.opAddress = req.body.opAddress;
+      upUser.YearsExp = req.body.years;
+      await upUser.save().then(()=>{res.send("0")}).catch(()=>{res.send("1")});
     }else{
       console.log("Error occured");
+      res.send("2");
     }
   }
 exports.registerUser = async(req, res)=>{

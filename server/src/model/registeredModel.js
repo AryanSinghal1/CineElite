@@ -89,29 +89,29 @@ const registerUserSchema = new mongoose.Schema({
             required: true
         }
     }],
-    tokens:[{
         token:{
             type:String,
             required: true
         }
-    }]
-})
+    })
 let i=0;
-registerUserSchema.pre("save", async function(){
+registerUserSchema.pre("save", async function(next){
     if(this.isModified('password')&&this.registered&&i>1){
     this.password = await bcrypt.hash(this.password, 10);
 }
 i++;
+next();
 })
-registerUserSchema.methods.createJsonToken=async()=>{
+registerUserSchema.methods.generateAuthToken=async function(){
     try{
-        const token = jwt.sign({_id: this._id}, "Helloeveryonewelcometothecinelite")
-        // this.tokens.concat({token:token})
-        // await this.save();
-        return token;
-    }catch(err){
-        console.log(err);
-    }
+            const token = jwt.sign({_id: this._id.toString()}, "Helloeveryonewelcometothecinelite")
+            console.log(token)
+            this.token = token;
+            await this.save();
+            return token;
+        }catch(err){
+            console.log("Error is"+err);
+        }
 }
 const userRegisterModel = new mongoose.model("userRegister", registerUserSchema)
 module.exports = userRegisterModel
