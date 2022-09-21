@@ -14,7 +14,16 @@ function Home() {
       username: username,
       invitecode: Math.floor(Math.random() * 899999) + 100000,
     };
-  await axios.post("http://127.0.0.1:8000/admInvite", userData)
+  await axios.post("http://127.0.0.1:8000/api/admInvite", userData).then(e=>{
+    switch(e.data){
+      case 0: 
+      window.alert("Invite Sent");
+      break;
+      case 1:
+        window.alert("Invite already sent to user")
+        break;
+    }
+  })
     e.target.reset();
   };
   return (

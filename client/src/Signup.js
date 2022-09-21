@@ -18,6 +18,8 @@ function Signup() {
   const [profilePhoto, setProfilePhoto] = useState(false);
   const [signUp, setSignUp] = useState(false);
   const [vatDoc, setVatDoc] = useState(false);
+  const [invalid, setInvalid] = useState(false);
+  const [user, setUser] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!invite||!!fname||!lname||!email||!mobile||!address||!VAT||!intro){
@@ -36,7 +38,18 @@ function Signup() {
         vatDoc: vatDoc
       };
       console.log(data)
-    await axios.post("http://127.0.0.1:8000/register", data).then(()=>{setSignUp(true)}).catch((e)=>console.log(e))
+    await axios.post("http://127.0.0.1:8000/api/register", data).then(e=>{switch (e.data) {
+      case 0:
+        setSignUp(true)
+        break;
+      case 1:
+        setInvalid(true)
+        console.log("invalid code")
+        break;
+        case 2:
+          setUser(true)
+          break;
+    };console.log(e.data)}).catch(e=>console.log(e));
   };
   const handleUploadImages = (e) =>{
     let file = e.target.files[0];
@@ -55,7 +68,7 @@ function Signup() {
     };
   }
   return (
-    <>{!signUp?<div className="signupMain"><div className="confirmation"><div className="confirmationTextContainer"><p className="registerDone">Thank You For <span className="reg">Registering.</span></p><p>Within <span className="reg">X</span> hours,</p><p>You'll get a confirmation email.</p></div></div><div className="confirmationBackground"></div></div>:(
+    <>{!signUp?(
       <div className="signupMain">
         <div className="info">
           <img src={logo1} className="logo1" alt="logo1"></img>
@@ -92,6 +105,7 @@ function Signup() {
                     placeholder="Enter Invite Code"
                     maxLength="6"
                   ></input>
+{invalid?<span className="referror errorField">Invalid Code</span>:''}
                   {!invite&&error?<span className="referror errorField">This is a required field</span>:''}
                   </div>
                 </div>
@@ -237,12 +251,13 @@ function Signup() {
                     type="submit"
                     value="Sign up"
                   ></input>
+                  {user?<p className="errorUser">User not referred</p>:''}
                 </div>
               </form>
             </div>
           </div>
         </div>
-      </div>)}
+      </div>):<div className="signupMain"><div className="confirmation"><div className="confirmationTextContainer"><p className="registerDone">Thank You For <span className="reg">Registering.</span></p><p>Within <span className="reg">X</span> hours,</p><p>You'll get a confirmation email.</p></div></div><div className="confirmationBackground"></div></div>}
     </>
   );
 }

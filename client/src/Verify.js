@@ -7,20 +7,28 @@ function Verify() {
   const [verified, setVerified] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [err, setErr] = useState(false);
+  const [coderr, setCodErr] = useState(false);
   const verifyit = async (e) => {
-    const verifyData = await axios.get("http://localhost:8000/admlogin");
+    const verifyData = await axios.get("http://localhost:8000/api/admlogin");
     const getVerifyData = verifyData.data;
     const data = getVerifyData.filter((e) => {
       return e.email == email && e.registered;
     });
-    if (data[0].password == password) {
-      setVerified(true);
+    if(data[0]){
+      if (data[0].password == password) {
+        setVerified(true);
+      }else{
+        setCodErr(true)
+      }
+    }else{
+      setErr(true);
     }
-  };
+    };
   console.log(verified);
   return (
     <>
-      {verified ? 
+      {!verified ? 
       (
         <SetPassword email={email} />
       ) : 
@@ -59,6 +67,8 @@ function Verify() {
                   ></input>
                   </div>
                 <button onClick={verifyit} className="verifyButton">Proceed</button>
+                {err?<span className="error">User not verified yet.</span>:''}
+                {coderr?<span className="error">Incorrect Temporary password.</span>:''}
                   </div>
               </div>
             </div>

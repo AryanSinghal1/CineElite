@@ -12,7 +12,7 @@ function SetPassword(props) {
         password: password,
       };
       console.log(passwordData);
-      await axios.post("http://127.0.0.1:8000/pass", passwordData);
+      await axios.post("http://127.0.0.1:8000/api/pass", passwordData);
     } else {
       window.alert("Passwords do not match");
     }

@@ -1,0 +1,207 @@
+.mainDashboard{
+    width: 100%;
+    height: 130vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.dashboardInfo{
+    width: 100%;
+    height: 10%;
+    background-color: #072448;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+}
+.infoText{
+    color: #fff;
+    font-size: 25px;
+    text-align: left;
+    font-weight: 600;
+}
+.dashboardContentContainer{
+    width: 100%;
+    height:90%;
+    background-color: #f5f5ef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dashboardContent{
+    width: 97%;
+    height: 98%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.businessOverview{
+    width: 100%;
+    height: 20%;
+    position: relative;
+}
+.businessActions{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.actionControls{
+    width: 20%;
+    height: 90%;
+    border: 1px solid #072448;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.actionControlsCont{
+    position: relative;
+    width: 90%;
+    height: 90%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    font-size: 12px;
+}
+.actions{
+    font-weight: 600;
+    font-size: 18px;
+}
+.actionCount{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color:#FFCB00;
+    position: absolute;
+    top: 4px;
+    right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+}
+.needAction{
+    background-color: #54D2D2;
+    border: none;
+}
+.businessCalendar{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.businessDetails{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.businessMyInvites{
+    width: 20%;
+    height: 90%;
+    border: 1px solid #072448;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+.businessMykit{
+    width: 50%;
+    height: 90%;
+    border: 1px solid #072448;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+.businessMykitText{
+    width: 100%;
+    height: 40%;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.businessMykitDetails{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.businessMykitContent{
+    width: 20%;
+    height: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    font-weight: 600;
+}
+.businesskitHeadings{
+    font-size: 12px;
+    font-weight: 500;
+}
+.calendarContainer{
+    width: 60%;
+    height: 90%;
+    border-radius: 15px;
+    border: 1px solid #072448;
+}
+.businessUpcoming{
+    width: 30%;
+    height: 90%;
+    border-radius: 15px;
+    background-color: #54D2D2;
+    font-size: 20px;
+    color: white;
+    font-weight: 600;
+    padding: 30px;
+}
+.overViewHeading{
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 48px;
+}
+.overViewPara{
+    font-size: 14px;
+}
+.businessLogo{
+    position: absolute;
+    right: 20px;
+    top: 15px;
+}
+.businessMyInviteText{
+    width: 100%;
+    height: 40%;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.businessMyInviteAction{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.businessInviteActionButton{
+    padding: 5px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    background-color: #FFCB00;
+    border: none;
+    color: #fff;
+}

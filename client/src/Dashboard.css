@@ -1,0 +1,87 @@
+.DashboardContainer{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+.DashboardMain{
+    width: 95%;
+    height: 85%;
+    }
+.DashboardInfo{
+    width: 100%;
+    height: 25%;
+    font-size: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.DashboardInfoText{
+    width: 30%;
+    height: 100%;
+}
+.DashboardSearchContainer{
+    width: 5%;
+    height: 100%;
+}
+.DashboardSearch{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.DashboardActions{
+    width: 100%;
+    height: 75%;
+}
+.DashboardActionContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.DashboardNotifications{
+    width: 25%;
+    height: 100%;
+    border-radius: 15px;
+    background-color: #163763;
+    color: #fff;
+    padding: 20px;
+    font-size: 25px;
+}
+.DashboardActionOptions{
+    width: 60%;
+    height: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.DashboardActionOptionsSelect{
+    width: 30%;
+    height: 45%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px -2px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.DashboardActionOptionsSelectContainer{
+    width: 70%;
+    height: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+.DashboardActionOptionsImage{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
