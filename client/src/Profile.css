@@ -1,0 +1,211 @@
+.profileMain{
+    width: 100%;
+    height: 170vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.ProfileDashboardInfo{
+    width: 100%;
+    height: 10%;
+    background-color: #072448;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+}
+.ProfileInfoText{
+    color: #fff;
+    font-size: 25px;
+    text-align: left;
+    font-weight: 600;
+}
+.profileAboutContainer{
+    height: 90%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profileAbout{
+    height: 100%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.profileImage{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.profImageContainer{
+    margin: 0 20px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.profImage{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.ProfilePersonal{
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ProfilePersonalItems{
+    height: 90%;
+    width: 23%;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ProfilePersonalContainers{
+    height: 90%;
+    width: 90%;
+    position: relative;
+}
+.ProfileProfession{
+    width: 100%;
+    height: 45%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.profileProfessionContainer1{
+    width: 90%;
+    height: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.profileProfessionIcon{
+    width: 25px;
+    height: 25px;
+}
+.IMDBIcon{
+    width: 40px;
+}
+.ProfilePersonalItems1, .ProfilePersonalItems3{
+    height: 90%;
+    width: 28%;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ProfilePersonalItems2{
+    width: 32%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profileProfessionContainer2{
+    height: 90%;
+    width: 32%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+.profileAcknowledgements, .profileReferrals{
+    width: 100%;
+    height: 44%;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profAck, .profRef{
+    width: 90%;
+    height: 90%;
+}
+.setupBtnContainer{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.setupBtn{
+    padding: 6px 10px;
+    border-radius: 10px;
+    background-color: transparent;
+    border: 1px solid black;
+}
+.profileProfessionContainerAck{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+.profileProfessionMain{
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 90%;
+    width: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profileProfessionContainer3{
+    height: 90%;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color: #163763;
+    font-weight: 600;
+}
+.profileView{
+    font-weight: 600;
+    font-size: 20px;
+    margin: 20px;
+}
+.profileView p{
+    margin-bottom: 10px;
+}
+.profileViewButton{
+    padding: 8px 30px;
+    background-color: #072448;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+.profileProButton{
+    padding: 5px 20px;
+    background-color: #FFDD55;
+    border: none;
+    font-size: 15px;    
+    font-weight: 500;
+}
+.profileMatter{
+    width: 70%;
+    height: 60%;
+    color: #000000;
+    font-weight: normal;
+}

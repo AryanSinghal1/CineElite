@@ -1,4 +1,5 @@
 const registerSchema = require('../model/registeredModel');
+const calendarSchema = require('../model/model');
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 const auth = require('../middleware/auth');
@@ -102,26 +103,33 @@ exports.verifyUser = async (req, res) => {
     }
   }
   exports.loginUser = async (req, res) => {
-    const loginUser = await registerSchema.findOne({ email: req.body.email });
-    if (loginUser) {
-      const loginDone = await bcrypt.compare(
-        req.body.password,
-        loginUser.password
+const loginUser = await registerSchema.findOne({ email: req.body.email });
+if (loginUser) {
+  const loginDone = await bcrypt.compare(
+    req.body.password,
+    loginUser.password
         );
         const token = await loginUser.generateAuthToken();
         if (loginDone) {
+          res.cookie("jwtoken" ,token,{
+            expires: new Date(Date.now() + 25892000),
+            httpOnly : true
+        })
           localStorage.setItem("token", token);
-          res.send("0");
+          // res.send("0");
           console.log("Sivvess");
+          return res.status(200).json({"Message" : "Welcome"})                
         } else {
-        res.send("1");
+          // res.send("1");
+          return res.status(400).json({"message" : "Invalid Credentials"})
+        }
+      } else {
+        // res.send("2");
+        return res.status(400).json({"message" : "User not registered"})            
       }
-    } else {
-      res.send("2");
-    }
   }
         exports.getUser = async (req, res) => {
-          const usertoken = localStorage.getItem("token");
+          const usertoken = req.cookies.jwtoken;
           const loggedIn = await registerSchema.findOne({token:usertoken});
           console.log(loggedIn);
           res.send(loggedIn);
@@ -173,4 +181,25 @@ exports.registerUser = async(req, res)=>{
     console.log("User not Referred.");
     variable = 3;
   }
+}
+exports.calendarDelete = async(req, res)=>{
+  console.log(req.params);
+  console.log(req.body);
+  const schema = await calendarSchema.findByIdAndDelete(req.params.id);
+}
+exports.calendarUser = async(req, res)=>{
+  const thisCalendar = new calendarSchema({
+    title: req.body.title,
+    date1: req.body.value1Date,
+    time1: req.body.value1Time,
+    date2: req.body.value2Date,
+    time2: req.body.value2Time
+  })
+  await thisCalendar.save();
+}
+exports.viewCalendar = async(req, res)=>{
+  let dateToday = new Date();
+  let string = `${dateToday.getMonth()+1}/${dateToday.getDate()}/${dateToday.getFullYear()}`;
+  const calendarIn = await calendarSchema.find({date1:{ $gte: string }});
+  res.send(calendarIn);
 }

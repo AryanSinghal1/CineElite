@@ -1,14 +1,12 @@
 const jwt = require('jsonwebtoken');
 const userRegisterModel = require('../model/registeredModel');
-const auth = async(req, res, next)=>{
+exports.auth = async(req, res, next)=>{
     try{
-        const token = req.cookies.jwt;
+        const token = req.cookies.jwtoken;
         const Verifyuser = jwt.verify(token, "Helloeveryonewelcometothecinelite");
-        const data = userRegisterModel.findOne({_id:Verifyuser._id})
-        console.log(data)
+        await userRegisterModel.findOne({_id:Verifyuser._id})
         next();
     }catch(error){
         res.send(error)
     }
 }
-module.exports = auth;
