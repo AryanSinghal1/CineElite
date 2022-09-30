@@ -13,21 +13,37 @@ const Login = () => {
       email: email,
       password: password,
     };
-  await axios.post("http://127.0.0.1:8000/api/userlogin", loginData ).then(e=>{
-    {switch(e.data){
-    case 0:
-      window.alert("Success");
-        navigate('/dashboard');
-      break;
-    case 1:
-      setError(true);
-      break;
-    case 2:
-      setError(true);
-      break;
-  }}
-  }
-  )
+    await fetch("/api/userlogin",{
+      method  :"POST",
+      headers : {
+          Accept : "application/json",
+          "Content-Type" : "application/json"
+      },
+      body:JSON.stringify({
+        email, password
+      }),
+      credentials : 'include'
+  }).then(async(e)=>{
+    const thisdata = await e.json();
+    console.log(thisdata.Message);
+    if(thisdata.Message=="Welcome"){
+       navigate('/overview');
+    }else{
+          setError(true);
+    }
+  })
+  // await axios.post("http://127.0.0.1:8000", loginData ).then(e=>{
+  //   {switch(e.data){
+  //   case 0:
+  //     window.alert("Success");
+  //     break;
+  //   case 1:
+  //     break;
+  //   case 2:
+  //     break;
+  // }};console.log(e.data.Message);
+  // }
+  // )
   };
   return (
     <div className="loginMain">
