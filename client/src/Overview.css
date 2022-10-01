@@ -264,6 +264,7 @@
 }
 .highlight{
     background-color: red !important;
+    color: white !important;
 }
 .profileLink{
     width: 90%;

@@ -15,6 +15,12 @@ const userSchema = new mongoose.Schema({
     },
     time2:{
         type: String
+    },
+    book:{
+        type: Number
+    },
+    bookend:{
+        type: Number
     }
 })
 const userModel = new mongoose.model("user", userSchema)
