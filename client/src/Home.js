@@ -90,8 +90,43 @@ Fname" className="InviteFormInputs"></textarea>
           </div>
         <div className="mainInviteFormContainer">
         <div className="mainInviteForm">
-          <h3>Send Invitations to:</h3>
+          <h3 className="mainIviteFormText">Send Invitations to:</h3>
       <form className="mainInviteEmailForm" onSubmit={handleSubmit} method="POST" action="/admInvite">
+        <input
+        className="InviteFormInputs"
+          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+          placeholder="Enter Email"
+          name="username"
+        ></input>
+        <input
+        className="InviteFormInputs"
+          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+          placeholder="Enter Email"
+          name="username"
+        ></input>
+        <input
+        className="InviteFormInputs"
+          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+          placeholder="Enter Email"
+          name="username"
+        ></input>
+        <input
+        className="InviteFormInputs"
+          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+          placeholder="Enter Email"
+          name="username"
+        ></input>
+        <input
+        className="InviteFormInputs"
+          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+          placeholder="Enter Email"
+          name="username"
+        ></input>
         <input
         className="InviteFormInputs"
           onChange={(e) => setUsername(e.target.value)}
