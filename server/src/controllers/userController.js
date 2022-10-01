@@ -188,18 +188,35 @@ exports.calendarDelete = async(req, res)=>{
   const schema = await calendarSchema.findByIdAndDelete(req.params.id);
 }
 exports.calendarUser = async(req, res)=>{
+  console.log(req.body);
   const thisCalendar = new calendarSchema({
     title: req.body.title,
     date1: req.body.value1Date,
     time1: req.body.value1Time,
     date2: req.body.value2Date,
-    time2: req.body.value2Time
+    time2: req.body.value2Time,
+    book: req.body.start,
+    bookend: req.body.end
   })
   await thisCalendar.save();
 }
 exports.viewCalendar = async(req, res)=>{
   let dateToday = new Date();
-  let string = `${dateToday.getMonth()+1}/${dateToday.getDate()}/${dateToday.getFullYear()}`;
-  const calendarIn = await calendarSchema.find({date1:{ $gte: string }});
-  res.send(calendarIn);
+  const calendarIn = await calendarSchema.find({book:{ $gte: dateToday.getTime() }, bookend:{ $gte: dateToday.getTime()}});
+  let getCurrent = calendarIn.filter((e)=>{return e.bookend!=e.book})
+  res.send(getCurrent);
+}
+exports.updateCalendar = async(req, res)=>{
+  let updateDate = await calendarSchema.findOne({_id: req.body.id});
+  console.log(updateDate);
+  if(updateDate){
+    updateDate.title = req.body.title,
+    updateDate.date1 = req.body.value1Date,
+    updateDate.time1 = req.body.value1Time,
+    updateDate.date2 = req.body.value2Date,
+    updateDate.time2 = req.body.value2Time,
+    updateDate.book = req.body.start,
+    updateDate.bookend = req.body.end
+  }
+  await updateDate.save()
 }
