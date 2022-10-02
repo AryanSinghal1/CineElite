@@ -22,11 +22,12 @@ exports.getInvite = async (req, res) => {
           },
         });
         let info = await transporter.sendMail({
-          from: "aryann11223@gmail.com",
+          from: "CineliteTeam",
           to: req.body.username,
-          subject: "Welcome to CineElite",
+          subject: req.body.messageSub,
           text: `Hello ${req.body.username}, your invite code is ${req.body.invitecode}`,
-          html: `<p>Hello User, Your username is ${req.body.username} and your invite code is ${req.body.invitecode}</p>`,
+          // html: `<p>Hello User, Your username is ${req.body.username} and your invite code is ${req.body.invitecode}</p>`,
+          html: `<p>${req.body.messageCont}</p>`,
         });
         console.log("Message sent: %s", info.messageId);
         let mediaDetails = {

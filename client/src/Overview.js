@@ -13,11 +13,12 @@ import axios from "axios";
 import Modal from "./CalendarModal";
 function Overview(props) {
   const [user, setUser] = useState({});
-  const [check, setCheck] = useState(0);
+  const [calendarEvents, setCalendarEvents] = useState([]);
   const [menu, setMenu] = useState(true);
   const [action, setAction] = useState(false);
   const [date, setDate] = useState(new Date());
   const [scheduledDates, setScheduledDates] = useState([]);
+  const [referrals, setReferrals] = useState(0);
   const navigate = useNavigate();
   const getUser = async () => {
     const thisdata = await fetch("api/getUser", {
@@ -35,23 +36,14 @@ function Overview(props) {
       setUser(getData)
       const thisCalendar = await axios.get("http://127.0.0.1:8000/api/getCalendar");
     // setScheduledDates(thisCalendar.data);
+    setReferrals(thisCalendar.data.length);
     thisCalendar.data.map((e)=>{
-      console.log(typeof(e.date1));
-      console.log(e.date1);
       scheduledDates.push(e.date1)
     })
+    setCalendarEvents(thisCalendar.data);
       return getData;
     }
   };
-  const getCalendar = async() =>{
-    const thisCalendar = await axios.get("http://127.0.0.1:8000/api/getCalendar");
-    // setScheduledDates(thisCalendar.data);
-    thisCalendar.data.map((e)=>{
-      console.log(typeof(e.date1));
-      console.log(scheduledDates);
-      setScheduledDates([...scheduledDates, e.date1]);
-    })
-  }
   console.log(scheduledDates)
   menu?document.body.style.overflow = "hidden":document.body.style.overflow = "scroll";
   const handleMenu = ()=>{
@@ -234,6 +226,13 @@ function Overview(props) {
             </div>
             <div className="businessUpcoming">
               <p>Upcoming Activities</p>
+              <ul>
+              {calendarEvents.map((e)=>{
+                return <li className="eventsList">{e.title}<br></br>{e.date1}-{e.date2}<br></br>{e.time1}-{e.time2}</li>
+              })}
+                {/* <li>{calendarEvents[0]}</li> */}
+                {/* <li>{calendarEvents[0].date1}-{calendarEvents[0].date2}{calendarEvents[0].title}{calendarEvents[0].time1}-{calendarEvents[0].time2}</li> */}
+              </ul>
             </div>
           </div>
           <div className="businessDetails">
@@ -263,7 +262,7 @@ function Overview(props) {
             </div>
             <div className="businessMyInvites">
               <div className="businessMyInviteText">
-                <p>You have invited 12</p>
+                <p>You have invited {referrals}</p>
                 <p>industry professionals.</p>
               </div>
               <div className="businessMyInviteAction">

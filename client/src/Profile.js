@@ -8,10 +8,19 @@ import icon5 from '../src/Logo/icon5.png';
 import icon6 from '../src/Logo/icon6.png';
 import icon7 from '../src/Logo/icon7.png';
 import './Profile.css'
+import "react-toggle/style.css";
+import Toggle from 'react-toggle'
+import axios from 'axios';
 function Profile() {
     const navigate = useNavigate();
     const [user, setUser] = useState({});
     const [userBankDetails, setUserBankDetails] = useState({});
+    const [referralData, setReferralData] = useState([]);
+    const getUsers = async(req, res)=>{
+      const allData = await axios.get("http://localhost:8000/api/admLogin");
+      setReferralData(allData.data);
+    }
+
     const getUser = async() =>{
     const thisdata = await fetch("api/getUser", {
         method:"GET",
@@ -31,6 +40,7 @@ function Profile() {
     }
     useEffect(()=>{
         getActions();
+        getUsers();
     },[]);
     
     const getActions = async(e)=>{
@@ -91,8 +101,18 @@ function Profile() {
         <h3>Setup</h3>
         <br></br>
         <p>Email Notifications - </p>
-        <p>Toggle</p>
-        <p>Newsletter - Toggle</p>
+        <Toggle
+  id='cheese-status'
+  icons={false}
+  // defaultChecked={this.state.cheeseIsReady}
+  // onChange={this.handleCheeseChange} 
+  />
+        <p>Newsletter</p>     <Toggle
+  id='cheese-status'
+  icons={false}
+  // defaultChecked={this.state.cheeseIsReady}
+  // onChange={this.handleCheeseChange} 
+  />
         <div className='setupBtnContainer'>
           <button className='setupBtn'>Change Password</button>
         </div>
@@ -122,6 +142,11 @@ function Profile() {
         <div className='profileReferrals'>
         <div className='profRef'>
           <h3>My Referals</h3>
+          <ul>
+          {referralData.map((e)=>{
+            return <li>{e.email}</li>
+          })}
+          </ul>
         </div>
         </div>
       </div>
