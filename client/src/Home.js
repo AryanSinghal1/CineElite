@@ -1,19 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import emailjs from "@emailjs/browser";
 import axios from "axios";
 import './Home.css';
 function Home() {
-  const [username, setUsername] = useState();
+  const [username1, setUsername1] = useState("");
+  const [username2, setUsername2] = useState("");
+  const [username3, setUsername3] = useState("");
+  const [username4, setUsername4] = useState("");
+  const [username5, setUsername5] = useState("");
+  const [username6, setUsername6] = useState("");
+  const [messageContent, setMessageContent] = useState();
+  const [messageSubject, setMessageSubject] = useState();
+  const [referral, setReferrals] = useState(0);
+  const [joined, setJoined] = useState(0);
   // const [code, setCode] = useState()
-  const generateCode = () => {
-    // let newCode = Math.floor(Math.random() * 899999) + 100000
-    // setCode(newCode)
+  const getUsers = async() => {
+    const usersData = await axios.get("http://localhost:8000/api/admLogin");
+    let joinedUsers = 0;
+    setReferrals(usersData.data.length);
+    usersData.data.map((e)=>{
+      if(e.fname&&e.fname!="To be entered by the user"){
+        joinedUsers = joinedUsers+1;
+      }
+    })
+    setJoined(joinedUsers)
   };
+
+  useEffect(()=>{
+    getUsers();
+  },[]);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let userArray = [username1, username2, username3, username4, username5, username6];
+    let finalUserArray = userArray.filter(e=>e!='');
+    setReferrals(referral+finalUserArray.length);
     const userData = {
-      username: username,
+      username: finalUserArray,
       invitecode: Math.floor(Math.random() * 899999) + 100000,
+      messageSub: messageSubject,
+      messageCont: messageContent
     };
   await axios.post("http://127.0.0.1:8000/api/admInvite", userData).then(e=>{
     switch(e.data){
@@ -46,13 +71,13 @@ function Home() {
         </div>
       <div className="mainInviteSent">
       <div className="totalInviteSentContainer">
-        <h3 className="totalInviteh3">32</h3>
+        <h3 className="totalInviteh3">{referral}</h3>
         <p>Invitations Sent</p>
         </div>
         </div>
       <div className="mainInviteSent">
       <div className="totalInviteSentContainer">
-        <h3 className="totalInviteh3">28</h3>
+        <h3 className="totalInviteh3">{joined}</h3>
         <p>Successfully Joined</p>
         </div>
         </div>
@@ -66,9 +91,9 @@ function Home() {
         <form onSubmit={handleSubmit} method="POST" action="/admInvite" className="mainEmailSubjectContentForm">
         <div className="mainEmailSubjectFormTexts">
           <h3>Message Subject:</h3>
-          <input type="text" placeholder="Special invite from Fname Lname" className="InviteFormInputs"></input>
+          <input type="text" value={messageSubject} onChange={(e)=>{setMessageSubject(e.target.value)}} placeholder="Special invite from Fname Lname" className="InviteFormInputs"></input>
           <h3>Message Content:</h3>
-          <textarea rows="15" type="text" placeholder="Hey, I've been using this tool for my business and I think you'll find it to be quite valuable as well!
+          <textarea rows="15" type="text" value={messageContent} onChange={(e)=>{setMessageContent(e.target.value)}} placeholder="Hey, I've been using this tool for my business and I think you'll find it to be quite valuable as well!
 
 CineElite is enhancing the way this industry works.You can run your business end-to-end in an
 ecosystem full of your trusted peers.
@@ -83,7 +108,7 @@ Cheers.
 Fname" className="InviteFormInputs"></textarea>
           </div>
           <div className="inviteFormButton">
-        <input className="inviteFormButtonSubmit" type="submit" value="Send 6 Invites"></input>
+        <input className="inviteFormButtonSubmit" type="submit" value="Send Invites"></input>
         </div>
           </form>
           </div>
@@ -94,42 +119,42 @@ Fname" className="InviteFormInputs"></textarea>
       <form className="mainInviteEmailForm" onSubmit={handleSubmit} method="POST" action="/admInvite">
         <input
         className="InviteFormInputs"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername1(e.target.value)}
           type="text"
           placeholder="Enter Email"
           name="username"
         ></input>
         <input
         className="InviteFormInputs"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername2(e.target.value)}
           type="text"
           placeholder="Enter Email"
           name="username"
         ></input>
         <input
         className="InviteFormInputs"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername3(e.target.value)}
           type="text"
           placeholder="Enter Email"
           name="username"
         ></input>
         <input
         className="InviteFormInputs"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername4(e.target.value)}
           type="text"
           placeholder="Enter Email"
           name="username"
         ></input>
         <input
         className="InviteFormInputs"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername5(e.target.value)}
           type="text"
           placeholder="Enter Email"
           name="username"
         ></input>
         <input
         className="InviteFormInputs"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername6(e.target.value)}
           type="text"
           placeholder="Enter Email"
           name="username"
