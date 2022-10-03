@@ -148,7 +148,7 @@ function Overview(props) {
                     </div>
                     <div className="menuOptionsContainer">
                       <div className="menuOptions">
-                        <p>Equipment</p>
+                       <Link to ="/equipment">Equipment</Link> 
                       </div>
                     </div>
                     <div className="menuOptionsContainer">

@@ -1,5 +1,6 @@
 const express = require("express");
 const {registerUser, getInvite, getUsers, setPassword, verifyUser, loginUser, updateUser, getUser, calendarUser, viewCalendar, calendarDelete, updateCalendar} = require('../controllers/userController')
+
 const {auth} = require('../middleware/auth')
 const router = express.Router();
 router.route("/register").post(registerUser);
@@ -14,4 +15,5 @@ router.route('/schedule').post(calendarUser);
 router.route('/getCalendar').get(viewCalendar);
 router.route('/getCalendar').post(updateCalendar);
 router.route('/getCalendar/:id').delete(calendarDelete);
+
 module.exports = router;

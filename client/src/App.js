@@ -16,6 +16,7 @@ import Profile from "./Profile";
 import CalendarModal from "./CalendarModal";
 import Scheduling from "./Scheduling";
 import UserProfile from "./UserProfile";
+import { Products } from "./Pages/Product";
 function App() {
   return (
     <div className="App">
@@ -34,6 +35,7 @@ function App() {
         <Route exact path="/userlogin" element={<Login/>}/>
         <Route exact path="/profile" element={<Profile/>}/>
         <Route exact path="/userprofile" element={<UserProfile/>}/>
+        <Route exact path="/equipment" element={<Products/>}/>
       </Routes>
     </div>
   );

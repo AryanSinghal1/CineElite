@@ -1,5 +1,6 @@
 const registerSchema = require('../model/registeredModel');
 const calendarSchema = require('../model/model');
+
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 const auth = require('../middleware/auth');

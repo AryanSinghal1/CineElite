@@ -1,0 +1,59 @@
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+
+
+
+import { Toast } from "./Toast";
+
+export function ProductCard({ product }) {
+ 
+ 
+  const navigate = useNavigate();
+  const [toast, setToast] = useState(false);
+  const [bagType, setBagType] = useState("");
+
+  const { _id, typeOfBrand,  name, image } = product;
+
+  
+
+ 
+
+  return (
+    <>
+      {toast && <Toast toast={toast} setToast={setToast} bagType={bagType} />}
+      <Link to={`/product/${_id}`} className="link">
+        <div className="bg-white border border-1 border-cyan-100 w-56 h-80 shadow-md dark:bg-gray-800 dark:border-gray-700 flex flex-col  ">
+          
+
+          
+            <img src={image} alt="equipment" className="object-fill h-32 mb-1 w-44 mx-6 my-auto "/>
+        
+          <div className="p-4 my-auto">
+           <h5 className=" font-semibold text-center mb-2 text-2xl border-t-4 dark:text-white">{typeOfBrand}</h5>
+              
+           
+           
+              <h3 className="mb-2 text-center font-normal tracking-tight    dark:text-white">{name}</h3>
+            
+          </div>
+            <div className=" my-auto text-center">
+           
+            
+           
+            <button
+                className="mx-5"
+                
+              >
+                <span className="material-icons-outlined md-light ">
+                 verified_user
+                </span>
+                
+              </button>
+          </div>
+        </div>
+      </Link>
+    </>
+  );
+}
