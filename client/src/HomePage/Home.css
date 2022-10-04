@@ -1,0 +1,126 @@
+
+.MainLandingContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.mainPageImage{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+}
+.logo1{
+z-index: 2;
+}
+.logo2{
+z-index: 1;
+}
+.circle, .circleDown{
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(90deg, #298BD0 0.54%, #163763 97.31%);
+    border-radius: 50%;
+    position: absolute;
+    top: 30%;
+    right: -5%;
+    z-index: 4;
+    overflow: hidden;
+}
+.circleDown{
+    width: 100px;
+    height: 100px;
+top: 80%;
+right: 0%;
+bottom: 0;
+}
+.navbarContainer{
+    width: 100%;
+    height: 10vh;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.navbar{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navContent{
+    width: 15%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navContent ul li a{
+    text-decoration: none;
+    color: #000;
+}
+.navContent ul li{
+    list-style: none;
+}
+.InnerCircle{
+    position: absolute;
+    bottom: -5%;
+    left: 0;
+}
+.InnerCircleup{
+    position: absolute;
+    top: -5%;
+    /* transform: rotate(340deg); */
+    left: 0%;
+}
+.cineText{
+    width: 60%;
+}
+.MainPageContainerDiv{
+    width: 100%;
+    height: 90vh;
+    
+    z-index: 10;
+}
+.mainPageInfoDivContainer{
+    float: left;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mainPageInfoDiv{
+    width: 80%;
+    height: 55%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.mainPageInfoDivText{
+    color: #54D2D2;
+    font-size: 30px;
+    font-weight: 600;
+    width: 100%;
+    /* height: 50%; */
+}
+.mainPageActionButton{
+    background-color: #FFDD55;
+    padding: 6px 60px;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 600;
+}
+.mainPageActionButtonContainer{
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}

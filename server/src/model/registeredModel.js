@@ -91,7 +91,7 @@ const registerUserSchema = new mongoose.Schema({
     }],
         token:{
             type:String,
-            required: true
+            // required: true
         }
     })
 let i=0;

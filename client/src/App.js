@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Route, Router, Routes, Switch } from "react-router-dom";
-import Home from "./Home";
-import Signup from "./Signup";
-import SignupUsers from "./SignupUsers";
+import Signup from "./SignupLogin/Signup/Signup";
+import SignupUsers from "./Verification/SignupUsers";
 import Dashboard from "./Dashboard";
-import Login from "./Login";
-import Verify from "./Verify";
-import Overview from "./Overview";
-import Update from "./Update";
-import NoLogin from "./NoLogin";
-import Main from "./Main";
+import Login from "./SignupLogin/Login";
+import Verify from "./SignupLogin/Verify";
+import Overview from "./Dashboard/Overview";
+import Update from "./Profile/Update";
+import NoLogin from "./SignupLogin/NoLogin";
+import Home from "./HomePage/Home";
 // import {createMemoryHistory} from 'history';
 import axios from "axios";
-import Profile from "./Profile";
-import CalendarModal from "./CalendarModal";
-import Scheduling from "./Scheduling";
-import UserProfile from "./UserProfile";
+import Profile from "./Profile/Profile";
+import CalendarModal from "./Scheduling/CalendarModal";
+import Scheduling from "./Scheduling/Scheduling";
+import UserProfile from "./Profile/UserProfile";
+import Invite from "./InvitePage/Invite";
+import SignupRole from "./SignupLogin/Signup/SignupRole";
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route exact path="/" element={<Main />}/>
+        <Route exact path="/" element={<Home />}/>
+        <Route exact path="/role/:invitecode" element={<SignupRole />}/>
         <Route exact path="/calendar" element={<CalendarModal />}/>
-        <Route exact path="/admInvite" element={<Home />}/>
+        <Route exact path="/admInvite" element={<Invite />}/>
         <Route exact path="/scheduling" element={<Scheduling />}/>
         <Route exact path="/register" element={<Signup />}/>
         <Route exact path="/admverify" element={<SignupUsers />}/>

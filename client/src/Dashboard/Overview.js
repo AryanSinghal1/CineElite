@@ -3,14 +3,14 @@ import "./Overview.css";
 import {Link, Navigate, useNavigate} from 'react-router-dom'
 import FullCalendar from '@fullcalendar/react' 
 import dayGridPlugin from '@fullcalendar/daygrid' 
-import logo from "./Logo/logo.png";
-import Message from "./Logo/Message.png";
-import Profile from "./Logo/Profile.png";
+import logo from "../Logo/logo.png";
+import Message from "../Logo/Message.png";
+import Profile from "../Logo/Profile.png";
 import Calendar from 'react-calendar';
-import overview from "./Logo/Overview.png";
+import overview from "../Logo/Overview.png";
 import 'react-calendar/dist/Calendar.css';
 import axios from "axios";
-import Modal from "./CalendarModal";
+import Modal from "../Scheduling/CalendarModal";
 function Overview(props) {
   const [user, setUser] = useState({});
   const [calendarEvents, setCalendarEvents] = useState([]);
@@ -32,6 +32,8 @@ function Overview(props) {
     const getData = await thisdata.json();
     if(!getData.fname){
       navigate("/nologin")
+    }else if(getData.work=="work"){
+      navigate("/up")
     }else{
       setUser(getData)
       const thisCalendar = await axios.get("http://127.0.0.1:8000/api/getCalendar");

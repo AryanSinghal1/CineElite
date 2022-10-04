@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import icon1 from '../src/Logo/icon1.png';
-import icon2 from '../src/Logo/icon2.png';
-import icon3 from '../src/Logo/icon3.png';
-import icon4 from '../src/Logo/icon4.png';
-import icon5 from '../src/Logo/icon5.png';
-import icon6 from '../src/Logo/icon6.png';
-import icon7 from '../src/Logo/icon7.png';
+import icon1 from '../Logo/icon1.png';
+import icon2 from '../Logo/icon2.png';
+import icon3 from '../Logo/icon3.png';
+import icon4 from '../Logo/icon4.png';
+import icon5 from '../Logo/icon5.png';
+import icon6 from '../Logo/icon6.png';
+import icon7 from '../Logo/icon7.png';
 import './UserProfile.css'
 function UserProfile() {
   const navigate = useNavigate();
