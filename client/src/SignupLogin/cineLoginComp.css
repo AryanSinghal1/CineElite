@@ -1,0 +1,38 @@
+.info {
+    width: 35%;
+    height: 100%;
+    background-color: #141c31;
+    background-image: linear-gradient(135deg, rgba(20, 28, 29, 0.83), #141c31);
+    position: relative;
+  }
+  .logo1{
+    width: 80%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.logo2{
+    width: 80%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.logo{
+    width: 10%;
+    position: absolute;
+    bottom: 2.5%;
+    left: 5.5%;
+}
+
+.company {
+    position: absolute;
+    top: 30%;
+    right: 0;
+  width: 100%;
+}
+.company p {
+  font-weight: 600;
+  font-size: 50px;
+  color: #fff;
+  padding: 30px;
+}
