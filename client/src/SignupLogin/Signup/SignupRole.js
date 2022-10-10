@@ -50,7 +50,7 @@ function SignupRole() {
                     type="text"
                     placeholder="Enter Invite Code"
                     maxLength="6"
-                    value={inviteUser.password}
+                    value={invitecode}
                   ></input> </div>
                 </div>
                 <div className='chooseOption'>

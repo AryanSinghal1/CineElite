@@ -4,6 +4,8 @@ const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 const auth = require("../middleware/auth");
 const getToken = require("../token");
+const  chats  = require("../chats");
+const Chat = require("../model/chatModel");
 var LocalStorage = require("node-localstorage").LocalStorage,
   localStorage = new LocalStorage("./scratch");
 // exports.setHeaders = function (req, res, next) {
@@ -144,6 +146,12 @@ exports.getUser = async (req, res) => {
   console.log(loggedIn);
   res.send(loggedIn);
 };
+exports.getAnotherUsers = async(req, res)=>{
+  const usertoken = req.cookies.jwtoken;
+  const othersLoggedIn = await registerSchema.where("token").ne(usertoken);
+  // console.log(loggedIn);
+  res.send(othersLoggedIn);
+}
 exports.updateUser = async (req, res) => {
   const gettoken = localStorage.getItem("token");
   const upUser = await registerSchema.findOne({ token: gettoken });
@@ -248,3 +256,21 @@ exports.updateCalendar = async (req, res) => {
   }
   await updateDate.save();
 };
+exports.getChats = async(req, res) =>{
+  res.send(chats);
+}
+exports.getChatbyId = async(req, res) =>{
+  // req.params.id;
+  const singleChat = chats.find(e=>e._id==req.params.id);
+  res.send(singleChat);
+}
+exports.accessChat = async(req, res)=>{
+  const { email } = req.body;
+  if(!email){
+    res.send("Status 400")
+  }
+  var isChat = await Chat.find({
+    users:{$elemMatch:{$eq: req.user.email}}
+  })
+  // isChat = await user
+}
