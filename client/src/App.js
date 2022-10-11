@@ -17,6 +17,8 @@ import Scheduling from "./Scheduling/Scheduling";
 import UserProfile from "./Profile/UserProfile";
 import Invite from "./InvitePage/Invite";
 import SignupRole from "./SignupLogin/Signup/SignupRole";
+import Communication from "./Message/Communication";
+// import ChatPage from "./Trash/ChatPage";
 function App() {
   return (
     <div className="App">
@@ -36,6 +38,8 @@ function App() {
         <Route exact path="/userlogin" element={<Login/>}/>
         <Route exact path="/profile" element={<Profile/>}/>
         <Route exact path="/userprofile" element={<UserProfile/>}/>
+        <Route exact path="/messages" element={<Communication/>}/>
+        {/* <Route path="/chatUser" element={<ChatPage/>}/> */}
       </Routes>
     </div>
   );
