@@ -18,13 +18,16 @@ import UserProfile from "./Profile/UserProfile";
 import Invite from "./InvitePage/Invite";
 import SignupRole from "./SignupLogin/Signup/SignupRole";
 import Communication from "./Message/Communication";
+import Documents from "./Documents/Documents";
+import Customers from "./Customers";
 // import ChatPage from "./Trash/ChatPage";
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route exact path="/" element={<Home />}/>
-        <Route exact path="/role/:invitecode" element={<SignupRole />}/>
+        <Route path="/role/:invitecode" element={<SignupRole />}/>
+        <Route path="/role" element={<SignupRole />}/>
         <Route exact path="/calendar" element={<CalendarModal />}/>
         <Route exact path="/admInvite" element={<Invite />}/>
         <Route exact path="/scheduling" element={<Scheduling />}/>
@@ -38,7 +41,10 @@ function App() {
         <Route exact path="/userlogin" element={<Login/>}/>
         <Route exact path="/profile" element={<Profile/>}/>
         <Route exact path="/userprofile" element={<UserProfile/>}/>
-        <Route exact path="/messages" element={<Communication/>}/>
+        <Route path="/messages/:id" element={<Communication/>}/>
+        <Route path="/messages/" element={<Communication/>}/>
+        <Route exact path="/documentsUser" element={<Documents/>}/>
+        <Route exact path="/customers" element={<Customers/>}/>
         {/* <Route path="/chatUser" element={<ChatPage/>}/> */}
       </Routes>
     </div>

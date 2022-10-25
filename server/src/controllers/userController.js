@@ -2,10 +2,12 @@ const registerSchema = require("../model/registeredModel");
 const calendarSchema = require("../model/model");
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
+const pdf = require('html-pdf');
 const auth = require("../middleware/auth");
 const getToken = require("../token");
 const  chats  = require("../chats");
 const Chat = require("../model/chatModel");
+const pdfTemplate = require('./documents');
 var LocalStorage = require("node-localstorage").LocalStorage,
   localStorage = new LocalStorage("./scratch");
 // exports.setHeaders = function (req, res, next) {
@@ -274,3 +276,21 @@ exports.accessChat = async(req, res)=>{
   })
   // isChat = await user
 }
+
+
+exports.createInvoice = (req, res) => {
+  pdf.create(pdfTemplate(req.body), {}).toFile(`Resume-Aryans87@gmail.com.pdf`, (err) => {
+      if(err){
+          res.send(Promise.reject());
+          console.log(err);
+      }
+
+      res.send(Promise.resolve());
+      console.log('Success');
+  });
+};
+
+// Get - Send generated pdf to the client
+exports.getInvoice = (req,res) => {
+  res.sendFile(`${__dirname}/Resume-Aryans87@gmail.com.pdf`);
+};
