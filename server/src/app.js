@@ -14,6 +14,10 @@ app.use(express.json({limit: "50mb"}));
 app.use(express.urlencoded({ extended: true , limit:"500mb"}));
 app.use(cors());
 app.use(cookieParser());
+app.use(function(req, res, next){
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+})
 app.use("/api", route);
 app.use("/chat", chatRoute);
 io.on("connection", socket=>{

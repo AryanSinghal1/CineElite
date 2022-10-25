@@ -186,11 +186,13 @@ function Overview(props) {
               </div>
             </div>
             <div className="actionControls">
+            <Link to='/documentsUser' className="profileLink">
               <div className="actionControlsCont">
                 <p className="actions">Open Documents</p>
                 <p>1 Quote, 1 Invoice</p>
                 <div className="actionCount">3</div>
               </div>
+              </Link>
             </div>
             <div className={actionClassname}>
               <div className="actionControlsCont">

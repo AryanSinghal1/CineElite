@@ -1,5 +1,5 @@
 const express = require("express");
-const {registerUser, getInvite, getUsers, setPassword, verifyUser, loginUser, updateUser, getUser, calendarUser, viewCalendar, calendarDelete, updateCalendar, getChats, getChatbyId, getAnotherUsers, accessChat} = require('../controllers/userController')
+const {registerUser, getInvite, getUsers, setPassword, verifyUser, loginUser, updateUser, getUser, calendarUser, viewCalendar, calendarDelete, updateCalendar, getChats, getChatbyId, getAnotherUsers, accessChat, getInvoice, createInvoice} = require('../controllers/userController')
 const {auth} = require('../middleware/auth')
 const router = express.Router();
 router.route("/chat").get(getChats).post(accessChat);
@@ -17,4 +17,6 @@ router.route('/schedule').post(calendarUser);
 router.route('/getCalendar').get(viewCalendar);
 router.route('/getCalendar').post(updateCalendar);
 router.route('/getCalendar/:id').delete(calendarDelete);
+router.route('/create').get(createInvoice);
+router.route('/getInvoice').get(getInvoice);
 module.exports = router;

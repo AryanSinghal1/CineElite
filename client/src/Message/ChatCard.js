@@ -1,34 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 function ChatCard(props) {
-    const [user, setUser] = useState({});
-    const getUser = async() =>{
-    const thisdata = await fetch("api/getUser", {
-        method:"GET",
-        headers:{
-          Accept : "application/json",
-          "Content-Type" : "application/json"
-        },
-        credentials: 'include',
-      })
-      const getData = await thisdata.json();
-      if(!getData.fname){
-        // navigate("/nologin")
-      }
-        else{
-        setUser(getData)
-        }
-    }
-    useEffect(()=>{
-        getUser()
-    },[]);
-    console.log(user);
   return (
-    <div style={{height: "100px", width: "100%", backgroundColor: props.to==user.email? 'green':"red"}}>
-    {/* <h1>Hello</h1> */}
-    <p>{props.name}</p>
-    <p>{props.chat}</p>
-    <p>{props.to}</p>
+    <div
+    className=
+    {
+      props.to.email==props.name.email?
+      'w-full h-1/6 flex items-center justify-start'
+      :'w-full h-1/6 flex items-center justify-end'
+    }
+    >
+     <div
+     className='w-fit h-full flex-col'
+     >
+     <span className=
+     {props.to.email==props.name.email?
+      'h-fit rounded-full bg-red-500 text-white px-3 py-1'
+     :'h-fit rounded-full bg-green-500 text-white px-3 py-1'}
+     >{props.chat}</span>
+     <p className='text-[10px] text-left'>{props.to.email}</p>
+     </div>
     </div>
   )
 }
