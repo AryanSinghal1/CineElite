@@ -57,6 +57,6 @@ export const Data = [
     {
     id:11,
     month: "DEC",
-    plvalue: 55
+    plvalue: -55
 },
 ]
