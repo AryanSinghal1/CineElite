@@ -1,0 +1,222 @@
+.main{
+    background-color: rgba(238, 238, 238, 1);
+}
+.navigation{
+width: 238vh;
+height: 77px;
+top: 0px;
+background: #072448;
+display: flex;
+justify-content: flex-start;
+align-items: center;
+padding: 20px;
+}
+.config_head{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.nav_head{
+    font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 20px;
+color: white;
+}
+.nav_heading{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 25%;
+}
+.nav_heading> div {
+    width: 100px;
+    margin: 10px;
+    text-align: center;
+    line-height: 75px;
+    color: white;
+  }
+.nav_logo{
+    display: flex;
+    justify-content: right;
+    margin-left: 25%;
+}
+.confighead{
+    margin-top: 5%;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 40px;
+    margin-left: 5%;
+}
+.configtemplate{
+    font-weight: 600;
+    font-size: 30px;
+    text-transform: capitalize;
+    margin-left: 5%;
+    margin-top: 33px;
+}
+.configbox{
+    display: flex;
+    flex-direction: row;
+    
+    
+}
+.configbox1:hover{
+    border: 3px solid #54D2D2;
+    box-shadow: 0px 4px 8px 1px rgba(0, 0, 0, 0.25);
+}
+.configbox2:hover{
+    border: 3px solid #54D2D2;
+    box-shadow: 0px 4px 8px 1px rgba(0, 0, 0, 0.25);
+}
+.configbox3:hover{
+    border: 3px solid #54D2D2;
+    box-shadow: 0px 4px 8px 1px rgba(0, 0, 0, 0.25);
+}
+.configbox1{
+    display:flex flex;
+    flex-direction: row;
+    justify-content:start;
+    width: 316px;
+    height: 210px;
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 5%;
+    margin-top: 48px;
+}
+.configbox2{
+    display:flex flex;
+    flex-direction: row;
+    justify-content:space-between;
+    width: 316px;
+    height: 210px;
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 10%;
+    margin-top: 48px;
+}
+.configbox3{
+    display:flex flex;
+    flex-direction: row;
+    justify-content:end;
+    width: 316px;
+    height: 210px;
+    background-color: white;
+    border-radius: 20px;
+    margin-left: 10%;
+    margin-top: 48px;
+}
+.img1{
+    margin: auto;
+    padding: 8px;
+}
+.img2{
+    margin: auto;
+    padding: 8px;
+}
+.img3{
+    margin: auto;
+    padding: 8px;
+}
+.configboxtext{
+    opacity: 0.5;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 45px;
+    text-transform: capitalize;
+    margin-left: 5%;
+    margin-top: 16px;
+
+}
+ .configboxtext1{
+    display: flex flex;
+    flex-direction: row;
+    justify-content: start;
+
+}
+.configboxtext2{
+    display: flex flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.configboxtext3{
+    display: flex flex;
+    flex-direction: row;
+    justify-content: end;
+
+} 
+.configsub1{
+    font-weight: 500;
+    font-size: 25px;
+    margin-left: 5%;
+    text-transform: capitalize;
+    margin-top: 149px;
+}
+.terms{
+    width: 888px;
+    height: 68px;
+    margin-left: 5%;
+    border: 0.5px solid #000000;
+    border-radius: 10px;
+    margin-top: 21px;
+
+}
+.note{
+    font-weight: 500;
+    font-size: 25px;
+    margin-left: 5%;
+    text-transform: capitalize;
+    margin-top: 48px;
+}
+.notes{
+    width: 888px;
+    height: 68px;
+    margin-left: 5%;
+    border: 0.5px solid #000000;
+    border-radius: 10px;
+    margin-top: 21px;
+
+}
+.textfield{
+    font-weight: 500;
+    font-size: 25px;
+    margin-left: 5%;
+    text-transform: capitalize;
+    margin-top: 48px;
+}
+.textfieldcontainer{
+    width: 888px;
+    height: 68px;
+    margin-left: 5%;
+    border: 0.5px solid #000000;
+    border-radius: 10px;
+    margin-top: 21px;
+
+}
+.doccontainer{
+    font-weight: 500;
+    font-size: 25px;
+    margin-left: 5%;
+    text-transform: capitalize;
+    margin-top: 48px;
+}
+.docprefix{
+    width: 219px;
+    height: 68px;
+    margin-left: 5%;
+    border: 0.5px solid #000000;
+    border-radius: 10px;
+    margin-top: 21px;
+
+}
+.btnpreview{
+    margin-left: 825px;
+}
+.preview{
+justify-content: end;
+gap: 6.58px;
+padding: 10.5px 45.5px 10.5px;
+background: #FFDD55;
+border-radius: 6.58008px;
+}
