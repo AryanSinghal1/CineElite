@@ -18,7 +18,7 @@ function ChatCard(props) {
       'h-fit rounded-full bg-red-500 text-white px-3 py-1'
      :'h-fit rounded-full bg-green-500 text-white px-3 py-1'}
      >{props.chat}</span>
-     <p className='text-[10px] text-left'>{props.to.email}</p>
+     {/* <p className='text-[10px] text-left'>{props.to.email}</p> */}
      </div>
     </div>
   )

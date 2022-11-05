@@ -4,7 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        'cineBlue': "#141C31"
+        'cineBlue': "#141C31",
+        'billingBlue': "#072448",
+        "background": "#EEEEEE"
       }
     },
   },
