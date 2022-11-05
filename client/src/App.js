@@ -20,6 +20,9 @@ import SignupRole from "./SignupLogin/Signup/SignupRole";
 import Communication from "./Message/Communication";
 import Documents from "./Documents/Documents";
 import Customers from "./Customers";
+import Billing from "./Billing/Billing";
+import BillingCustomers from "./Billing/BillingCustomers";
+import BillingSuppliers from "./Billing/BillingSuppliers";
 // import ChatPage from "./Trash/ChatPage";
 function App() {
   return (
@@ -45,7 +48,9 @@ function App() {
         <Route path="/messages/" element={<Communication/>}/>
         <Route exact path="/documentsUser" element={<Documents/>}/>
         <Route exact path="/customers" element={<Customers/>}/>
-        {/* <Route path="/chatUser" element={<ChatPage/>}/> */}
+        <Route exact path="/billing" element={<Billing/>}/>
+        <Route exact path="/billingcustomers" element={<BillingCustomers/>}/>
+        <Route exact path="/billingsuppliers" element={<BillingSuppliers/>}/>
       </Routes>
     </div>
   );

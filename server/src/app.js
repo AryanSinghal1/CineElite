@@ -3,7 +3,9 @@ const app = express();
 const port = process.env.PORT || 8000;
 const cors = require("cors");
 const route = require('./routes/userRoute');
-const chatRoute = require('./routes/chatRoute')
+const chatRoute = require('./routes/chatRoute');
+const customerRoute = require('./routes/customerRoute');
+const supplierRoute = require('./routes/supplierRoutes');
 const cookieParser = require('cookie-parser');
 const Chat = require("./model/chatModel");
 require("./connection/connection");
@@ -20,6 +22,8 @@ app.use(function(req, res, next){
 })
 app.use("/api", route);
 app.use("/chat", chatRoute);
+app.use("/customers", customerRoute);
+app.use("/suppliers", supplierRoute);
 io.on("connection", socket=>{
   socket.on("Input Chat Message", msg => {
     try{
