@@ -2,6 +2,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '~antd/dist/antd.css';
 *{
   font-family: 'Poppins', sans-serif;
+}
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  left: 8%;
+  width: 20px;
+  border: none;
+  outline: none;
+  /* color: transparent; */
+  filter:opacity(0);
+    -webkit-appearance: none;
 }

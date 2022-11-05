@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Route, Router, Routes, Switch } from "react-router-dom";
+import React from "react";
+import { Route, Routes} from "react-router-dom";
 import Signup from "./SignupLogin/Signup/Signup";
 import SignupUsers from "./Verification/SignupUsers";
 import Dashboard from "./Dashboard";
@@ -10,7 +10,6 @@ import Update from "./Profile/Update";
 import NoLogin from "./SignupLogin/NoLogin";
 import Home from "./HomePage/Home";
 // import {createMemoryHistory} from 'history';
-import axios from "axios";
 import Profile from "./Profile/Profile";
 import CalendarModal from "./Scheduling/CalendarModal";
 import Scheduling from "./Scheduling/Scheduling";
