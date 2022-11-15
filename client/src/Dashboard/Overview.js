@@ -58,7 +58,7 @@ function Overview(props) {
   console.log(user);
   const getActions = async(e)=>{
     const user = await getUser();
-    const userBankDetails = user.bankDetails[0];
+    const userBankDetails = user?.bankDetails[0];
     const accountDetails = {
       AccNo:"Account Number",
       Swift:"Swift",

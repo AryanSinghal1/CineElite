@@ -94,7 +94,7 @@ function Signup() {
                     }}
                     type="text"
                     placeholder="Enter Invite Code"
-                    maxLength="6"
+                    maxLength="9"
                   ></input>
 {invalid?<span className="referror errorField">Invalid Code</span>:''}
                   {!invite&&error?<span className="referror errorField">This is a required field</span>:''}

@@ -22,6 +22,8 @@ import Customers from "./Customers";
 import Billing from "./Billing/Billing";
 import BillingCustomers from "./Billing/BillingCustomers";
 import BillingSuppliers from "./Billing/BillingSuppliers";
+import MonthScheduling from "./Scheduling/MonthScheduling";
+import DayScheduling from "./Scheduling/DayScheduling";
 // import ChatPage from "./Trash/ChatPage";
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
         <Route exact path="/calendar" element={<CalendarModal />}/>
         <Route exact path="/admInvite" element={<Invite />}/>
         <Route exact path="/scheduling" element={<Scheduling />}/>
+        <Route exact path="/mscheduling" element={<MonthScheduling />}/>
+        <Route exact path="/dscheduling" element={<DayScheduling />}/>
         <Route exact path="/register" element={<Signup />}/>
         <Route exact path="/admverify" element={<SignupUsers />}/>
         <Route exact path="/overview" element={<Overview/>}/>

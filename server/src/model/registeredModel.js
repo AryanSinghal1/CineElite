@@ -96,7 +96,9 @@ const registerUserSchema = new mongoose.Schema({
     })
 let i=0;
 registerUserSchema.pre("save", async function(next){
-    if(this.isModified('password')&&this.registered&&i>1){
+    var find = new RegExp("CEID"+'\\w*','gi');
+    let currentInviteCode = this.password.match(find);
+    if(this.isModified('password')&&this.registered&&!currentInviteCode){
     this.password = await bcrypt.hash(this.password, 10);
 }
 i++;

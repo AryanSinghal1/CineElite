@@ -81,7 +81,7 @@ exports.setPassword = async (req, res) => {
   console.log(signupUser);
   if (signupUser && signupUser.registered) {
     signupUser.password = req.body.password;
-    await signupUser.save();
+    await signupUser.save().then(()=>{res.send("Password Set")}).catch((e)=>{console.log(e)});
   } else {
     console.log("User not Verified Yet");
   }
@@ -90,9 +90,9 @@ exports.verifyUser = async (req, res) => {
   const getUserData = await registerSchema.findOne({ email: req.body.email });
   if (getUserData) {
     if (!getUserData.registered) {
-      const random = Math.floor(Math.random() * 899999) + 100000;
+      let InviteCode = `CEID${Math.floor(Math.random() * 1000000).toString(16).toUpperCase()}`;
       getUserData.registered = true;
-      getUserData.password = random;
+      getUserData.password = InviteCode;
       await getUserData.save();
       let transporter = nodemailer.createTransport({
         service: "gmail",
@@ -105,8 +105,8 @@ exports.verifyUser = async (req, res) => {
         from: "aryann11223@gmail.com",
         to: req.body.email,
         subject: "Welcome to Stabnil6",
-        text: `Hello ${req.body.email}, you are verified`,
-        html: `<p>Hello User, You are verified and You can now go and setup your account with ${random} </p>`,
+        text: `Hello ${req.body.email}, you are verified and You can now go and setup your account with ${InviteCode}`,
+        html: `<p>Hello User, You are verified and You can now go and setup your account with ${InviteCode} </p>`,
       });
       console.log("Message sent: %s", info.messageId);
     } else {

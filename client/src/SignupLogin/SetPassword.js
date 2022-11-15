@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import './SetPassword.css'
+import { useNavigate } from "react-router-dom";
 function SetPassword(props) {
+  const navigate = useNavigate();
   const [password, SetPassword] = useState();
   const [rePassword, SetRePassword] = useState();
   const handlePassword = async (e) => {
@@ -12,7 +14,9 @@ function SetPassword(props) {
         password: password,
       };
       console.log(passwordData);
-      await axios.post("http://127.0.0.1:8000/api/pass", passwordData);
+      await axios.post("http://127.0.0.1:8000/api/pass", passwordData).then(()=>{
+        navigate('/overview');
+      });
     } else {
       window.alert("Passwords do not match");
     }
