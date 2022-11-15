@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useNavigate } from "react-router-dom";
 import SetPassword from "./SetPassword";
 import "./Verify.css";
 function Verify() {
+  const navigate = useNavigate();
   const [verified, setVerified] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -28,7 +29,7 @@ function Verify() {
   console.log(verified);
   return (
     <>
-      {!verified ? 
+      {verified ? 
       (
         <SetPassword email={email} />
       ) : 
