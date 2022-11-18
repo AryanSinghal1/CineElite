@@ -1,6 +1,6 @@
 import React from 'react'
 
-function MonthCalendar(props) {
+function SideCalendar(props) {
     let firstDayOfMonth = new Date(
         props.day.getFullYear(),
         props.day.getMonth(),
@@ -35,20 +35,15 @@ function MonthCalendar(props) {
     
     <div className="flex flex-wrap justify-between w-full h-full">
       {currentDays.map((day) => {
-        const dayColor = day.day==0||day.day==6?"bg-background":"";
-        const selected = day.selected ? " text-red-600" : "";
         return (
           <div
             className={
-              `w-[14%] h-[16%] border flex justify-center items-center rounded-lg ${selected} ${dayColor}`
+              `w-[14%] h-[16%] flex justify-center items-center`
             }
             onClick={() => props.changeCurrentDay(day)}
           >
-            <div className='w-[90%] h-[95%] flex flex-col justify-between'>
-            <p className='font-bold'>{day.number}</p>
-            <div className='w-full h-[90%] flex flex-col items-center'>
-            <div className='w-full h-[30%] bg-red-600 rounded-md mb-1'></div>
-            </div>
+            <div className='w-[90%] h-[95%] flex justify-center items-center'>
+            <p className={day.currentMonth?'font-bold':""}>{day.number}</p>
             </div>
           </div>
         );
@@ -57,4 +52,4 @@ function MonthCalendar(props) {
   )
 }
 
-export default MonthCalendar
+export default SideCalendar;

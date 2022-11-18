@@ -1,176 +1,196 @@
+import React,{ useEffect, useState } from 'react'
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import DateTimePicker from 'react-datetime-picker';
+// import Calendar from 'rc-calendar';
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import './Scheduling.css'
+import MonthCalendar from './MonthCalendar';
 import CineLogo from '../Logo/logo.png'
+import { Calendar, momentLocalizer } from 'react-big-calendar'
+import moment from 'moment'
 import SideCalendar from './SideCalendar';
-function DayScheduling() {
-  const [show, setShow] = useState(false);
-  const [value1, onChange1] = useState(new Date());
-  const [value2, onChange2] = useState(new Date());
-  const [title, setTitle] = useState();
-  const [create, setCreate] = useState(false);
-  const [data, setData] = useState([]);
-  const [updateUser, setUpdateUser] = useState({});
-  const [newvalue1, newonChange1] = useState();
-  const [newvalue2, newonChange2] = useState();
-  const [newtitle, setNewTitle] = useState();
+
+const localizer = momentLocalizer(moment)
+
+function WeekScheduling() {
   const [currentDay, setCurrentDay] = useState(new Date());
-  const getData = async() =>{
-    const thisCalendar = await axios.get("http://127.0.0.1:8000/api/getCalendar");
-    if(thisCalendar.data){
-      setData(thisCalendar.data);
+    const [show, setShow] = useState(false);
+    const [value1, onChange1] = useState(new Date());
+    const [value2, onChange2] = useState(new Date());
+    const [title, setTitle] = useState();
+    const [create, setCreate] = useState(false);
+    const [data, setData] = useState([]);
+    const [updateUser, setUpdateUser] = useState({});
+    const [newvalue1, newonChange1] = useState();
+    const [newvalue2, newonChange2] = useState();
+    const [newtitle, setNewTitle] = useState();
+    const [page, setPage] = useState(0);
+    const getData = async() =>{
+      const thisCalendar = await axios.get("http://127.0.0.1:8000/api/getCalendar");
+      if(thisCalendar.data){
+        setData(thisCalendar.data);
+      }
     }
-  }
-  useEffect(()=>{
-    getData();
-  },[])
-  const handleDelete = async(e)=>{
-    console.log(e._id);
-    await axios.delete(`http://127.0.0.1:8000/api/getCalendar/${e._id}`);
-  }
-  const handleUpdateCalendar = async(e)=>{
-    e.preventDefault();
-    let updateCalendar = {
-      id: updateUser._id,
-      title: newtitle,
-      value1Date:newvalue1.toLocaleDateString(),value1Time:newvalue1.toLocaleTimeString(), value2Date:newvalue2.toLocaleDateString(),value2Time:newvalue2.toLocaleTimeString(),
-      start: newvalue1.getTime(), end: newvalue2.getTime()
+    useEffect(()=>{
+      getData();
+    },[])
+    const handleDelete = async(e)=>{
+      console.log(e._id);
+      await axios.delete(`http://127.0.0.1:8000/api/getCalendar/${e._id}`);
     }
-    await axios.post('http://127.0.0.1:8000/api/getCalendar', updateCalendar);
-  }
-  const handleUpdate = async(e)=>{
-    setUpdateUser(e);
-    setShow(true);
-    let startDate = new Date(e.book);
-    let endDate = new Date(e.bookend);
-    console.log(startDate, endDate)
-    newonChange1(startDate);
-    newonChange2(endDate);
-    setNewTitle(e.title);
-  }
-  console.log(updateUser);
-  const handleSubmit = async(e) =>{
+    const handleUpdateCalendar = async(e)=>{
       e.preventDefault();
-      let thisobject = {
-          value1Date:value1.toLocaleDateString(),value1Time:value1.toLocaleTimeString(), value2Date:value2.toLocaleDateString(),value2Time:value2.toLocaleTimeString(), title,
-          start: value1.getTime(), end: value2.getTime()
+      let updateCalendar = {
+        id: updateUser._id,
+        title: newtitle,
+        value1Date:newvalue1.toLocaleDateString(),value1Time:newvalue1.toLocaleTimeString(), value2Date:newvalue2.toLocaleDateString(),value2Time:newvalue2.toLocaleTimeString(),
+        start: newvalue1.getTime(), end: newvalue2.getTime()
       }
-      if(thisobject.start<thisobject.end){
-        if(data.length!=0){for(var i=0; i< data.length; i++){
-          if(data[i].book==value1.getTime() && data[i].bookend==value2.getTime()){
-            window.alert("Already scheduled");
-          }else{
-            console.log("Yess1");
-            await axios.post("http://127.0.0.1:8000/api/schedule", thisobject);
-            break;   
-          }}}
-          else{console.log("Yess");
-  await axios.post("http://127.0.0.1:8000/api/schedule", thisobject);
+      await axios.post('http://127.0.0.1:8000/api/getCalendar', updateCalendar);
+    }
+    const handleUpdate = async(e)=>{
+      setUpdateUser(e);
+      setShow(true);
+      let startDate = new Date(e.book);
+      let endDate = new Date(e.bookend);
+      console.log(startDate, endDate)
+      newonChange1(startDate);
+      newonChange2(endDate);
+      setNewTitle(e.title);
+    }
+    console.log(updateUser);
+    const handleSubmit = async(e) =>{
+        e.preventDefault();
+        let thisobject = {
+            value1Date:value1.toLocaleDateString(),value1Time:value1.toLocaleTimeString(), value2Date:value2.toLocaleDateString(),value2Time:value2.toLocaleTimeString(), title,
+            start: value1.getTime(), end: value2.getTime()
+        }
+        if(thisobject.start<thisobject.end){
+          if(data.length!=0){for(var i=0; i< data.length; i++){
+            if(data[i].book==value1.getTime() && data[i].bookend==value2.getTime()){
+              window.alert("Already scheduled");
+            }else{
+              console.log("Yess1");
+              await axios.post("http://127.0.0.1:8000/api/schedule", thisobject);
+              break;   
+            }}}
+            else{console.log("Yess");
+    await axios.post("http://127.0.0.1:8000/api/schedule", thisobject);
+    }
+    }else{
+          window.alert("Booking Time Invalid")
+        }
+    }
+  const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const weekdaysSide = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  const arrayTime = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
+  const changeCurrentDay = (e) =>{
+    console.log(e.date.getMonth());
+    setCurrentDay(e.date)
   }
-  }else{
-        window.alert("Booking Time Invalid")
-      }
-  }
-const weekdaysSide = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const changeCurrentDay = (e) =>{
-  console.log(e.date.getMonth());
-  setCurrentDay(e.date)
-}
-const increment = (e) =>{
-  let date = new Date(currentDay.getFullYear(), currentDay.getMonth()+1, 1);
-  console.log(date);
-  setCurrentDay(date);
-}
-const decrement = (e) =>{
-  let date = new Date(currentDay.getFullYear(), currentDay.getMonth()-1, 1);
-  console.log(date);
-  setCurrentDay(date);
-}
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
-    const year = 2022;
-    const currentMonth = "May";
-    const InfoMonths=[{
-        id:0,
-        name: "January",
-        months: 31
-    },
-    {
-        id:1,
-        name: "February",
-        months: 28
-    },
-    {
-        id:2,
-        name: "March",
-        months: 31
-    },
-    {
-        id:3,
-        name: "April",
-        months: 30
-    },
-    {
-        id:4,
-        name: "May",
-        months: 31
-    },
-    {
-        id:5,
-        name: "June",
-        months: 30
-    },
-    {
-        id:6,
-        name: "July",
-        months: 31
-    },
-    {
-        id:7,
-        name: "August",
-        months: 31
-    },
-    {
-        id:8,
-        name: "September",
-        months: 30
-    },
-    {
-        id:9,
-        name: "October",
-        months: 31
-    },
-    {
-        id:10,
-        name: "November",
-        months: 30
-    },
-    {
-        id:11,
-        name: "December",
-        months: 31
-    },
+  const InfoMonths=[{
+    id:0,
+    name: "January",
+    months: 31
+},
+{
+    id:1,
+    name: "February",
+    months: 28
+},
+{
+    id:2,
+    name: "March",
+    months: 31
+},
+{
+    id:3,
+    name: "April",
+    months: 30
+},
+{
+    id:4,
+    name: "May",
+    months: 31
+},
+{
+    id:5,
+    name: "June",
+    months: 30
+},
+{
+    id:6,
+    name: "July",
+    months: 31
+},
+{
+    id:7,
+    name: "August",
+    months: 31
+},
+{
+    id:8,
+    name: "September",
+    months: 30
+},
+{
+    id:9,
+    name: "October",
+    months: 31
+},
+{
+    id:10,
+    name: "November",
+    months: 30
+},
+{
+    id:11,
+    name: "December",
+    months: 31
+},
 ]
-const AllMonths = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const currentMonthArr=InfoMonths.filter(x=>x.name==months[currentDay.getMonth()]);
-const daysArray = [];
+  const increment = (e) =>{
+    let date = new Date(currentDay.getFullYear(), currentDay.getMonth()+1, 1);
+    console.log(date);
+    setCurrentDay(date);
+  }
+  const decrement = (e) =>{
+    let date = new Date(currentDay.getFullYear(), currentDay.getMonth()-1, 1);
+    console.log(date);
+    setCurrentDay(date);
+  }
+  const daysArray = [];
+  const next = () =>{
+    if(page+7<currentMonthArr[0].months){
+      setPage(page+7);
+    }
+  }
+  const prev = () =>{
+    if(page-7>=0){
+    setPage(page-7);
+    }
+  }
 for(let i=1;i<=currentMonthArr[0].months;i++){
-    let date = new Date(year, currentMonthArr[0].id, i);
-    let currentDay=AllMonths[date.getDay()];
+    let date = new Date(currentDay.getFullYear(), currentDay.getMonth(), i);
+    let currentDayToday=weekdaysSide[date.getDay()];
     let monthDates = {
         date:i,
-        day:currentDay,
+        day:currentDayToday,
         events:[{
             appointment:"Appointment 1",
             text:"Lorem Ipsum"
@@ -296,7 +316,7 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
       <div className='w-full h-[95%] flex justify-center items-center bg-background'>
         <div className='w-[95%] h-[98%] '>
           <div className='w-full h-[15%] flex justify-between items-center'>
-            <div className='h-full w-1/6 flex items-center'><p className='font-bold text-2xl'>Month</p></div>
+            <div className='h-full w-1/6 flex items-center'><p className='font-bold text-2xl'>Weekly</p></div>
           </div>
           <div className='h-[85%] w-full flex justify-center items-center'>
           <div className='h-full w-full flex justify-between items-between '>
@@ -366,47 +386,56 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
               </div>
             </div>
             </div>
-        <div className="h-full w-3/4 flex flex-col justify-center items-center">
-          <div className='h-[85%] w-full flex flex-col justify-between items-start rounded-xl'>
-                  <h2 className='font-bold text-3xl'>{months[currentDay.getMonth()]}</h2>
-              <div className="w-full h-[92%] flex flex-col justify-between items-center ">
-                {daysArray.map((e)=>{return <div className='border-b-2 border-slate-300 w-full flex items-center'>
-                    <div className='h-full w-[8%] flex justify-center items-start'>
-                        <p className='font-bold text-2xl mt-4'>{e.date}</p>
-                    </div>
-                    <div className='h-full w-[10%] flex justify-center items-start'>
-                        <p className='text-2xl mt-4'>{e.day}</p>
-                    </div>
-                    <div className='h-full w-[82%] flex flex-col justify-center items-center my-4'>
-                        {e.events.map((event)=>{
-                            return(
-                            <div className='h-[50px] w-full bg-red-500 rounded-xl flex justify-center items-center border-b-2 border-black'>
-                            <div className='h-full w-[95%] flex justify-between items-center'>
-                                <div className='w-1/3 h-full flex items-center'>
-                                <div className='h-full w-[10px] bg-red-700'></div>
-                                <p className='text-2xl mx-2'>{event.appointment}</p>
-                                </div>
-                                <div className='w-1/3 h-full flex justify-end items-center'>
-                                    <p className='text-2xl'>{event.text}</p>
-                                </div>
-                            </div>
-                            </div>
-                            )
-                        })
-                        }
-                    </div>
-                </div>})}
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 absolute bottom-0 left-0" onClick={()=>{prev()}}>
+  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+</svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 absolute bottom-0 left-10" onClick={()=>{next()}}>
+  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+</svg>
+        <div className="h-full w-3/4 flex items-center bg-white">
+                <div className='h-full w-[12.5%] border flex flex-col justify-center items-center border-slate-300'>
+            <div className='h-[5%] w-full bg-background flex flex-col justify-between items-center'>
+                <div className='h-1/2 w-full'></div>
+                <div className='h-1/2 w-full'></div>
             </div>
-              </div>
-              </div>
-              </div>
-          </div>
-          
-          </div>
-              </div>
-              </div>
-          
+            <div className='h-[95%] w-full flex flex-col justify-between items-center'>
+                
+            {arrayTime.map((e)=>{
+                        return <div className='h-[4.16%] w-full flex flex-col justify-center items-center'>
+                            <div className='w-full h-1/2 flex items-center justify-end border'>
+                            <p>{e}:00</p>
+                            </div>
+                            <div className='w-full h-1/2 flex items-center justify-end border'>
+                            </div>
+                            </div>
+                    })}
+            </div>
+                </div>
+                {daysArray.slice(page,page+7).map((e)=>{return (<div className='h-full w-[12.5%] border flex flex-col justify-center items-center border-slate-300'>
+            <div className='h-[5%] w-full bg-background flex flex-col justify-between items-center'>
+                <div className='h-1/2 w-full font-bold'>{e.date}</div>
+                <div className='h-1/2 w-full'>{e.day}</div>
+            </div>
+            <div className='h-[95%] w-full flex flex-col justify-between items-center'>
+            {arrayTime.map((e)=>{
+                        return <div className='h-[4.16%] w-full flex flex-col justify-center items-center'>
+                            <div className='w-full h-1/2 flex items-center justify-end border'>
+                            </div>
+                            <div className='w-full h-1/2 flex items-center justify-end border'>
+                            </div>
+                            </div>
+                    })}
+            
+            </div>
+                </div>)})}
+      </div>
+      </div>
+        </div>
+        </div>
+        </div>
+    </div>
+
   )
 }
 
-export default DayScheduling
+export default WeekScheduling
