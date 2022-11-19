@@ -1,22 +1,22 @@
 import React,{ useEffect, useState } from 'react'
 import axios from 'axios';
-import DateTimePicker from 'react-datetime-picker';
-// import Calendar from 'rc-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import './Scheduling.css'
-import MonthCalendar from './MonthCalendar';
 import CineLogo from '../Logo/logo.png'
-import { Calendar, momentLocalizer } from 'react-big-calendar'
+import { momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import SideCalendar from './SideCalendar';
+import { useNavigate } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment)
 
 function WeekScheduling() {
+  const navigate = useNavigate();
   const [currentDay, setCurrentDay] = useState(new Date());
     const [show, setShow] = useState(false);
     const [value1, onChange1] = useState(new Date());
     const [value2, onChange2] = useState(new Date());
+    const [user, setUser] = useState({});
     const [title, setTitle] = useState();
     const [create, setCreate] = useState(false);
     const [data, setData] = useState([]);
@@ -25,12 +25,36 @@ function WeekScheduling() {
     const [newvalue2, newonChange2] = useState();
     const [newtitle, setNewTitle] = useState();
     const [page, setPage] = useState(0);
-    const getData = async() =>{
-      const thisCalendar = await axios.get("http://127.0.0.1:8000/api/getCalendar");
-      if(thisCalendar.data){
-        setData(thisCalendar.data);
+    const [calendarData, setCalendarData] = useState({});
+    
+    const getUser = async() =>{
+      const thisdata = await fetch("api/getUser", {
+          method:"GET",
+          headers:{
+            Accept : "application/json",
+            "Content-Type" : "application/json"
+          },
+          credentials: 'include',
+        })
+        const getData = await thisdata.json();
+        if(!getData.fname){
+          navigate("/nologin")
+        }else{
+          setUser(getData);
+          return getData;
+        }
       }
+
+  const getData = async() =>{const user = await getUser();
+    if(user){
+      setUser(user);
+      setCalendarData({userId: user._id});
     }
+    const thisCalendar = await axios.post("http://127.0.0.1:8000/api/getCalendar",{"userId":user._id});
+    if(thisCalendar.data){
+      setData(thisCalendar.data);
+    }
+  }
     useEffect(()=>{
       getData();
     },[])
@@ -58,27 +82,19 @@ function WeekScheduling() {
       newonChange2(endDate);
       setNewTitle(e.title);
     }
-    console.log(updateUser);
+    // console.log(updateUser);
+    const handleChange = (e) =>{
+      setCalendarData({...calendarData, [e.target.name]:e.target.value});
+    }
     const handleSubmit = async(e) =>{
         e.preventDefault();
-        let thisobject = {
-            value1Date:value1.toLocaleDateString(),value1Time:value1.toLocaleTimeString(), value2Date:value2.toLocaleDateString(),value2Time:value2.toLocaleTimeString(), title,
-            start: value1.getTime(), end: value2.getTime()
-        }
-        if(thisobject.start<thisobject.end){
-          if(data.length!=0){for(var i=0; i< data.length; i++){
-            if(data[i].book==value1.getTime() && data[i].bookend==value2.getTime()){
-              window.alert("Already scheduled");
-            }else{
-              console.log("Yess1");
-              await axios.post("http://127.0.0.1:8000/api/schedule", thisobject);
-              break;   
-            }}}
-            else{console.log("Yess");
-    await axios.post("http://127.0.0.1:8000/api/schedule", thisobject);
-    }
-    }else{
-          window.alert("Booking Time Invalid")
+        const book = new Date(`${calendarData.start} ${calendarData.startTime}`);
+        const bookEnd = new Date(`${calendarData.end} ${calendarData.endTime}`);
+        console.log(book, bookEnd);
+        console.log(book.getTime(), bookEnd.getTime());
+        if(book.getTime()<bookEnd.getTime()){
+          console.log(calendarData)
+          await axios.post("http://127.0.0.1:8000/api/schedule", calendarData);
         }
     }
   const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -97,7 +113,7 @@ function WeekScheduling() {
     "November",
     "December"
   ];
-  const arrayTime = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
+  const arrayTime = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
   const changeCurrentDay = (e) =>{
     console.log(e.date.getMonth());
     setCurrentDay(e.date)
@@ -185,17 +201,97 @@ const currentMonthArr=InfoMonths.filter(x=>x.name==months[currentDay.getMonth()]
     setPage(page-7);
     }
   }
+  let timeEventArray = [
+    {
+    id:0
+  },
+    {
+    id:1
+  },
+    {
+    id:2
+  },
+    {
+    id:3
+  },
+    {
+    id:4
+  },
+    {
+    id:5
+  },
+    {
+    id:6
+  },
+    {
+    id:7
+  },
+    {
+    id:8
+  },
+    {
+    id:9
+  },
+    {
+    id:10
+  },
+    {
+    id:11
+  },
+    {
+    id:12
+  },
+    {
+    id:13
+  },
+    {
+    id:14
+  },
+    {
+    id:15
+  },
+    {
+    id:16
+  },
+    {
+    id:17
+  },
+    {
+    id:18
+  },
+    {
+    id:19
+  },
+    {
+    id:20
+  },
+    {
+    id:21
+  },
+    {
+    id:22
+  },
+    {
+    id:23
+  },
+]
 for(let i=1;i<=currentMonthArr[0].months;i++){
     let date = new Date(currentDay.getFullYear(), currentDay.getMonth(), i);
     let currentDayToday=weekdaysSide[date.getDay()];
     let monthDates = {
         date:i,
+        month: date.getMonth(),
+        year: date.getFullYear(),
         day:currentDayToday,
-        events:[{
-            appointment:"Appointment 1",
-            text:"Lorem Ipsum"
-        }]
+        events:timeEventArray
     }
+    // data.map((e)=>{
+    //   let eventDate = new Date(e.date1);
+    //   let startTime = e.time1.split(":");
+    //   if(monthDates.month==eventDate.getMonth()&&monthDates.year==eventDate.getFullYear()&&eventDate.getDate()==monthDates.date){
+    //     monthDates.events[startTime[0]].event = e;
+    //   }
+    // })
     daysArray.push(monthDates);
 }
   return (
@@ -210,13 +306,13 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
 </svg>
 
             </div>
-            <form className='h-[90%] w-full'>
-              <div className='h-[80%] w-full flex flex-col justify-between items-center'>
-                <div className='h-[30%] w-full flex flex-col justify-center items-start'>
+            <form className='h-[90%] w-full' onChange={handleChange} onSubmit={handleSubmit}>
+            <div className='h-[80%] w-full flex flex-col justify-between items-center'>
+                <div className='h-[25%] w-full flex flex-col justify-center items-start'>
               <p className=' text-lg'>Name</p>
-              <input className='w-full h-1/2' type="text" placeholder="Enter Name"></input>
+              <input className='w-full h-1/2' type="text" name='name' placeholder="Enter Name"></input>
                 </div>
-                <div className='h-[30%] w-full flex flex-col justify-center items-start'>
+                <div className='h-[25%] w-full flex flex-col justify-center items-start'>
               <p className='text-lg'>Date</p>
               <div className='w-full h-[80%] flex justify-between items-center'>
                 <div className='w-[48%] h-full relative'>
@@ -265,7 +361,7 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
                           </div>
               <input
                             datepicker="true"
-                            name="start"
+                            name="end"
                             type="text"
                             className="sm:text-sm rounded-lg focus:ring-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark: dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="To"
@@ -274,13 +370,22 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
                 </div>
               </div>
                 </div>
-                <div className='h-[30%] w-full flex flex-col justify-center items-start'>
+                <div className='h-[25%] w-full flex justify-center items-start'>
+                <div className='h-full w-1/2 flex justify-center items-center'>
+                  <input name='startTime' type="time"></input>
+                </div>
+                <div className='h-full w-1/2 flex justify-center items-center'>
+                  <input name='endTime' type="time"></input>
+
+                </div>
+                </div>
+                <div className='h-[25%] w-full flex flex-col justify-center items-start'>
               <p className=' text-lg'>Note</p>
-              <input className='w-full h-1/2' type="text" placeholder="Enter Notes"></input>
+              <input className='w-full h-1/2' name='note' type="text" placeholder="Enter Notes"></input>
                 </div>
               </div>
               <div className='h-[20%] w-full flex items-center'>
-                <button className='px-6 py-2 bg-yellow-300 rounded-lg font-bold'>Add</button>
+                <input type="submit" value="Add" className='px-6 py-2 bg-yellow-300 rounded-lg font-bold'></input>
               </div>
             </form>
           </div>
@@ -417,15 +522,30 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
                 <div className='h-1/2 w-full'>{e.day}</div>
             </div>
             <div className='h-[95%] w-full flex flex-col justify-between items-center'>
-            {arrayTime.map((e)=>{
-                        return <div className='h-[4.16%] w-full flex flex-col justify-center items-center'>
+            {e.events.map((events)=>{
+              data.map((eventsData)=>{
+                let thistime = eventsData.time1.split(":");
+                let startTime = thistime[0];
+                let thisEndtime = eventsData.time2.split(":");
+                let endTime = thisEndtime[0];
+                if(events.id>=startTime&&events.id<=endTime){
+                  events.event = eventsData;
+                }
+                })
+                let eventDate = new Date(events.event?.date1);
+                let eventEndDate = new Date(events.event?.date2);
+                return events.event&&e.date>=eventDate.getDate()&&e.date<=eventEndDate.getDate()?<div className='h-[4.16%] w-full flex flex-col justify-center items-center'>
+                <div className='w-full h-full flex items-center justify-end bg-red-400 border border-red-600 flex justify-center items-center'>
+                  <p className='font-semibold'>{events.event.title}</p>
+                </div>
+                </div>:<div className='h-[4.16%] w-full flex flex-col justify-center items-center'>
                             <div className='w-full h-1/2 flex items-center justify-end border'>
                             </div>
                             <div className='w-full h-1/2 flex items-center justify-end border'>
                             </div>
                             </div>
                     })}
-            
+                    
             </div>
                 </div>)})}
       </div>

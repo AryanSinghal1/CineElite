@@ -223,26 +223,27 @@ exports.calendarDelete = async (req, res) => {
 exports.calendarUser = async (req, res) => {
   console.log(req.body);
   const thisCalendar = new calendarSchema({
-    title: req.body.title,
-    date1: req.body.value1Date,
-    time1: req.body.value1Time,
-    date2: req.body.value2Date,
-    time2: req.body.value2Time,
-    book: req.body.start,
-    bookend: req.body.end,
+    title: req.body.name,
+    note: req.body.note,
+    date1: req.body.start,
+    time1: req.body.startTime,
+    date2: req.body.end,
+    time2: req.body.endTime,
+    user: req.body.userId
   });
   await thisCalendar.save();
 };
 exports.viewCalendar = async (req, res) => {
   let dateToday = new Date();
-  const calendarIn = await calendarSchema.find({
-    book: { $gte: dateToday.getTime() },
-    bookend: { $gte: dateToday.getTime() },
-  });
-  let getCurrent = calendarIn.filter((e) => {
-    return e.bookend != e.book;
-  });
-  res.send(getCurrent);
+  // const calendarIn = await calendarSchema.find({
+  //   book: { $gte: dateToday.getTime() },
+  //   bookend: { $gte: dateToday.getTime() },
+  // });
+  const calendarIn = await calendarSchema.find({user: req.body.userId});
+  // let getCurrent = calendarIn.filter((e) => {
+  //   return e.bookend != e.book;
+  // });
+  res.send(calendarIn);
 };
 exports.updateCalendar = async (req, res) => {
   let updateDate = await calendarSchema.findOne({ _id: req.body.id });

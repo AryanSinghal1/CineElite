@@ -2,20 +2,47 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import CineLogo from '../Logo/logo.png'
 import SideCalendar from './SideCalendar';
+import { useNavigate } from 'react-router-dom';
 function DayScheduling() {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [value1, onChange1] = useState(new Date());
   const [value2, onChange2] = useState(new Date());
   const [title, setTitle] = useState();
   const [create, setCreate] = useState(false);
   const [data, setData] = useState([]);
+  const [user, setUser] = useState({});
   const [updateUser, setUpdateUser] = useState({});
   const [newvalue1, newonChange1] = useState();
   const [newvalue2, newonChange2] = useState();
   const [newtitle, setNewTitle] = useState();
   const [currentDay, setCurrentDay] = useState(new Date());
-  const getData = async() =>{
-    const thisCalendar = await axios.get("http://127.0.0.1:8000/api/getCalendar");
+  const [calendarData, setCalendarData] = useState({});
+    
+    const getUser = async() =>{
+      const thisdata = await fetch("api/getUser", {
+          method:"GET",
+          headers:{
+            Accept : "application/json",
+            "Content-Type" : "application/json"
+          },
+          credentials: 'include',
+        })
+        const getData = await thisdata.json();
+        if(!getData.fname){
+          navigate("/nologin")
+        }else{
+          setUser(getData);
+          return getData;
+        }
+      }
+
+  const getData = async() =>{const user = await getUser();
+    if(user){
+      setUser(user);
+      setCalendarData({userId: user._id});
+    }
+    const thisCalendar = await axios.post("http://127.0.0.1:8000/api/getCalendar",{"userId":user._id});
     if(thisCalendar.data){
       setData(thisCalendar.data);
     }
@@ -48,27 +75,38 @@ function DayScheduling() {
     setNewTitle(e.title);
   }
   console.log(updateUser);
+  const handleChange = (e) =>{
+    setCalendarData({...calendarData, [e.target.name]:e.target.value});
+  }
   const handleSubmit = async(e) =>{
       e.preventDefault();
-      let thisobject = {
-          value1Date:value1.toLocaleDateString(),value1Time:value1.toLocaleTimeString(), value2Date:value2.toLocaleDateString(),value2Time:value2.toLocaleTimeString(), title,
-          start: value1.getTime(), end: value2.getTime()
+      const book = new Date(`${calendarData.start} ${calendarData.startTime}`);
+      const bookEnd = new Date(`${calendarData.end} ${calendarData.endTime}`);
+      console.log(book, bookEnd);
+      console.log(book.getTime(), bookEnd.getTime());
+      if(book.getTime()<bookEnd.getTime()){
+        console.log(calendarData)
+        await axios.post("http://127.0.0.1:8000/api/schedule", calendarData);
       }
-      if(thisobject.start<thisobject.end){
-        if(data.length!=0){for(var i=0; i< data.length; i++){
-          if(data[i].book==value1.getTime() && data[i].bookend==value2.getTime()){
-            window.alert("Already scheduled");
-          }else{
-            console.log("Yess1");
-            await axios.post("http://127.0.0.1:8000/api/schedule", thisobject);
-            break;   
-          }}}
-          else{console.log("Yess");
-  await axios.post("http://127.0.0.1:8000/api/schedule", thisobject);
-  }
-  }else{
-        window.alert("Booking Time Invalid")
-      }
+  //     let thisobject = {
+  //         value1Date:value1.toLocaleDateString(),value1Time:value1.toLocaleTimeString(), value2Date:value2.toLocaleDateString(),value2Time:value2.toLocaleTimeString(), title,
+  //         start: value1.getTime(), end: value2.getTime()
+  //     }
+  //     if(thisobject.start<thisobject.end){
+  //       if(data.length!=0){for(var i=0; i< data.length; i++){
+  //         if(data[i].book==value1.getTime() && data[i].bookend==value2.getTime()){
+  //           window.alert("Already scheduled");
+  //         }else{
+  //           console.log("Yess1");
+  //           await axios.post("http://127.0.0.1:8000/api/schedule", thisobject);
+  //           break;   
+  //         }}}
+  //         else{console.log("Yess");
+  // await axios.post("http://127.0.0.1:8000/api/schedule", thisobject);
+  // }
+  // }else{
+  //       window.alert("Booking Time Invalid")
+  //     }
   }
 const weekdaysSide = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const changeCurrentDay = (e) =>{
@@ -162,19 +200,18 @@ const months = [
         months: 31
     },
 ]
-const AllMonths = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const AllDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const currentMonthArr=InfoMonths.filter(x=>x.name==months[currentDay.getMonth()]);
+console.log(data);
 const daysArray = [];
 for(let i=1;i<=currentMonthArr[0].months;i++){
     let date = new Date(year, currentMonthArr[0].id, i);
-    let currentDay=AllMonths[date.getDay()];
+    let currentDay=AllDays[date.getDay()];
     let monthDates = {
         date:i,
         day:currentDay,
-        events:[{
-            appointment:"Appointment 1",
-            text:"Lorem Ipsum"
-        }]
+        year: date.getFullYear(),
+        month: date.getMonth(),
     }
     daysArray.push(monthDates);
 }
@@ -190,13 +227,13 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
 </svg>
 
             </div>
-            <form className='h-[90%] w-full'>
-              <div className='h-[80%] w-full flex flex-col justify-between items-center'>
-                <div className='h-[30%] w-full flex flex-col justify-center items-start'>
+            <form className='h-[90%] w-full' onChange={handleChange} onSubmit={handleSubmit}>
+            <div className='h-[80%] w-full flex flex-col justify-between items-center'>
+                <div className='h-[25%] w-full flex flex-col justify-center items-start'>
               <p className=' text-lg'>Name</p>
-              <input className='w-full h-1/2' type="text" placeholder="Enter Name"></input>
+              <input className='w-full h-1/2' type="text" name='name' placeholder="Enter Name"></input>
                 </div>
-                <div className='h-[30%] w-full flex flex-col justify-center items-start'>
+                <div className='h-[25%] w-full flex flex-col justify-center items-start'>
               <p className='text-lg'>Date</p>
               <div className='w-full h-[80%] flex justify-between items-center'>
                 <div className='w-[48%] h-full relative'>
@@ -245,7 +282,7 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
                           </div>
               <input
                             datepicker="true"
-                            name="start"
+                            name="end"
                             type="text"
                             className="sm:text-sm rounded-lg focus:ring-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark: dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="To"
@@ -254,13 +291,22 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
                 </div>
               </div>
                 </div>
-                <div className='h-[30%] w-full flex flex-col justify-center items-start'>
+                <div className='h-[25%] w-full flex justify-center items-start'>
+                <div className='h-full w-1/2 flex justify-center items-center'>
+                  <input name='startTime' type="time"></input>
+                </div>
+                <div className='h-full w-1/2 flex justify-center items-center'>
+                  <input name='endTime' type="time"></input>
+
+                </div>
+                </div>
+                <div className='h-[25%] w-full flex flex-col justify-center items-start'>
               <p className=' text-lg'>Note</p>
-              <input className='w-full h-1/2' type="text" placeholder="Enter Notes"></input>
+              <input className='w-full h-1/2' name='note' type="text" placeholder="Enter Notes"></input>
                 </div>
               </div>
               <div className='h-[20%] w-full flex items-center'>
-                <button className='px-6 py-2 bg-yellow-300 rounded-lg font-bold'>Add</button>
+                <input type="submit" value="Add" className='px-6 py-2 bg-yellow-300 rounded-lg font-bold'></input>
               </div>
             </form>
           </div>
@@ -378,20 +424,23 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
                         <p className='text-2xl mt-4'>{e.day}</p>
                     </div>
                     <div className='h-full w-[82%] flex flex-col justify-center items-center my-4'>
-                        {e.events.map((event)=>{
+                        {data.map((event)=>{
+                          let eventDate = new Date(event.date1);
+                          let eventDateEnd = new Date(event.date2);
+                              if(eventDate.getDate()<=e.date&& e.date<=eventDateEnd.getDate()){
                             return(
                             <div className='h-[50px] w-full bg-red-500 rounded-xl flex justify-center items-center border-b-2 border-black'>
                             <div className='h-full w-[95%] flex justify-between items-center'>
                                 <div className='w-1/3 h-full flex items-center'>
                                 <div className='h-full w-[10px] bg-red-700'></div>
-                                <p className='text-2xl mx-2'>{event.appointment}</p>
+                                <p className='text-2xl mx-2'>{event.title}</p>
                                 </div>
                                 <div className='w-1/3 h-full flex justify-end items-center'>
-                                    <p className='text-2xl'>{event.text}</p>
+                                    <p className='text-2xl'>{event.note}</p>
                                 </div>
                             </div>
                             </div>
-                            )
+                            )}
                         })
                         }
                     </div>

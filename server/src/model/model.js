@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema({
     date2:{
         type: String
     },
+    note:{
+        type: String
+    },
     time2:{
         type: String
     },
@@ -21,7 +24,11 @@ const userSchema = new mongoose.Schema({
     },
     bookend:{
         type: Number
+    },
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "userRegister"
     }
 })
-const userModel = new mongoose.model("user", userSchema)
+const userModel = new mongoose.model("scheduleUser", userSchema)
 module.exports = userModel
