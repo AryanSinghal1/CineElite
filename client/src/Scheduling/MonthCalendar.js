@@ -6,6 +6,9 @@ function MonthCalendar(props) {
         props.day.getMonth(),
         1
       );
+      // let thisday =new Date(props.events[0].date1)
+      // console.log(thisday.getDate())
+      console.log(firstDayOfMonth.getDate());
       let weekdayOfFirstDay = firstDayOfMonth.getDay();
       let currentDays = [];
       for (let day = 0; day < 42; day++) {
@@ -25,9 +28,8 @@ function MonthCalendar(props) {
           number: firstDayOfMonth.getDate(),
           day: firstDayOfMonth.getDay(),
           selected: firstDayOfMonth.toDateString() === props.day.toDateString(),
-          year: firstDayOfMonth.getFullYear()
+          year: firstDayOfMonth.getFullYear(),
         };
-    
         currentDays.push(calendarDay);
       }
       
@@ -46,8 +48,13 @@ function MonthCalendar(props) {
           >
             <div className='w-[90%] h-[95%] flex flex-col justify-between'>
             <p className='font-bold'>{day.number}</p>
-            <div className='w-full h-[90%] flex flex-col items-center'>
-            <div className='w-full h-[30%] bg-red-600 rounded-md mb-1'></div>
+            <div className='w-full h-[90%] flex flex-col items-center'>{props.events.map((e)=>{
+          let eventDate = new Date(e.date1);
+          let eventDateEnd = new Date(e.date2);
+              if(eventDate.getDate()<=day.number&& day.number<=eventDateEnd.getDate()){
+                return (<div className='w-full h-[30%] bg-red-600 rounded-md mb-1'><p className='text-white'>{e.title}</p></div>)
+              }
+            })}
             </div>
             </div>
           </div>
