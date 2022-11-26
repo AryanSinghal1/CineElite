@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import icon1 from '../Logo/icon1.png';
 import icon2 from '../Logo/icon2.png';
@@ -10,27 +11,11 @@ import icon7 from '../Logo/icon7.png';
 import './UserProfile.css'
 function UserProfile() {
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
-  const getUser = async() =>{
-        const thisdata = await fetch("api/getUser", {
-        method:"GET",
-        headers:{
-          Accept : "application/json",
-          "Content-Type" : "application/json"
-        },
-        credentials: 'include',
-      })
-      const getData = await thisdata.json();
-      if(!getData.fname){
+  const user = useSelector(state=>state.user.user);
+      if(!user.fname){
         navigate("/nologin")
-      }else{
-        setUser(getData);
       }
-    }
-    useEffect(()=>{
-        getUser();
-    },[]);
-    console.log(user);
+      
   return (
     <div className='userProfileMain'>
         <div className="userProfileDashboardInfo">

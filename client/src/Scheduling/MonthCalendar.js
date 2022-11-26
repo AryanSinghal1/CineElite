@@ -6,8 +6,6 @@ function MonthCalendar(props) {
         props.day.getMonth(),
         1
       );
-      // let thisday =new Date(props.events[0].date1)
-      // console.log(thisday.getDate())
       console.log(firstDayOfMonth.getDate());
       let weekdayOfFirstDay = firstDayOfMonth.getDay();
       let currentDays = [];

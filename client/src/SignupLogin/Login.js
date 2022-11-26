@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import './Login.css';
+import { useDispatch } from "react-redux";
+import { loginUser } from "../Slices";
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState(false);
   const handleLogin = async (e) => {
     e.preventDefault();
-    let loginData = {
-      email: email,
-      password: password,
-    };
     await fetch("/api/userlogin",{
       method  :"POST",
       headers : {
@@ -25,25 +24,13 @@ const Login = () => {
       credentials : 'include'
   }).then(async(e)=>{
     const thisdata = await e.json();
-    console.log(thisdata.Message);
-    if(thisdata.Message=="Welcome"){
+    if(thisdata.loginUser){
+      dispatch(loginUser(thisdata.loginUser));
        navigate('/overview');
     }else{
           setError(true);
     }
   })
-  // await axios.post("http://127.0.0.1:8000", loginData ).then(e=>{
-  //   {switch(e.data){
-  //   case 0:
-  //     window.alert("Success");
-  //     break;
-  //   case 1:
-  //     break;
-  //   case 2:
-  //     break;
-  // }};console.log(e.data.Message);
-  // }
-  // )
   };
   return (
     <div className="loginMain">

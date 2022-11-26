@@ -11,45 +11,22 @@ import './Profile.css'
 import "react-toggle/style.css";
 import Toggle from 'react-toggle'
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 function Profile() {
     const navigate = useNavigate();
-    const [user, setUser] = useState({});
-    const [userBankDetails, setUserBankDetails] = useState({});
     const [referralData, setReferralData] = useState([]);
     const getUsers = async(req, res)=>{
       const allData = await axios.get("http://localhost:8000/api/admLogin");
       setReferralData(allData.data);
     }
-
-    const getUser = async() =>{
-    const thisdata = await fetch("api/getUser", {
-        method:"GET",
-        headers:{
-          Accept : "application/json",
-          "Content-Type" : "application/json"
-        },
-        credentials: 'include',
-      })
-      const getData = await thisdata.json();
-      if(!getData.fname){
-        navigate("/nologin")
-      }else{
-        setUser(getData);
-        return getData;
-      }
+    const user = useSelector(state=>state.user.user);
+    if(!user.fname){
+      navigate('/nologin');
     }
     useEffect(()=>{
-        getActions();
         getUsers();
     },[]);
     
-    const getActions = async(e)=>{
-        const user = await getUser();
-        console.log(user.bankDetails[0].AccNo);
-        if(user.bankDetails[0]){
-        setUserBankDetails(user.bankDetails[0]);
-        }
-    }
     return (
         <div className='profileMain'><div className="ProfileDashboardInfo">
     <p className="ProfileInfoText">CineElite</p>
@@ -58,7 +35,6 @@ function Profile() {
   <div className='profileAbout'>
     <div className='profileImage'>
         <div className='profImageContainer'>
-            {/* <img className='profImage' src={user.profImage}></img> */}
             <img className='profImage' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWcBk5v06sc_1-gOFMn9oc2R2rs62Ir9VSyQm4gzqN&s"></img>
         </div>
         <div className='profileView'>
@@ -89,11 +65,16 @@ function Profile() {
     <div className='ProfilePersonalItems'>
     <div className='ProfilePersonalContainers'>
         <h3>Payment Details</h3>
-        <p>{userBankDetails.AccNo}</p>
-        <p>{userBankDetails.Bank}</p>
-        <p>{userBankDetails.Branch}</p>
-        <p>{userBankDetails.BranchAddress}</p>
-        <p>{userBankDetails.Swift}</p>
+        {user.bankDetails?.map((e)=>{
+          return(<>
+            <p>{e.AccNo}</p>
+            <p>{e.Bank}</p>
+            <p>{e.Branch}</p>
+            <p>{e.BranchAddress}</p>
+            <p>{e.Swift}</p>
+            </>
+          )
+        })}
         </div>
         </div>
     <div className='ProfilePersonalItems'>

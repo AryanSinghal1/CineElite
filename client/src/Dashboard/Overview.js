@@ -11,67 +11,53 @@ import overview from "../Logo/Overview.png";
 import 'react-calendar/dist/Calendar.css';
 import axios from "axios";
 import Modal from "../Scheduling/CalendarModal";
+import { useSelector } from "react-redux";
+import { current } from "@reduxjs/toolkit";
 function Overview(props) {
-  const [user, setUser] = useState({});
   const [calendarEvents, setCalendarEvents] = useState([]);
   const [menu, setMenu] = useState(true);
-  const [action, setAction] = useState(false);
   const [date, setDate] = useState(new Date());
   const [scheduledDates, setScheduledDates] = useState([]);
   const [referrals, setReferrals] = useState(0);
   const navigate = useNavigate();
+  const currentUser = useSelector(state=>state.user.user);
   const getUser = async () => {
-    const thisdata = await fetch("api/getUser", {
-      method:"GET",
-      headers:{
-        Accept : "application/json",
-        "Content-Type" : "application/json"
-      },
-      credentials: 'include',
-    })
-    const getData = await thisdata.json();
-    if(!getData.fname){
+    if(!currentUser.fname){
       navigate("/nologin")
-    }else if(getData.work=="work"){
+    }else if(currentUser.work=="work"){
       navigate("/up")
     }else{
-      setUser(getData)
       const thisCalendar = await axios.get("http://127.0.0.1:8000/api/getCalendar");
-    // setScheduledDates(thisCalendar.data);
     setReferrals(thisCalendar.data.length);
     thisCalendar.data.map((e)=>{
       scheduledDates.push(e.date1)
     })
     setCalendarEvents(thisCalendar.data);
-      return getData;
     }
   };
-  console.log(scheduledDates)
+  getUser();
   menu?document.body.style.overflow = "hidden":document.body.style.overflow = "scroll";
   const handleMenu = ()=>{
     setMenu(!menu);
   }
-  useEffect(() => {
-    getActions();
-  }, []);
-  console.log(action);
-  console.log(user);
+  let actionClassname = "actionControls";
+  let actionActivity = "Action Needed";
   const getActions = async(e)=>{
-    const user = await getUser();
-    const userBankDetails = user?.bankDetails[0];
+    const userBankDetails = currentUser?.bankDetails[0];
     const accountDetails = {
+      _id: userBankDetails._id,
       AccNo:"Account Number",
-      Swift:"Swift",
       Bank:"Bank",
       Branch:"Branch",
-      BranchAddress:"Branch Address"
+      BranchAddress:"Branch Address",
+      Swift:"Swift"
     }
-    if(userBankDetails.AccNo==accountDetails.AccNo||userBankDetails.Bank==accountDetails.Bank||userBankDetails.Branch==accountDetails.Branch||userBankDetails.BranchAddress==accountDetails.BranchAddress||userBankDetails.Swift==accountDetails.Swift){
-      setAction(true);
+    if(JSON.stringify(accountDetails)===JSON.stringify(userBankDetails)){
+      actionActivity = "Account Updated";
+      actionClassname = "actionControls needAction";
     }
   }
-  // }
-  let actionClassname = action?"actionControls needAction":"actionControls";
+  getActions();
   return (
     <div className="mainDashboard">
       <div className="dashboardInfo">
@@ -152,12 +138,12 @@ function Overview(props) {
                     </div>
                     <div className="menuOptionsContainer">
                       <div className="menuOptions">
-                        <Link className="menulinks" to="/scheduling"><p>Scheduling</p></Link>
+                        <Link className="menulinks" to="/scheduling" onClick={()=>{document.body.style.overflow = "scroll"}}><p>Scheduling</p></Link>
                       </div>
                     </div>
                     <div className="menuOptionsContainer">
                       <div className="menuOptions">
-                      <Link className="menulinks" to="/billing"><p>Billing</p></Link>
+                      <Link className="menulinks" to="/billing" onClick={()=>{document.body.style.overflow = "scroll"}}><p>Billing</p></Link>
                       </div>
                     </div>
                     <div className="menuOptionsContainer">
@@ -174,7 +160,7 @@ function Overview(props) {
         <div className="dashboardContent">
           <div className="businessOverview">
             <img className="businessLogo" src={logo} onClick={handleMenu} alt="CineElite"></img>
-            <p className="overViewHeading">{user.fname}'s Business Overview</p>
+            <p className="overViewHeading">{currentUser.fname}'s Business Overview</p>
             <p className="overViewPara">Saturday, 3 September 2022</p>
           </div>
           <div className="businessActions">
@@ -197,7 +183,7 @@ function Overview(props) {
             <div className={actionClassname}>
               <div className="actionControlsCont">
                 <p>Account Status</p>
-                <p className="actions">{action?"Action Needed":"Account Updated"}</p>
+                <p className="actions">{actionActivity}</p>
                 <p>CEID00001</p>
               </div>
             </div>
