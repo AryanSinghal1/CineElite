@@ -10,6 +10,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import SideCalendar from './SideCalendar';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const localizer = momentLocalizer(moment)
 
@@ -21,35 +22,18 @@ function MonthScheduling() {
     const [title, setTitle] = useState();
     const [create, setCreate] = useState(false);
     const [data, setData] = useState([]);
-    const [user, setUser] = useState({});
     const [updateUser, setUpdateUser] = useState({});
     const [newvalue1, newonChange1] = useState();
     const [newvalue2, newonChange2] = useState();
     const [newtitle, setNewTitle] = useState();
     const [currentDay, setCurrentDay] = useState(new Date());
     const [calendarData, setCalendarData] = useState({});
-    
-    const getUser = async() =>{
-      const thisdata = await fetch("api/getUser", {
-          method:"GET",
-          headers:{
-            Accept : "application/json",
-            "Content-Type" : "application/json"
-          },
-          credentials: 'include',
-        })
-        const getData = await thisdata.json();
-        if(!getData.fname){
+    const user = useSelector(state=>state.user.user);
+        if(!user.fname){
           navigate("/nologin")
-        }else{
-          setUser(getData);
-          return getData;
         }
-      }
     const getData = async() =>{
-      const user = await getUser();
       if(user){
-        setUser(user);
         setCalendarData({userId: user._id});
       }
       const thisCalendar = await axios.post("http://127.0.0.1:8000/api/getCalendar",{"userId":user._id});

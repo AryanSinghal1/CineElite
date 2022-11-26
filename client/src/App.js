@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes} from "react-router-dom";
 import Signup from "./SignupLogin/Signup/Signup";
 import SignupUsers from "./Verification/SignupUsers";
@@ -9,7 +9,6 @@ import Overview from "./Dashboard/Overview";
 import Update from "./Profile/Update";
 import NoLogin from "./SignupLogin/NoLogin";
 import Home from "./HomePage/Home";
-// import {createMemoryHistory} from 'history';
 import Profile from "./Profile/Profile";
 import CalendarModal from "./Scheduling/CalendarModal";
 import Scheduling from "./Scheduling/Scheduling";
@@ -25,8 +24,27 @@ import BillingSuppliers from "./Billing/BillingSuppliers";
 import MonthScheduling from "./Scheduling/MonthScheduling";
 import DayScheduling from "./Scheduling/DayScheduling";
 import WeekScheduling from "./Scheduling/WeekScheduling";
-// import ChatPage from "./Trash/ChatPage";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { loginUser } from "./Slices";
 function App() {
+  const dispatch = useDispatch();
+  const getData = async()=>{
+    await fetch("/api/authenticate",{
+      method  :"GET",
+      headers : {
+          Accept : "application/json",
+          "Content-Type" : "application/json"
+      },
+      credentials : 'include'
+  }).then(async(e)=>{
+    const data = await e.json();
+        dispatch(loginUser(data));
+    }).catch(e=>console.log(e));
+  }
+  useEffect(()=>{
+    getData();
+  },[]);
   return (
     <div className="App">
       <Routes>

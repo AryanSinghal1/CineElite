@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const pdf = require('html-pdf');
 const auth = require("../middleware/auth");
 const getToken = require("../token");
+const jwt = require('jsonwebtoken');
 const  chats  = require("../chats");
 const Chat = require("../model/chatModel");
 const pdfTemplate = require('./documents');
@@ -116,6 +117,23 @@ exports.verifyUser = async (req, res) => {
     console.log("No user found");
   }
 };
+exports.authenticateUser = async (req, res) => {
+  const token = req.cookies.jwtoken;
+  if(token){
+    const Verifyuser = jwt.verify(token, "Helloeveryonewelcometothecinelite");
+    if(Verifyuser){
+      let currentUser = await registerSchema.findOne({_id: Verifyuser._id});
+      console.log(currentUser);
+      if(currentUser){
+        res.send(currentUser);
+      }else{
+        console.log("Invalid Token");
+      }
+    }else{
+      console.log("Not Logged IN");
+    }
+  }
+}
 exports.loginUser = async (req, res) => {
   const loginUser = await registerSchema.findOne({ email: req.body.email });
   if (loginUser) {
@@ -130,9 +148,8 @@ exports.loginUser = async (req, res) => {
         httpOnly: true,
       });
       localStorage.setItem("token", token);
-      // res.send("0");
       console.log("Sivvess");
-      return res.status(200).json({ Message: "Welcome" });
+      return res.status(200).json({ loginUser, token, Message: "Welcome" });
     } else {
       // res.send("1");
       return res.status(400).json({ message: "Invalid Credentials" });

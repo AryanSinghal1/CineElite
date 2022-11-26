@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {io} from "socket.io-client"
-import {connect} from 'react-redux'
+import {connect, useSelector} from 'react-redux'
 import axios from 'axios';
 import ChatCard from './ChatCard';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,28 +11,14 @@ function Communication() {
   const [allUsers, setAllUsers] = useState([]);
   const [currentChatUsers, setCurrentChatUsers] = useState([]);
   const [value, setValue] = useState("");
-  const [loginUser, setLoginUser] = useState({});
   const [chats, setChats] = useState([]);
   const [selected, setSelected] = useState({});
   const searchParams = useParams();
 
   const navigate = useNavigate();
-  const getUser = async () => {
-    const thisdata = await fetch("/api/getUser", {
-      method:"GET",
-      headers:{
-        Accept : "application/json",
-        "Content-Type" : "application/json"
-      },
-      credentials: 'include',
-    })
-    const getData = await thisdata.json();
-    if(searchParams.id==getData.email){
-      navigate('/nologin')
-    }
-      else{
-      return getData;
-      }
+  const user = useSelector(state=>state.user.user);
+  if(searchParams.id==user.email){
+    navigate('/nologin')
   }
   const getCurrentUser = async(req, res)=>{
     const currentUserData = await axios.get("http://localhost:8000/api/admLogin")
@@ -41,23 +27,21 @@ function Communication() {
       return activeCurrentUser[0];
     }
   const getChats = async(req, res)=>{
-    const loginUser = await getUser();
     const currUser = await getCurrentUser();
     if(currUser)setActiveUser(currUser)
-    if(loginUser)setLoginUser(loginUser)
     await axios.get("http://localhost:8000/chat").then(async(e)=>{
       // const currentUserChats = e.data.filter((user)=>{return user.to._id==activeUser._id})
-      const currentUserChats = currUser?e.data.filter((chat)=>{return chat.to.email==currUser.email&&chat.sender.email==loginUser.email||chat.sender.email==currUser.email&&chat.to.email==loginUser.email}):{};
+      const currentUserChats = currUser?e.data.filter((chat)=>{return chat.to.email==currUser.email&&chat.sender.email==user.email||chat.sender.email==currUser.email&&chat.to.email==user.email}):{};
       setChats(currentUserChats);
     const achatUsers = [];
-    const senderData = e.data.filter(x=>x.sender._id==loginUser._id);
+    const senderData = e.data.filter(x=>x.sender._id==user._id);
   senderData.map((ch)=>{
     achatUsers.push(ch.to);
   })
   if(currUser)achatUsers.push(currUser);
   const finalChatUsers = achatUsers.reduce((map, elem)=>map.set(elem._id, elem), new Map()).values();
   const finalChatUserArray = Array.from(finalChatUsers);
-  const ffinalChatUserArray = finalChatUserArray.filter(x=>x.email!=loginUser.email)
+  const ffinalChatUserArray = finalChatUserArray.filter(x=>x.email!=user.email)
   console.log(finalChatUsers);
   setChatUsers(ffinalChatUserArray);
     }).catch(e=>console.log(e))
@@ -81,9 +65,8 @@ useEffect(()=>{
   },[searchParams.id])
   const submitMessage = async(e) =>{
     e.preventDefault();
-    const loginUser = await getUser();
-    let userId = loginUser._id;
-    let userName = loginUser.email;
+    let userId = user._id;
+    let userName = user.email;
     let time = new Date().getTime();
     let type = "text";
     let to = activeUser._id;
@@ -137,7 +120,7 @@ useEffect(()=>{
        <div className='w-full h-5/6 flex-col'>
         {chats.length?chats.map((chat)=>{
           console.log(chat);
-          return <ChatCard key={chat._id} activeUser={activeUser} chat={chat.message} name={loginUser}
+          return <ChatCard key={chat._id} activeUser={activeUser} chat={chat.message} name={user}
          to={chat.to}/>
        }):''}
       </div>

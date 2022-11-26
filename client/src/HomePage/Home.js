@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Logo3 from '../Logo/Main3.png';
 import Logo2 from '../Logo/Main2.png';
 import Logo1 from '../Logo/Main1.png';

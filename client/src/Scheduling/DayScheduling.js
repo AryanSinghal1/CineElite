@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import CineLogo from '../Logo/logo.png'
 import SideCalendar from './SideCalendar';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 function DayScheduling() {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -11,35 +12,19 @@ function DayScheduling() {
   const [title, setTitle] = useState();
   const [create, setCreate] = useState(false);
   const [data, setData] = useState([]);
-  const [user, setUser] = useState({});
   const [updateUser, setUpdateUser] = useState({});
   const [newvalue1, newonChange1] = useState();
   const [newvalue2, newonChange2] = useState();
   const [newtitle, setNewTitle] = useState();
   const [currentDay, setCurrentDay] = useState(new Date());
   const [calendarData, setCalendarData] = useState({});
-    
-    const getUser = async() =>{
-      const thisdata = await fetch("api/getUser", {
-          method:"GET",
-          headers:{
-            Accept : "application/json",
-            "Content-Type" : "application/json"
-          },
-          credentials: 'include',
-        })
-        const getData = await thisdata.json();
-        if(!getData.fname){
+    const user = useSelector(state=>state.user.user);
+        if(!user.fname){
           navigate("/nologin")
-        }else{
-          setUser(getData);
-          return getData;
         }
-      }
 
-  const getData = async() =>{const user = await getUser();
+  const getData = async() =>{
     if(user){
-      setUser(user);
       setCalendarData({userId: user._id});
     }
     const thisCalendar = await axios.post("http://127.0.0.1:8000/api/getCalendar",{"userId":user._id});
@@ -88,25 +73,6 @@ function DayScheduling() {
         console.log(calendarData)
         await axios.post("http://127.0.0.1:8000/api/schedule", calendarData);
       }
-  //     let thisobject = {
-  //         value1Date:value1.toLocaleDateString(),value1Time:value1.toLocaleTimeString(), value2Date:value2.toLocaleDateString(),value2Time:value2.toLocaleTimeString(), title,
-  //         start: value1.getTime(), end: value2.getTime()
-  //     }
-  //     if(thisobject.start<thisobject.end){
-  //       if(data.length!=0){for(var i=0; i< data.length; i++){
-  //         if(data[i].book==value1.getTime() && data[i].bookend==value2.getTime()){
-  //           window.alert("Already scheduled");
-  //         }else{
-  //           console.log("Yess1");
-  //           await axios.post("http://127.0.0.1:8000/api/schedule", thisobject);
-  //           break;   
-  //         }}}
-  //         else{console.log("Yess");
-  // await axios.post("http://127.0.0.1:8000/api/schedule", thisobject);
-  // }
-  // }else{
-  //       window.alert("Booking Time Invalid")
-  //     }
   }
 const weekdaysSide = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const changeCurrentDay = (e) =>{
