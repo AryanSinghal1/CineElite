@@ -24,6 +24,17 @@ import BillingSuppliers from "./Billing/BillingSuppliers";
 import MonthScheduling from "./Scheduling/MonthScheduling";
 import DayScheduling from "./Scheduling/DayScheduling";
 import WeekScheduling from "./Scheduling/WeekScheduling";
+
+import {Header} from './components/Header';
+import {Products} from "./pages/index"
+import {Watchlist} from "./pages/index"
+import { Kit } from "./pages/index";
+import { ProductDetails } from "./pages/index";
+import { LandingPage } from "./pages/LandingPage";
+import PrivateRoute from "./PrivateRoute"
+import {Packages} from "./pages/Packages"
+import { Compare } from "./pages/Compare";
+import { History } from "./pages/History";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { loginUser } from "./Slices";
@@ -75,6 +86,30 @@ function App() {
         <Route exact path="/billingcustomers" element={<BillingCustomers/>}/>
         <Route exact path="/billingsuppliers" element={<BillingSuppliers/>}/>
       </Routes>
+      <Header/>
+ <Routes>
+ <Route path="/equipment" element={<LandingPage/>} />
+       <Route path="/explore" element={<PrivateRoute />} >
+       <Route path="/explore" element={<Products />} />
+       </Route>
+   
+       <Route path="/product/:productId" element={<ProductDetails />} />
+       <Route path="/watchlist" element={<PrivateRoute/>} >
+        <Route path="/watchlist" element={<Watchlist/>} />
+        </Route>
+        <Route path="/kit" element={<PrivateRoute/>} >
+        <Route path="/kit" element={<Kit/>} />
+        </Route>
+        <Route path="/compare" element={<PrivateRoute/>} >
+        <Route path="/compare" element={<Compare/>} />
+        </Route>
+        <Route path="/history" element={<PrivateRoute/>} >
+        <Route path="/history" element={<History/>} />
+        </Route>
+      
+       <Route exact path="/packages" element={<Packages/>}/>
+  </Routes>
+ 
     </div>
   );
 }
