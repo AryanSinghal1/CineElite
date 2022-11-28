@@ -12,6 +12,13 @@ require("./connection/connection");
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
+const products = require("./routes/product.router");
+const kit = require("./routes/kit.router");
+const compare = require("./routes/compare.router")
+const history = require("./routes/history.router")
+const watchlist = require('./routes/watchlist.router')
+const certified = require('./routes/certified.router')
+
 app.use(express.json({limit: "50mb"}));
 app.use(express.urlencoded({ extended: true , limit:"500mb"}));
 app.use(cors());
@@ -24,6 +31,12 @@ app.use("/api", route);
 app.use("/chat", chatRoute);
 app.use("/customers", customerRoute);
 app.use("/suppliers", supplierRoute);
+app.use("/products", products)
+app.use("/kit", kit);
+app.use("/watchlist", watchlist)
+app.use("/compare", compare)
+app.use("/history", history)
+app.use("/certified", certified)
 io.on("connection", socket=>{
   socket.on("Input Chat Message", msg => {
     try{

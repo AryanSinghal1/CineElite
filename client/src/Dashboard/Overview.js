@@ -128,7 +128,7 @@ function Overview(props) {
                     </div>
                     <div className="menuOptionsContainer">
                       <div className="menuOptions">
-                        <p>Equipment</p>
+                      <Link className="menulinks" to="/equipments" onClick={()=>{document.body.style.overflow = "scroll"}}><p>Equipments</p></Link>
                       </div>
                     </div>
                     <div className="menuOptionsContainer">

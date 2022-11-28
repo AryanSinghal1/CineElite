@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import './Login.css';
 import { useDispatch } from "react-redux";
-import { loginUser } from "../Slices";
+import { loginUser } from "../Slices/Slices";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
