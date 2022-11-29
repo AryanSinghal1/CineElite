@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 import { current } from "@reduxjs/toolkit";
 function Overview(props) {
   const [calendarEvents, setCalendarEvents] = useState([]);
-  const [menu, setMenu] = useState(true);
+  const [menu, setMenu] = useState(false);
   const [date, setDate] = useState(new Date());
   const [scheduledDates, setScheduledDates] = useState([]);
   const [referrals, setReferrals] = useState(0);
@@ -66,7 +66,7 @@ function Overview(props) {
       <div className="dashboardInfo">
         <p className="infoText">CineElite</p>
       </div>
-            {menu && <div className="menuContainer"><div className="menu">
+            {menu && <div className="menuContainer" onClick={(e)=>setMenu(false)}><div className="menu">
               <div className="inviteMenu">
                 <div className="inviteIcon">
                   <img
@@ -152,7 +152,7 @@ function Overview(props) {
                           src={overview}
                           alt="Message"
                         ></img>
-                        <Link className="menulinks" to="/overview"><p onClick={(e)=>setMenu(false)}>Overview</p></Link>
+                        <Link className="menulinks" to="/overview"><p>Overview</p></Link>
                       </div>
                     </div>
                     <div className="menuOptionsContainer">
@@ -215,7 +215,7 @@ function Overview(props) {
       <div className="dashboardContentContainer">
         <div className="dashboardContent">
           <div className="businessOverview">
-            <img className="businessLogo" src={logo} onClick={handleMenu} alt="CineElite"></img>
+            <img className="businessLogo" src={logo} onClick={(e)=>setMenu(true)} alt="CineElite"></img>
             <p className="overViewHeading">{currentUser.fname}'s Business Overview</p>
             <p className="overViewPara">Saturday, 3 September 2022</p>
           </div>

@@ -199,18 +199,22 @@ const certified = useSelector(state=>state.equipment.certified);
               <h3 className="mb-2 text-center font-normal tracking-tight    dark:text-white">
                 {name}
               </h3>
+              
               <button className="mx-5 mb-2 p-2 rounded-xl mt-4 hover:bg-yellow-300 hover:text-white ">
+              <Link to={`/product/${_id}`} className="link">
                 <div className="">
-                  <Link to={`/product/${_id}`} className="link">
+                  
                     <span className="mb-2 text-l font-medium mr-2">
                       View details
                     </span>
                     <span className="material-icons-outlined md-light  ">
-                      <span class="material-symbols-outlined">open_in_new</span>
-                    </span>
-                  </Link>
+                     open_in_new</span>
+                   
+                 
                 </div>
+                </Link>
               </button>
+             
 
               {isInKit ? (
                 <button className="" onClick={(e) => KitFunction(e)}>

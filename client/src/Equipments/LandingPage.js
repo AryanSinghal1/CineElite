@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom"
 import sony from "../assets/sony.jpg"
-
+import { Header } from "./Components/Header"
 export function LandingPage() {
 
 
 return (
+  <>
+  <Header/>
     <div className="relative overflow-hidden bg-black">
     <div className="mx-auto w-full">
       <div className="relative z-10   sm:pb-16 md:pb-20 lg:w-full lg:max-w-2xl lg:pb-28 xl:pb-32">
@@ -31,6 +33,7 @@ return (
       <img className="h-56 w-full object-cover sm:h-72 md:h-96 lg:h-full lg:w-full" src={sony} alt=""/>
     </div>
   </div>
+  </>
 )
 
 
