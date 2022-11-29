@@ -33,6 +33,7 @@ import { Kit } from "./Equipments/Kit";
 import { Watchlist } from "./Equipments/watchlist";
 import { ProductDetails } from "./Equipments/ProductDetails";
 import { History } from "./Equipments/History";
+import { Compare } from "./Equipments/Compare";
 function App() {
   const dispatch = useDispatch();
   const getData = async()=>{
@@ -71,6 +72,7 @@ function App() {
         <Route exact path="/history" element={<History/>}/>
         <Route exact path="/packages" element={<Products/>}/>
         <Route path="/product/:productId" element={<ProductDetails />} />
+        <Route exact path="/compare" element={<Compare/>}/>
         <Route exact path="/admverify" element={<SignupUsers />}/>
         <Route exact path="/overview" element={<Overview/>}/>
         <Route exact path="/dashboard" element={<Dashboard />}/>
