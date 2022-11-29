@@ -9,7 +9,7 @@ import { brand, category, initializeCertified, initializeCompare, initializeHist
 import axios from "axios";
 import { Header } from "./Components/Header";
 
-export function Products() {
+export function Watchlist() {
     const dispatch = useDispatch();
     const isLoading = false;
   const inventory = useSelector(state=>state.equipment.inventory);
@@ -17,6 +17,7 @@ export function Products() {
   const sortByTypeOfBrand = useSelector(state=>state.equipment.sortByTypeOfBrand);
   const sortByTypeOfCategory = useSelector(state=>state.equipment.sortByTypeOfCategory);
   const compare = useSelector(state=>state.equipment.compare);
+  const watchlist = useSelector(state=>state.equipment.watchlist);
   const [categoryMenu, setCategoryMenu] = useState(false);
   const handleCategory = () => {
     setCategoryMenu(!categoryMenu);
@@ -30,44 +31,7 @@ export function Products() {
     setSuggest(!suggest);
   };
   
-  const fetchData = async () => {
-    try {
-      const {
-        data: { products },
-      } = await axios.get(`${API_URL}/products`);
-      console.log(products);
-      dispatch(initializeProducts(products));
-  const {
-      data: { kit },
-  } = await axios.post(`${API_URL}/kit`,{user:"6368ec6041d2eea1df2fb29a"});
-  console.log(kit);
-  
-  dispatch(initializeKit(kit));
-    
-    const {
-      data: { watchlist },
-    } = await axios.get(`${API_URL}/watchlist`);
-    dispatch(initializeWatchlist(watchlist));
-    const {
-      data: { compare },
-    } = await axios.get(`${API_URL}/compare`);
-    dispatch(initializeCompare(compare));
-    const {
-      data: { history },
-    } = await axios.get(`${API_URL}/history`);
-    dispatch(initializeHistory(history));
-    const {
-      data: { certified },
-    } = await axios.get(`${API_URL}/certified`);
-    dispatch(initializeCertified(certified));
-  }catch (error) {
-      console.error(error);
-    }
-
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+ 
 
 
   const getSortedData = (productList, sortBy) => {
@@ -331,7 +295,7 @@ export function Products() {
           </div>
         ) : (
           <>
-            {filteredData.map((product) => (
+            {watchlist.map((product) => (
               <ProductCard product={product} key={product._id} />
             ))}
           </>

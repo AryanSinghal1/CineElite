@@ -1,14 +1,6 @@
 
-import { useData } from "../context/DataContext";
-
-
-
-
 export function HistoryCard({product}) {
-    const {
-  
-        dispatch
-      } = useData();
+    
       const {  Model,Description,Date,Time} = product;
    
 
