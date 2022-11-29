@@ -17,7 +17,8 @@ const kit = require("./routes/kit.router");
 const compare = require("./routes/compare.router")
 const history = require("./routes/history.router")
 const watchlist = require('./routes/watchlist.router')
-const certified = require('./routes/certified.router')
+const certified = require('./routes/certified.router');
+const { auth } = require("./middleware/auth");
 
 app.use(express.json({limit: "50mb"}));
 app.use(express.urlencoded({ extended: true , limit:"500mb"}));
@@ -27,6 +28,7 @@ app.use(function(req, res, next){
   res.setHeader('Access-Control-Allow-Origin', '*');
   next();
 })
+// app.use(auth);
 app.use("/api", route);
 app.use("/chat", chatRoute);
 app.use("/customers", customerRoute);

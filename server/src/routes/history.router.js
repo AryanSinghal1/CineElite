@@ -6,7 +6,7 @@ historyRouter
   .route("/")
   .get(async (req, res) => {
     try {
-      const { userId } = req.user;
+      const  userId  = req.user;
       const getHistory = await History.findOne({ user: userId }).populate("user");
       res.send(getHistory);
     } catch (error) {

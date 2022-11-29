@@ -6,7 +6,7 @@ watchlistRouter
   .route("/")
   .get(async (req, res) => {
     try {
-      const { userId } = req.user;
+      const  userId  = req.user;
       const watchlist = await Watchlist.findById(userId).populate("products._id");
 
       const watchlistItem = watchlist.products.map((item) => {
