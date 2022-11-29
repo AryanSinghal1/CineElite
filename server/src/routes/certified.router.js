@@ -6,7 +6,7 @@ certifiedRouter
   .route("/")
   .get(async (req, res) => {
     try {
-      const { userId } = req.user;
+      const  userId  = req.user;
       const certified = await Certified.findById(userId).populate("products._id");
 
       const certifiedItem = certified.products.map((item) => {

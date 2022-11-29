@@ -6,7 +6,7 @@ compareRouter
   .route("/")
   .get(async (req, res) => {
     try {
-      const { userId } = req.user;
+      const  userId  = req.user;
       const compare = await Compare.findById(userId).populate("products._id");
 
       const compareItem = compare.products.map((item) => {

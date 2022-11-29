@@ -7,8 +7,8 @@ kitRouter
   .route("/")
   .get(async (req, res) => {
     try {
-      const { userId } = req.user;
-      console.log(getKit);
+      const userId = req.user;
+      console.log(req.user, userId);
       const getKit = await Kit.findOne({ user: userId }).populate("user");
       res.send(getKit);
     } 

@@ -4,6 +4,7 @@ import DateTimePicker from 'react-datetime-picker';
 import Calendar from 'rc-year-calendar';
 import './Scheduling.css'
 import CineLogo from '../Logo/logo.png'
+import { Link } from 'react-router-dom';
 function Scheduling() {
     const [show, setShow] = useState(false);
     const [value1, onChange1] = useState(new Date());
@@ -80,13 +81,16 @@ function Scheduling() {
     </div>
     <div className='flex h-1/2 items-center w-3/6'>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
-      <p>Year</p>
+      
+    <Link to="/scheduling"><p>Yearly</p></Link>
     </div>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
-      <p>Monthly</p>
+      
+      <Link to="/dscheduling"><p>Monthly</p></Link>
     </div>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
-      <p>Weekly</p>
+      
+    <Link to="/wscheduling"><p>Weekly</p></Link>
     </div>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
       <p>Activities</p>
