@@ -7,6 +7,7 @@ import { CompareCard } from "./Components/CompareCard";
 import { useDispatch, useSelector } from "react-redux";
 import { brand, category, initializeCertified, initializeCompare, initializeHistory, initializeKit, initializeProducts, initializeWatchlist } from "../Slices/EquipmentSlices";
 import axios from "axios";
+import { Header } from "./Components/Header";
 
 export function Products() {
     const dispatch = useDispatch();
@@ -105,6 +106,8 @@ export function Products() {
   const filteredData = getFilteredData(sortedData, {});
 
   return (
+    <>
+    <Header/>
     <div className="grid grid-cols-4 w-full min-h-screen bg-gray-200 ">
       <div className=" w-full flex-col ml-8 mt-12 lg:flex hidden   ">
         <form className="flex items-center">
@@ -257,7 +260,7 @@ export function Products() {
           <Link to="/compare">
             <button
               type="button"
-              className=" w-fit mx-12 px-6 mt-2 bg-yellow-300 rounded-lg  flex justify-between bg-white  py-2 text-gray-400 hover:text-gray-500"
+              className=" w-fit mx-12 px-6 mt-2 bg-yellow-300 rounded-lg  flex justify-between   py-2 text-gray-400 hover:text-gray-500"
             >
               <span className="font-medium text-center  text-gray-900">
                 Compare
@@ -269,7 +272,7 @@ export function Products() {
           <button
             onClick={() => handleSuggest(true)}
             type="button"
-            className="flex  w-64 px-2 py-1 ml-2 mt-2  bg-yellow-300 rounded-lg  items-center justify-between bg-white  text-gray-400 hover:text-gray-500"
+            className="flex  w-64 px-2 py-1 ml-2 mt-2  bg-yellow-300 rounded-lg  items-center justify-between  text-gray-400 hover:text-gray-500"
           >
             <span className="font-medium ml-12 text-black">
               Suggest Missing Item
@@ -313,7 +316,7 @@ export function Products() {
 
               <button
                 type="button"
-                className="flex   w-36 p-2 mx-auto mt-2  bg-yellow-300 rounded-2xl  items-center justify-between bg-white  text-gray-400 hover:text-gray-500"
+                className="flex   w-36 p-2 mx-auto mt-2  bg-yellow-300 rounded-2xl  items-center justify-between   text-gray-400 hover:text-gray-500"
               >
                 <span className="font-medium  mx-auto text-gray-900">Send</span>
               </button>
@@ -336,5 +339,6 @@ export function Products() {
         )}
       </div>
     </div>
+    </>
   );
 }
