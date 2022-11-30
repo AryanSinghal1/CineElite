@@ -12,7 +12,7 @@ const Login = () => {
   const [error, setError] = useState(false);
   const handleLogin = async (e) => {
     e.preventDefault();
-    await fetch("/api/userlogin",{
+    await fetch("http://localhost:3000/api/userlogin",{
       method  :"POST",
       headers : {
           Accept : "application/json",

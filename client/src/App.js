@@ -37,7 +37,7 @@ import { Compare } from "./Equipments/Compare";
 function App() {
   const dispatch = useDispatch();
   const getData = async()=>{
-    await fetch("/api/authenticate",{
+    await fetch("http://localhost:3000/api/authenticate",{
       method  :"GET",
       headers : {
           Accept : "application/json",
