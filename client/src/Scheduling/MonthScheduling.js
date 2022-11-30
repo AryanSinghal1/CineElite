@@ -9,7 +9,7 @@ import CineLogo from '../Logo/logo.png'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import SideCalendar from './SideCalendar';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const localizer = momentLocalizer(moment)
@@ -234,13 +234,16 @@ function MonthScheduling() {
     </div>
     <div className='flex h-1/2 items-center w-3/6'>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
-      <p>Year</p>
+      
+    <Link to="/scheduling"><p>Yearly</p></Link>
     </div>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
-      <p>Monthly</p>
+      
+      <Link to="/dscheduling"><p>Monthly</p></Link>
     </div>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
-      <p>Weekly</p>
+      
+    <Link to="/wscheduling"><p>Weekly</p></Link>
     </div>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
       <p>Activities</p>

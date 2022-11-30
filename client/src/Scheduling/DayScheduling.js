@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import CineLogo from '../Logo/logo.png'
 import SideCalendar from './SideCalendar';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 function DayScheduling() {
   const navigate = useNavigate();
@@ -285,21 +285,23 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
     </div>
     <div className='flex h-1/2 items-center w-3/6'>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
-      <p>Year</p>
+      
+    <Link to="/scheduling"><p>Yearly</p></Link>
     </div>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
-      <p>Monthly</p>
+      
+      <Link to="/dscheduling"><p>Monthly</p></Link>
     </div>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
-      <p>Weekly</p>
+      
+    <Link to="/wscheduling"><p>Weekly</p></Link>
     </div>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
       <p>Activities</p>
     </div>
     <div className='flex h-full w-1/5 justify-center items-center text-white text-md'>
       <p>History</p>
-    </div>
-    </div>
+    </div></div>
     <div className='flex items-center justify-end h-full w-1/5'>
       <img className='w-12 h-12' src={CineLogo}></img>
     </div>
