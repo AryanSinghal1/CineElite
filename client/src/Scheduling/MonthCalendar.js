@@ -49,7 +49,7 @@ function MonthCalendar(props) {
             <div className='w-full h-[90%] flex flex-col items-center'>{props.events.map((e)=>{
           let eventDate = new Date(e.date1);
           let eventDateEnd = new Date(e.date2);
-              if(eventDate.getDate()<=day.number&& day.number<=eventDateEnd.getDate()){
+              if(eventDate.getDate()<=day.number&& day.number<=eventDateEnd.getDate()&&eventDate.getMonth()==day.month&&eventDate.getFullYear()==day.year){
                 return (<div className='w-full h-[30%] bg-red-600 rounded-md mb-1'><p className='text-white'>{e.title}</p></div>)
               }
             })}

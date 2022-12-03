@@ -7,6 +7,7 @@ import { momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import SideCalendar from './SideCalendar';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const localizer = momentLocalizer(moment)
 
@@ -16,7 +17,7 @@ function WeekScheduling() {
     const [show, setShow] = useState(false);
     const [value1, onChange1] = useState(new Date());
     const [value2, onChange2] = useState(new Date());
-    const [user, setUser] = useState({});
+    // const [user, setUser] = useState({});
     const [title, setTitle] = useState();
     const [create, setCreate] = useState(false);
     const [data, setData] = useState([]);
@@ -27,27 +28,9 @@ function WeekScheduling() {
     const [page, setPage] = useState(0);
     const [calendarData, setCalendarData] = useState({});
     
-    const getUser = async() =>{
-      const thisdata = await fetch("api/getUser", {
-          method:"GET",
-          headers:{
-            Accept : "application/json",
-            "Content-Type" : "application/json"
-          },
-          credentials: 'include',
-        })
-        const getData = await thisdata.json();
-        if(!getData.fname){
-          navigate("/nologin")
-        }else{
-          setUser(getData);
-          return getData;
-        }
-      }
-
-  const getData = async() =>{const user = await getUser();
+ const user = useSelector(state=>state.user.user);
+  const getData = async() =>{
     if(user){
-      setUser(user);
       setCalendarData({userId: user._id});
     }
     const thisCalendar = await axios.post("http://127.0.0.1:8000/api/getCalendar",{"userId":user._id});
@@ -57,7 +40,7 @@ function WeekScheduling() {
   }
     useEffect(()=>{
       getData();
-    },[])
+    },[user])
     const handleDelete = async(e)=>{
       console.log(e._id);
       await axios.delete(`http://127.0.0.1:8000/api/getCalendar/${e._id}`);
@@ -201,7 +184,7 @@ const currentMonthArr=InfoMonths.filter(x=>x.name==months[currentDay.getMonth()]
     setPage(page-7);
     }
   }
-  let timeEventArray = [
+  const timeEventArray = [
     {
     id:0
   },
@@ -274,26 +257,49 @@ const currentMonthArr=InfoMonths.filter(x=>x.name==months[currentDay.getMonth()]
     {
     id:23
   },
-]
+] 
 for(let i=1;i<=currentMonthArr[0].months;i++){
-    let date = new Date(currentDay.getFullYear(), currentDay.getMonth(), i);
-    let currentDayToday=weekdaysSide[date.getDay()];
-    let monthDates = {
-        date:i,
-        month: date.getMonth(),
-        year: date.getFullYear(),
-        day:currentDayToday,
-        events:timeEventArray
-    }
-    // data.map((e)=>{
-    //   let eventDate = new Date(e.date1);
-    //   let startTime = e.time1.split(":");
-    //   if(monthDates.month==eventDate.getMonth()&&monthDates.year==eventDate.getFullYear()&&eventDate.getDate()==monthDates.date){
-    //     monthDates.events[startTime[0]].event = e;
-    //   }
-    // })
-    daysArray.push(monthDates);
+  let date = new Date(currentDay.getFullYear(), currentDay.getMonth(), i);
+  let currentDayToday=weekdaysSide[date.getDay()];
+  let monthDates = {
+    date:i,
+    month: date.getMonth(),
+    year: date.getFullYear(),
+    day:currentDayToday,
+    events:timeEventArray
+  }
+  daysArray.push(monthDates);
 }
+data.map(e=>{
+  let date = new Date(e.date1);
+  let Enddate = new Date(e.date2);
+  let thistime = e.time1.split(":");
+            let startTime = thistime[0];
+            let thisEndtime = e.time2.split(":");
+            let endTime = thisEndtime[0];
+            // if(events.id>=startTime&&events.id<=endTime){
+            //   events.event = eventsData;
+            // }
+    for(let i=date.getDate();i<=Enddate.getDate();i++){
+      // let currentDate = new Date(date.getFullYear(), date.getMonth(), i);
+      // let currentDay=AllDays[currentDate.getDay()];
+      // let monthDates = {
+      //     date:i,
+      //     day:currentDay,
+      //     year: currentDate.getFullYear(),
+      //     month: currentDate.getMonth(),
+      //     eventNote: e.note,
+      //     eventTitle: e.title
+      // }
+      // console.log(currentDay.getMonth()==date.getMonth(),i)
+      if(currentDay.getFullYear()==date.getFullYear()&&currentDay.getMonth()==date.getMonth()){
+        daysArray[i].events[startTime].event = e;
+        console.log("true");
+      }
+    }
+  }
+)
+console.log(daysArray)
   return (
     <div className='flex flex-col justify-between items-center h-[200vh] w-full relative'>
       {create&&<div className='absolute top-0 h-[100vh] w-full flex justify-center items-center bg-slate-500/50'>
@@ -523,18 +529,9 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
             </div>
             <div className='h-[95%] w-full flex flex-col justify-between items-center'>
             {e.events.map((events)=>{
-              data.map((eventsData)=>{
-                let thistime = eventsData.time1.split(":");
-                let startTime = thistime[0];
-                let thisEndtime = eventsData.time2.split(":");
-                let endTime = thisEndtime[0];
-                if(events.id>=startTime&&events.id<=endTime){
-                  events.event = eventsData;
-                }
-                })
                 let eventDate = new Date(events.event?.date1);
                 let eventEndDate = new Date(events.event?.date2);
-                return events.event&&e.date>=eventDate.getDate()&&e.date<=eventEndDate.getDate()?<div className='h-[4.16%] w-full flex flex-col justify-center items-center'>
+                return e.date>=eventDate.getDate()&&e.date<=eventEndDate.getDate()?<div className='h-[4.16%] w-full flex flex-col justify-center items-center'>
                 <div className='w-full h-full flex items-center justify-end bg-red-400 border border-red-600 flex justify-center items-center'>
                   <p className='font-semibold'>{events.event.title}</p>
                 </div>

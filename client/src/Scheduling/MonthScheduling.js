@@ -15,10 +15,9 @@ import { useSelector } from 'react-redux';
 const localizer = momentLocalizer(moment)
 
 function MonthScheduling() {
-  const navigate = useNavigate();
-    const [show, setShow] = useState(false);
-    const [value1, onChange1] = useState(new Date());
-    const [value2, onChange2] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const [value1, onChange1] = useState(new Date());
+  const [value2, onChange2] = useState(new Date());
     const [title, setTitle] = useState();
     const [create, setCreate] = useState(false);
     const [data, setData] = useState([]);
@@ -28,22 +27,25 @@ function MonthScheduling() {
     const [newtitle, setNewTitle] = useState();
     const [currentDay, setCurrentDay] = useState(new Date());
     const [calendarData, setCalendarData] = useState({});
+    const navigate = useNavigate();
     const user = useSelector(state=>state.user.user);
-        if(!user.fname){
-          navigate("/nologin")
-        }
+    // console.log(user);
+        // if(!user.fname){
+        //   navigate("/nologin")
+        // }
     const getData = async() =>{
       if(user){
         setCalendarData({userId: user._id});
       }
       const thisCalendar = await axios.post("http://127.0.0.1:8000/api/getCalendar",{"userId":user._id});
       if(thisCalendar.data){
+        // console.log(thisCalendar.data);
         setData(thisCalendar.data);
       }
     }
     useEffect(()=>{
       getData();
-    },[])
+    },[user])
     const handleDelete = async(e)=>{
       console.log(e._id);
       await axios.delete(`http://127.0.0.1:8000/api/getCalendar/${e._id}`);
