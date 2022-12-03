@@ -17,9 +17,9 @@ function Communication() {
 
   const navigate = useNavigate();
   const user = useSelector(state=>state.user.user);
-  if(searchParams.id==user.email){
-    navigate('/nologin')
-  }
+  // if(searchParams.id==user.email){
+  //   navigate('/nologin')
+  // }
   const getCurrentUser = async(req, res)=>{
     const currentUserData = await axios.get("http://localhost:8000/api/admLogin")
     const activeCurrentUser = currentUserData.data.filter(x=>{return x.email==searchParams.id});

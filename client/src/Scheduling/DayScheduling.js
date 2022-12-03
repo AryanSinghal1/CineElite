@@ -5,7 +5,6 @@ import SideCalendar from './SideCalendar';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 function DayScheduling() {
-  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [value1, onChange1] = useState(new Date());
   const [value2, onChange2] = useState(new Date());
@@ -18,10 +17,14 @@ function DayScheduling() {
   const [newtitle, setNewTitle] = useState();
   const [currentDay, setCurrentDay] = useState(new Date());
   const [calendarData, setCalendarData] = useState({});
+  const navigate = useNavigate();
     const user = useSelector(state=>state.user.user);
-        if(!user.fname){
-          navigate("/nologin")
-        }
+        // if(user!={}){
+        //   if(!user.fname){
+        //     navigate("/nologin")
+        //     // console.log("yess");
+        //   }
+        // }
 
   const getData = async() =>{
     if(user){
@@ -33,8 +36,15 @@ function DayScheduling() {
     }
   }
   useEffect(()=>{
-    getData();
-  },[])
+    // if(user){
+      getData();
+      // console.log(user);
+      // if(!user.fname){
+        // navigate("/nologin")
+        // console.log("yess");
+      // }
+    // }
+  },[user])
   const handleDelete = async(e)=>{
     console.log(e._id);
     await axios.delete(`http://127.0.0.1:8000/api/getCalendar/${e._id}`);
@@ -67,11 +77,10 @@ function DayScheduling() {
       e.preventDefault();
       const book = new Date(`${calendarData.start} ${calendarData.startTime}`);
       const bookEnd = new Date(`${calendarData.end} ${calendarData.endTime}`);
-      console.log(book, bookEnd);
       console.log(book.getTime(), bookEnd.getTime());
       if(book.getTime()<bookEnd.getTime()){
         console.log(calendarData)
-        await axios.post("http://127.0.0.1:8000/api/schedule", calendarData);
+        await axios.post("http://127.0.0.1:8000/api/schedule", calendarData).then(e=>getData());
       }
   }
 const weekdaysSide = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -103,7 +112,8 @@ const months = [
   "November",
   "December"
 ];
-    const year = 2022;
+    const year = currentDay.getFullYear();
+    // console.log();
     const currentMonth = "May";
     const InfoMonths=[{
         id:0,
@@ -170,11 +180,32 @@ const AllDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const currentMonthArr=InfoMonths.filter(x=>x.name==months[currentDay.getMonth()]);
 console.log(data);
 const daysArray = [];
+const newDaysArray = [];
+data.map((e)=>{ 
+  let date = new Date(e.date1);
+  let Enddate = new Date(e.date2);
+  for(let i=date.getDate();i<=Enddate.getDate();i++){
+    let currentDate = new Date(date.getFullYear(), date.getMonth(), i);
+    let currentDay=AllDays[currentDate.getDay()];
+    let monthDates = {
+        date:i,
+        day:currentDay,
+        year: currentDate.getFullYear(),
+        month: currentDate.getMonth(),
+        eventNote: e.note,
+        eventTitle: e.title
+    }
+    newDaysArray.push(monthDates);
+  }
+})
+const currentDaysArray = newDaysArray.filter(x=>x.month==currentDay.getMonth()&&x.year==currentDay.getFullYear());
+currentDaysArray.sort((a, b) => (a.date > b.date) ? 1 : -1)
 for(let i=1;i<=currentMonthArr[0].months;i++){
     let date = new Date(year, currentMonthArr[0].id, i);
     let currentDay=AllDays[date.getDay()];
     let monthDates = {
         date:i,
+        dateString:date.toLocaleDateString(),
         day:currentDay,
         year: date.getFullYear(),
         month: date.getMonth(),
@@ -383,8 +414,8 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
         <div className="h-full w-3/4 flex flex-col justify-center items-center">
           <div className='h-[85%] w-full flex flex-col justify-between items-start rounded-xl'>
                   <h2 className='font-bold text-3xl'>{months[currentDay.getMonth()]}</h2>
-              <div className="w-full h-[92%] flex flex-col justify-between items-center ">
-                {daysArray.map((e)=>{return <div className='border-b-2 border-slate-300 w-full flex items-center'>
+              <div className="w-full h-[92%] flex flex-col items-center ">
+                {currentDaysArray.map((e)=>{return <div className='border-b-2 border-slate-300 w-full flex items-center'>
                     <div className='h-full w-[8%] flex justify-center items-start'>
                         <p className='font-bold text-2xl mt-4'>{e.date}</p>
                     </div>
@@ -392,25 +423,21 @@ for(let i=1;i<=currentMonthArr[0].months;i++){
                         <p className='text-2xl mt-4'>{e.day}</p>
                     </div>
                     <div className='h-full w-[82%] flex flex-col justify-center items-center my-4'>
-                        {data.map((event)=>{
-                          let eventDate = new Date(event.date1);
-                          let eventDateEnd = new Date(event.date2);
-                              if(eventDate.getDate()<=e.date&& e.date<=eventDateEnd.getDate()){
-                            return(
+                        
                             <div className='h-[50px] w-full bg-red-500 rounded-xl flex justify-center items-center border-b-2 border-black'>
                             <div className='h-full w-[95%] flex justify-between items-center'>
                                 <div className='w-1/3 h-full flex items-center'>
                                 <div className='h-full w-[10px] bg-red-700'></div>
-                                <p className='text-2xl mx-2'>{event.title}</p>
+                                <p className='text-2xl mx-2'>{e.eventTitle}</p>
                                 </div>
                                 <div className='w-1/3 h-full flex justify-end items-center'>
-                                    <p className='text-2xl'>{event.note}</p>
+                                    <p className='text-2xl'>{e.eventNote}</p>
                                 </div>
                             </div>
                             </div>
-                            )}
-                        })
-                        }
+                            
+                        
+                        {/* }} */}
                     </div>
                 </div>})}
             </div>

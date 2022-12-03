@@ -7,7 +7,6 @@ const slice = createSlice({
     name:'user',
     initialState,
     reducers:{loginUser(state, action){
-        console.log(action.payload);
         state.user = action.payload;
     }
 }

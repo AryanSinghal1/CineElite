@@ -100,17 +100,25 @@ tune
 
     </div> 
    
-{historyData.length ? (
-      <>
-        <div className="w-full grid grid-rows-1 gap-6  ">
-          {historyData.map((history) => (
-            <HistoryCard product={history} key={history._id} />
-          ))}
-        </div>
-      </>
-    ) : (
-    <></>
-    )}
+
+    {/* {isLoading ? (
+          <div className="spinner">
+            <div></div>
+            <div></div>
+          </div>
+        ) : (
+          <>
+            {historyData.map((product) => (
+              <HistoryCard
+                product={product}
+                key={product._id}
+                
+              />
+            ))}
+          </>
+        )} */}
+    
+    
 
         </div>
     </div>

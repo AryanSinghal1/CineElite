@@ -248,7 +248,7 @@ exports.calendarUser = async (req, res) => {
     time2: req.body.endTime,
     user: req.body.userId
   });
-  await thisCalendar.save();
+  await thisCalendar.save().then(e=>res.send("Success")).catch(e=>console.log(e));
 };
 exports.viewCalendar = async (req, res) => {
   let dateToday = new Date();
