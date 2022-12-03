@@ -5,7 +5,7 @@ import { API_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCertified, addToCompare, addToHistory, addToKit, addToWatchlist } from "../../Slices/EquipmentSlices";
 
-export function ProductCard({ product }) {
+export function WatchlistCard({ product }) {
   const dispatch = useDispatch();
   const user = useSelector(state=>state.user.user);
 const kit = useSelector(state=>state.equipment.kit);

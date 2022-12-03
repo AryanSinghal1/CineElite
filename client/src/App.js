@@ -29,10 +29,15 @@ import axios from "axios";
 import { loginUser } from "./Slices/Slices";
 import { LandingPage } from "./Equipments/LandingPage";
 import { Products } from "./Equipments/Product";
+import { Kit } from "./Equipments/Kit";
+import { Watchlist } from "./Equipments/watchlist";
+import { ProductDetails } from "./Equipments/ProductDetails";
+import { History } from "./Equipments/History";
+import { Compare } from "./Equipments/Compare";
 function App() {
   const dispatch = useDispatch();
   const getData = async()=>{
-    await fetch("/api/authenticate",{
+    await fetch("http://localhost:3000/api/authenticate",{
       method  :"GET",
       headers : {
           Accept : "application/json",
@@ -62,6 +67,12 @@ function App() {
         <Route exact path="/register" element={<Signup />}/>
         <Route exact path="/equipments" element={<LandingPage/>}/>
         <Route exact path="/explore" element={<Products/>}/>
+        <Route exact path="/kit" element={<Kit/>}/>
+        <Route exact path="/watchlist" element={<Watchlist/>}/>
+        <Route exact path="/history" element={<History/>}/>
+        <Route exact path="/packages" element={<Products/>}/>
+        <Route path="/product/:productId" element={<ProductDetails />} />
+        <Route exact path="/compare" element={<Compare/>}/>
         <Route exact path="/admverify" element={<SignupUsers />}/>
         <Route exact path="/overview" element={<Overview/>}/>
         <Route exact path="/dashboard" element={<Dashboard />}/>
