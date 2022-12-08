@@ -9,15 +9,6 @@ const jwt = require('jsonwebtoken');
 const  chats  = require("../chats");
 const Chat = require("../model/chatModel");
 const pdfTemplate = require('./documents');
-var LocalStorage = require("node-localstorage").LocalStorage,
-  localStorage = new LocalStorage("./scratch");
-// exports.setHeaders = function (req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header('Access-Control-Allow-Credentials', true);
-//     res.header('Access-Control-Allow-Headers', 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization');
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
-//     next();
-//   }
 exports.getInvite = async (req, res) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -62,6 +53,7 @@ exports.getInvite = async (req, res) => {
     YearsExp: "To be entered by the user",
     work: "To be entered",
     registered: false,
+    refBy: req.body.refId
   });
   newUser.links.push(mediaDetails);
   newUser.bankDetails.push(paymentDetails);
@@ -147,7 +139,6 @@ exports.loginUser = async (req, res) => {
         expires: new Date(Date.now() + 25892000),
         httpOnly: true,
       });
-      localStorage.setItem("token", token);
       console.log("Sivvess");
       return res.status(200).json({ loginUser, token, Message: "Welcome" });
     } else {
@@ -172,7 +163,6 @@ exports.getAnotherUsers = async(req, res)=>{
   res.send(othersLoggedIn);
 }
 exports.updateUser = async (req, res) => {
-  const gettoken = localStorage.getItem("token");
   const upUser = await registerSchema.findOne({ token: gettoken });
   console.log(upUser.bankDetails[0]);
   console.log(upUser.bankDetails[0].AccNo);
@@ -204,7 +194,6 @@ exports.registerUser = async (req, res) => {
   const userFound = await registerSchema.findOne({ email: req.body.email });
   console.log(req.body);
   if (userFound) {
-    if (userFound.password == req.body.invite) {
       userFound.fname = req.body.fname;
       userFound.lname = req.body.lname;
       userFound.email = req.body.email;
@@ -221,11 +210,6 @@ exports.registerUser = async (req, res) => {
           variable = 1;
         })
         .catch((e) => console.log(e));
-    } else {
-      res.send("1");
-      console.log("Invalid Invite Code.");
-      variable = 2;
-    }
   } else {
     res.send("2");
     console.log("User not Referred.");

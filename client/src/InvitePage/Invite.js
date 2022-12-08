@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import emailjs from "@emailjs/browser";
+import {useSelector} from 'react-redux';
 import axios from "axios";
 import './Invite.css';
 function Invite() {
@@ -13,6 +14,8 @@ function Invite() {
   const [messageSubject, setMessageSubject] = useState();
   const [referral, setReferrals] = useState(0);
   const [joined, setJoined] = useState(0);
+  const user = useSelector(state=>state.user.user);
+  console.log(user);
   const getUsers = async() => {
     const usersData = await axios.get("http://localhost:8000/api/admLogin");
     let joinedUsers = 0;
@@ -49,6 +52,7 @@ usersData.data.map((e)=>{
     var find = new RegExp("CEID"+'\\w*','gi');
     let currentInviteCode = messageContent.match(find);
     const userData = {
+      refId: user._id,
       username: finalUserArray,
       invitecode: currentInviteCode[0],
       messageSub: messageSubject,

@@ -14,9 +14,19 @@ const registerUserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    refBy:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "userRegister"
+    },
+    companyName:{
+        type: String
+    },
     registered:{
         type: Boolean,
         required: true
+    },
+    role:{
+        type:Number
     },
     email:{
         type: String,
@@ -54,7 +64,13 @@ const registerUserSchema = new mongoose.Schema({
     vatDocument:{
         type: String
     },
+    businessRegistration:{
+        type: String
+    },
     profImage:{
+        type: String
+    },
+    companyLogo:{
         type: String
     },
     bankDetails:[{
