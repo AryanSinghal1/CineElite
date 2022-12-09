@@ -35,6 +35,8 @@ import { ProductDetails } from "./Equipments/ProductDetails";
 import { History } from "./Equipments/History";
 import { Compare } from "./Equipments/Compare";
 import SignupFreelancer from "./SignupLogin/Signup/SignupFreelancer";
+import SignupManufacturer from "./SignupLogin/Signup/SignupManufacturer";
+import SignupSME from "./SignupLogin/Signup/SignupSME";
 function App() {
   const dispatch = useDispatch();
   const getData = async()=>{
@@ -60,7 +62,6 @@ function App() {
         <Route path="/role/:invitecode" element={<SignupRole />}/>
         <Route path="/role" element={<SignupRole />}/>
         <Route exact path="/calendar" element={<CalendarModal />}/>
-        <Route exact path="/signup0" element={<SignupFreelancer />}/>
         <Route exact path="/admInvite" element={<Invite />}/>
         <Route exact path="/scheduling" element={<Scheduling />}/>
         <Route exact path="/mscheduling" element={<MonthScheduling />}/>

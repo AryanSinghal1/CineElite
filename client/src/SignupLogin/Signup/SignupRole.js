@@ -36,7 +36,7 @@ function SignupRole() {
       refId: inviteUser.refBy
     }
     dispatch(inviteUserCurr(invitedUser));
-    navigate('/signup0');
+    navigate('/register');
   }
   return (
     <div className="w-screen h-screen flex">

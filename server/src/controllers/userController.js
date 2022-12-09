@@ -202,7 +202,10 @@ exports.registerUser = async (req, res) => {
       userFound.vatTaxNumber = req.body.VAT;
       userFound.introduction = req.body.intro;
       userFound.profImage = req.body.profile;
-      userFound.vatDocument = req.body.vatDoc;
+      userFound.businessRegistration = req.body.vatDoc;
+      userFound.companyName = req.body.company;
+      userFound.role = req.body.role;
+      userFound.companyLogo = req.body.companyLogo;
       await userFound
         .save()
         .then((e) => {
