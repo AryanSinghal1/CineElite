@@ -4,14 +4,16 @@ import { useSelector } from "react-redux";
 import uploadLogo from "../../Logo/Upload.png";
 import CineLoginComp from "../CineLoginComp";
 
-function SignupFreelancer() {
+function SignupManufacturer() {
   const currInviteUser = useSelector(state=>state.user.currInviteUser);
     const [fname, setFname] = useState();
     const [lname, setLname] = useState();
     const [email, setEmail] = useState();
     const [mobile, setMobile] = useState();
+    const [company, setCompany] = useState();
+    const [supEmail, setSupEmail] = useState();
+    const [supCont, setSupCont] = useState();
     const [address, setAddress] = useState();
-    const [VAT, setVAT] = useState();
     const [intro, setIntro] = useState();
     const [invite, setInvite] = useState();
     const [error, setError] = useState(false);
@@ -22,7 +24,7 @@ function SignupFreelancer() {
     const [user, setUser] = useState(false);  
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!invite||!!fname||!lname||!email||!mobile||!address||!VAT||!intro){
+        if(!invite||!!fname||!lname||!email||!mobile||!address||!intro){
           setError(true)
         }
           const data = {
@@ -31,10 +33,11 @@ function SignupFreelancer() {
             email: currInviteUser.email,
             mobile: mobile,
             address: address,
-            VAT: VAT,
+            company: company,
+            supCont: supCont,
+            supEmail: supEmail,
             intro: intro,
             profile: profilePhoto,
-            vatDoc: vatDoc,
             role: currInviteUser.role
           };
           console.log(data)
@@ -62,15 +65,8 @@ function SignupFreelancer() {
           setProfilePhoto(re.target.result)
         };
       }
-      const handleuploadDoc = (e) =>{
-        let file = e.target.files[0];
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (re) => {
-          setVatDoc(re.target.result)
-        };
-      }    
-  return (
+
+      return (
     <>{!signUp?<div className="w-screen h-screen flex">
       <CineLoginComp />
       <div className="w-[65%] h-full bg-background flex justify-center items-center">
@@ -89,7 +85,17 @@ function SignupFreelancer() {
               encType="multipart/form-data"
             >
               <div className="w-full flex flex-wrap h-[70%]">
-                <div className="w-1/2 h-1/5 flex flex-col justify-center">
+                <div className="w-[95%] h-1/6 flex">
+                    <div className="w-1/3 h-full flex items-center">
+                        <p className="text-[15px]">Company Name</p>
+                    </div>
+                    <div className="w-2/3 h-full flex items-center">
+                        <input type="text" onChange={(e) => {
+                      setCompany(e.target.value);
+                    }} placeholder="Enter Company Name" className="h-2/3 w-[98%] bg-white border border-slate-500 rounded-lg"></input>
+                    </div>
+                    </div>
+                <div className="w-1/2 h-1/6 flex flex-col justify-center">
                   <div className="inputFieldNames flex align-center">
                     <p>First Name*</p>
                   </div>
@@ -107,7 +113,7 @@ function SignupFreelancer() {
                     ""
                   )}
                 </div>
-                <div className="w-1/2 h-1/5">
+                <div className="w-1/2 h-1/6">
                 <div className="inputFieldNames">
                     <p>Last Name*</p>
                   </div>
@@ -125,7 +131,7 @@ function SignupFreelancer() {
                     ""
                   )}
                 </div>
-                <div className="w-1/2 h-1/5">
+                <div className="w-1/2 h-1/6">
                   <div className="inputFieldNames">
                     <p>Contact Number*</p>
                   </div>
@@ -143,46 +149,63 @@ function SignupFreelancer() {
                     ""
                   )}
                 </div>
-                <div className="w-1/2 h-1/5">
+                <div className="w-1/2 h-1/6">
                   <div className="inputFieldNames">
-                    <p>VAT/TAX Number*</p>
+                    <p>Support Contact Number*</p>
                   </div>
                   <input
                     className="m-0 py-1 w-[350px] rounded-lg placeholder-gray-400"
                     onChange={(e) => {
-                      setVAT(e.target.value);
+                      setSupCont(e.target.value);
                     }}
                     type="number"
-                    placeholder="Enter VAT/Tax Number"
+                    placeholder="Enter Contact Number"
                   ></input>
-                  {!VAT && error ? (
+                  {!mobile && error ? (
                     <span className="errorField">This is a required field</span>
                   ) : (
                     ""
                   )}
                 </div>
-                <div className="w-full h-2/5 flex flex-col">
-                  <div className="w-full h-[10%] flex items-center">
-                    <p>Billing Address*</p>
+                <div className="w-full h-1/6">
+                  <div className="inputFieldNames">
+                    <p>Support Email*</p>
                   </div>
-                  <textarea
-                  rows={4}
-                    className="w-[95%] rounded-lg h-[80%] resize-none placeholder-gray-400"
+                  <input
+                    className="m-0 py-1 w-[95%] rounded-lg placeholder-gray-400"
                     onChange={(e) => {
-                      setAddress(e.target.value);
+                      setSupEmail(e.target.value);
                     }}
                     type="text"
-                    placeholder="Enter Address"
-                  ></textarea>
+                    placeholder="Enter Email"
+                  ></input>
                   {!address && error ? (
                     <span className="errorField">This is a required field</span>
                   ) : (
                     ""
                   )}
                 </div>
-                <div className="h-1/5 w-full">
+                <div className="w-full h-1/6">
                   <div className="inputFieldNames">
-                    <p>My Intro*</p>
+                    <p>Address*</p>
+                  </div>
+                  <input
+                    className="m-0 py-1 w-[95%] rounded-lg placeholder-gray-400"
+                    onChange={(e) => {
+                      setAddress(e.target.value);
+                    }}
+                    type="text"
+                    placeholder="Enter Address"
+                  ></input>
+                  {!address && error ? (
+                    <span className="errorField">This is a required field</span>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="h-1/6 w-full">
+                  <div className="inputFieldNames">
+                    <p>Company Intro*</p>
                   </div>
                   <input
                     className="m-0 py-1 w-[95%] rounded-lg placeholder-gray-400"
@@ -209,21 +232,6 @@ function SignupFreelancer() {
                 <div className="w-full h-[65%] flex justify-between">
                   <div className="">
                     <input
-                      id="vat"
-                      className="hidden absolute"
-                      onChange={handleuploadDoc}
-                      accept="application/pdf"
-                      type="file"
-                      name="vatPhoto"
-                    ></input>
-                    <label htmlFor="vat" className="uploadDocuments">
-                      Upload VAT Document &nbsp;
-                      <img src={uploadLogo} alt="upload"></img>
-                    </label>
-                    {/* {!intro&&error?'Error':''} */}
-                  </div>
-                  <div className="">
-                    <input
                       id="photo"
                       className="hidden absolute"
                       onChange={handleUploadImages}
@@ -231,8 +239,8 @@ function SignupFreelancer() {
                       type="file"
                       name="proPhoto"
                     ></input>
-                    <label htmlFor="photo" className="uploadDocuments">
-                      Upload Photo
+                    <label htmlFor="photo" className="uploadDocuments bg-white">
+                      Company Logo
                       <img src={uploadLogo} alt="upload"></img>
                     </label>
                   </div>
@@ -250,4 +258,4 @@ function SignupFreelancer() {
   );
 }
 
-export default SignupFreelancer;
+export default SignupManufacturer;

@@ -37,13 +37,18 @@ const registerUserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    supMobile:{
+        type: String,
+    },
+    supEmail:{
+        type: String,
+    },
     address:{
         type: String,
         required: true
     },
     vatTaxNumber:{
         type: String,
-        required: true
     },
     introduction:{
         type: String,

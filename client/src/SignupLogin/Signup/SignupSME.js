@@ -4,14 +4,16 @@ import { useSelector } from "react-redux";
 import uploadLogo from "../../Logo/Upload.png";
 import CineLoginComp from "../CineLoginComp";
 
-function SignupFreelancer() {
+function SignupSME() {
   const currInviteUser = useSelector(state=>state.user.currInviteUser);
     const [fname, setFname] = useState();
     const [lname, setLname] = useState();
     const [email, setEmail] = useState();
     const [mobile, setMobile] = useState();
-    const [address, setAddress] = useState();
+    const [company, setCompany] = useState();
+    const [companyLogo, setCompanyLogo] = useState();
     const [VAT, setVAT] = useState();
+    const [address, setAddress] = useState();
     const [intro, setIntro] = useState();
     const [invite, setInvite] = useState();
     const [error, setError] = useState(false);
@@ -22,7 +24,7 @@ function SignupFreelancer() {
     const [user, setUser] = useState(false);  
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!invite||!!fname||!lname||!email||!mobile||!address||!VAT||!intro){
+        if(!invite||!!fname||!lname||!email||!mobile||!address||!intro){
           setError(true)
         }
           const data = {
@@ -31,10 +33,12 @@ function SignupFreelancer() {
             email: currInviteUser.email,
             mobile: mobile,
             address: address,
+            company: company,
             VAT: VAT,
             intro: intro,
             profile: profilePhoto,
-            vatDoc: vatDoc,
+            vatDoc:vatDoc,
+            companyLogo:companyLogo,
             role: currInviteUser.role
           };
           console.log(data)
@@ -62,15 +66,25 @@ function SignupFreelancer() {
           setProfilePhoto(re.target.result)
         };
       }
-      const handleuploadDoc = (e) =>{
+      const handleUploadLogo = (e) =>{
         let file = e.target.files[0];
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (re) => {
+            setCompanyLogo(re.target.result)
+            console.log(re.target.result);
+        };
+    }
+    const handleuploadDoc = (e) =>{
+        let file = e.target.files[0];
+        console.log(file);
         let reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = (re) => {
           setVatDoc(re.target.result)
         };
       }    
-  return (
+      return (
     <>{!signUp?<div className="w-screen h-screen flex">
       <CineLoginComp />
       <div className="w-[65%] h-full bg-background flex justify-center items-center">
@@ -88,8 +102,18 @@ function SignupFreelancer() {
               className="w-full h-full flex flex-col justify-between items-center"
               encType="multipart/form-data"
             >
-              <div className="w-full flex flex-wrap h-[70%]">
-                <div className="w-1/2 h-1/5 flex flex-col justify-center">
+              <div className="w-full flex flex-wrap h-[65%]">
+                <div className="w-[95%] h-1/5 flex">
+                    <div className="w-1/3 h-full flex items-center">
+                        <p className="text-[15px]">Company Name</p>
+                    </div>
+                    <div className="w-2/3 h-full flex items-center">
+                        <input type="text" onChange={(e) => {
+                      setCompany(e.target.value);
+                    }} placeholder="Enter Company Name" className="h-1/2 w-[98%] bg-white border border-slate-500 rounded-lg"></input>
+                    </div>
+                    </div>
+                <div className="w-1/2 h-1/6 flex flex-col justify-center">
                   <div className="inputFieldNames flex align-center">
                     <p>First Name*</p>
                   </div>
@@ -107,7 +131,7 @@ function SignupFreelancer() {
                     ""
                   )}
                 </div>
-                <div className="w-1/2 h-1/5">
+                <div className="w-1/2 h-1/6">
                 <div className="inputFieldNames">
                     <p>Last Name*</p>
                   </div>
@@ -125,7 +149,7 @@ function SignupFreelancer() {
                     ""
                   )}
                 </div>
-                <div className="w-1/2 h-1/5">
+                <div className="w-1/2 h-1/6">
                   <div className="inputFieldNames">
                     <p>Contact Number*</p>
                   </div>
@@ -143,7 +167,7 @@ function SignupFreelancer() {
                     ""
                   )}
                 </div>
-                <div className="w-1/2 h-1/5">
+                <div className="w-1/2 h-1/6">
                   <div className="inputFieldNames">
                     <p>VAT/TAX Number*</p>
                   </div>
@@ -153,36 +177,35 @@ function SignupFreelancer() {
                       setVAT(e.target.value);
                     }}
                     type="number"
-                    placeholder="Enter VAT/Tax Number"
+                    placeholder="Enter VAT/TAX Number"
                   ></input>
-                  {!VAT && error ? (
+                  {!mobile && error ? (
                     <span className="errorField">This is a required field</span>
                   ) : (
                     ""
                   )}
                 </div>
-                <div className="w-full h-2/5 flex flex-col">
-                  <div className="w-full h-[10%] flex items-center">
+                <div className="w-full h-1/6">
+                  <div className="inputFieldNames">
                     <p>Billing Address*</p>
                   </div>
-                  <textarea
-                  rows={4}
-                    className="w-[95%] rounded-lg h-[80%] resize-none placeholder-gray-400"
+                  <input
+                    className="m-0 py-1 w-[95%] rounded-lg placeholder-gray-400"
                     onChange={(e) => {
                       setAddress(e.target.value);
                     }}
                     type="text"
                     placeholder="Enter Address"
-                  ></textarea>
+                  ></input>
                   {!address && error ? (
                     <span className="errorField">This is a required field</span>
                   ) : (
                     ""
                   )}
                 </div>
-                <div className="h-1/5 w-full">
+                <div className="h-1/6 w-full">
                   <div className="inputFieldNames">
-                    <p>My Intro*</p>
+                    <p>Company Intro*</p>
                   </div>
                   <input
                     className="m-0 py-1 w-[95%] rounded-lg placeholder-gray-400"
@@ -202,41 +225,55 @@ function SignupFreelancer() {
                 </div>
               </div>
               <div className="h-[20%] w-full flex flex-col">
-              <div className="h-2/3 w-full flex flex-col justify-between">
+              <div className="h-full w-full flex flex-col justify-between">
                 <div className="w-full h-[15%]">
                   <p>Upload*</p>
                 </div>
                 <div className="w-full h-[65%] flex justify-between">
                   <div className="">
-                    <input
-                      id="vat"
+                  <input
+                  id="doc"
                       className="hidden absolute"
                       onChange={handleuploadDoc}
                       accept="application/pdf"
                       type="file"
-                      name="vatPhoto"
+                      name="proPhoto"
                     ></input>
-                    <label htmlFor="vat" className="uploadDocuments">
+                    <label htmlFor="vat" className="uploadDocuments bg-white">
                       Upload VAT Document &nbsp;
                       <img src={uploadLogo} alt="upload"></img>
                     </label>
-                    {/* {!intro&&error?'Error':''} */}
+                    
                   </div>
                   <div className="">
                     <input
-                      id="photo"
+                    id="photo"
                       className="hidden absolute"
                       onChange={handleUploadImages}
                       accept="image/*"
                       type="file"
                       name="proPhoto"
                     ></input>
-                    <label htmlFor="photo" className="uploadDocuments">
-                      Upload Photo
+                    <label htmlFor="photo" className="uploadDocuments bg-white">
+                    Profile Photo
                       <img src={uploadLogo} alt="upload"></img>
                     </label>
                   </div>
                 </div>
+                  <div className="w-1/3">
+                    <input
+                    id="logo"
+                      className="hidden absolute"
+                      onChange={handleUploadLogo}
+                      accept="image/*"
+                      type="file"
+                      name="proPhoto"
+                    ></input>
+                    <label htmlFor="photo" className="uploadDocuments bg-white">
+                      Company Logo
+                      <img src={uploadLogo} alt="upload"></img>
+                    </label>
+                  </div>
               </div>
               </div>
               <div className="h-[10%] w-full flex justify-center items-center">
@@ -250,4 +287,4 @@ function SignupFreelancer() {
   );
 }
 
-export default SignupFreelancer;
+export default SignupSME;
