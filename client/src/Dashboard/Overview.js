@@ -25,11 +25,9 @@ function Overview(props) {
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user.user);
   const getUser = async () => {
-    if (!currentUser.fname) {
-      navigate("/nologin");
-    } else if (currentUser.work == "work") {
-      navigate("/up");
-    } else {
+    // if (!currentUser.fname) {
+    //   navigate("/nologin");
+    // } else {
       const thisCalendar = await axios.get(
         "http://127.0.0.1:8000/api/getCalendar"
       );
@@ -38,9 +36,10 @@ function Overview(props) {
         scheduledDates.push(e.date1);
       });
       setCalendarEvents(thisCalendar.data);
-    }
+    // }
   };
   getUser();
+  console.log(currentUser);
   menu
     ? (document.body.style.overflow = "hidden")
     : (document.body.style.overflow = "scroll");

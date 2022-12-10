@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import uploadLogo from "../../Logo/Upload.png";
 import CineLoginComp from "../CineLoginComp";
+import './Signup.css';
 
 function SignupSME() {
   const currInviteUser = useSelector(state=>state.user.currInviteUser);
@@ -21,7 +22,6 @@ function SignupSME() {
     const [signUp, setSignUp] = useState(false);
     const [vatDoc, setVatDoc] = useState(false);
     const [invalid, setInvalid] = useState(false);
-    const [user, setUser] = useState(false);  
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(!invite||!!fname||!lname||!email||!mobile||!address||!intro){
@@ -51,7 +51,7 @@ function SignupSME() {
             console.log("invalid code")
             break;
             case 2:
-              setUser(true)
+              // setUser(true)
               break;
         };console.log(e.data)
       }
@@ -70,7 +70,9 @@ function SignupSME() {
         let file = e.target.files[0];
         let reader = new FileReader();
         reader.readAsDataURL(file);
+        console.log(e.target.files);
         reader.onload = (re) => {
+          console.log(re);
             setCompanyLogo(re.target.result)
             console.log(re.target.result);
         };
@@ -233,7 +235,7 @@ function SignupSME() {
                   <div className="">
                   <input
                   id="doc"
-                      className="hidden absolute"
+                      className="opacity-0 absolute"
                       onChange={handleuploadDoc}
                       accept="application/pdf"
                       type="file"
@@ -263,11 +265,12 @@ function SignupSME() {
                   <div className="w-1/3">
                     <input
                     id="logo"
-                      className="hidden absolute"
-                      onChange={handleUploadLogo}
+                      className="opacity-0 absolute bg-black"
+                      // onChange={handleUploadLogo}
+                      onChange={(e)=>{handleUploadLogo(e)}}
                       accept="image/*"
                       type="file"
-                      name="proPhoto"
+                      name="Logo"
                     ></input>
                     <label htmlFor="photo" className="uploadDocuments bg-white">
                       Company Logo
