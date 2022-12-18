@@ -102,6 +102,7 @@ exports.verifyUser = async (req, res) => {
         html: `<p>Hello User, You are verified and You can now go and setup your account with ${InviteCode} </p>`,
       });
       console.log("Message sent: %s", info.messageId);
+      res.send("Message Sent");
     } else {
       console.log("User already registered");
     }

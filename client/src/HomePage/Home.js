@@ -35,7 +35,7 @@ function Home() {
           <h3>In Focus</h3>
           </div>
           <div className="mainPageActionButtonContainer">
-          <button className="mainPageActionButton"><a href="/register">Go</a></button>
+          <button className="mainPageActionButton"><a href="/userlogin">Go</a></button>
           </div>
         </div>
         </div>
